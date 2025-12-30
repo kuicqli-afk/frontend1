@@ -1,0 +1,96 @@
+.sec-container {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding: 50px 4%;
+}
+
+.sec-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.sec-text h2 {
+    font-size: 90px;
+    margin-right: 17%;
+    line-height: 1;
+    color: #0000E6;
+
+}
+
+.sec-text p {
+    font-size: 25px;
+    margin-right: 18%;
+    color: #898989;
+}
+
+/* ========================= */
+/*      RESPONSIVE CSS       */
+/* ========================= */
+
+/* -------- Tablets (1024px ↓) -------- */
+@media (max-width: 1024px) {
+    .sec-container {
+        padding: 40px 30px;
+    }
+
+    .sec-text {
+        width: 100%;
+        padding: 0 20px;
+    }
+
+    .sec-text h2 {
+        font-size: 70px;
+        text-align: left;
+    }
+
+    .sec-text p {
+        font-size: 24px;
+        text-align: left;
+    }
+}
+
+
+/* -------- Large Mobile (768px ↓) -------- */
+@media (max-width: 768px) {
+    .sec-container {
+        flex-direction: column;
+        justify-content: left;
+        text-align: left;
+        padding: 35px 20px;
+    }
+
+    .sec-text {
+        width: 100%;
+        padding: 0;
+    }
+
+    .sec-text h2 {
+        font-size: 55px;
+        line-height: 1.1;
+    }
+
+    .sec-text p {
+        font-size: 20px;
+        margin-top: 10px;
+    }
+}
+
+
+/* -------- Small Mobile (480px ↓) -------- */
+@media (max-width: 480px) {
+    .sec-container {
+        padding: 25px 20px;
+    }
+
+    .sec-text h2 {
+        font-size: 35px;
+    }
+
+    .sec-text p {
+        font-size: 18px;
+    }
+}

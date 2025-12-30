@@ -1,0 +1,138 @@
+.support-container {
+    padding: 120px 0;
+    display: flex;
+    justify-content: center;
+    background: #EEEEEE;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.192);
+}
+
+.support-card {
+    width: 1200px;
+    background: #fff;
+    display: flex;
+    border-radius: 40px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    gap: 40px;
+}
+
+/* LEFT BLUE ARROW PART */
+.support-left {
+    width: 56%;
+    background: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.support-left img {
+    width: 520px;
+    object-fit: cover;
+}
+
+/* RIGHT CONTENT */
+.support-right {
+    width: 60%;
+    padding: 20px 50px;
+    margin-right: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.support-text h2 {
+    font-size: 30px;
+    color: #5B5B5B;
+    margin-bottom: 10px;
+}
+
+.support-text p {
+    font-size: 16px;
+    color: #5B5B5B;
+    margin-bottom: 30px;
+}
+
+.support-content {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.support-row {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    margin-bottom: 35px;
+}
+
+.left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 35%;
+}
+
+.left h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #5B5B5B;
+    line-height: 1.2;
+}
+
+.icon {
+    width: 45px;
+    height: auto;
+}
+
+.divider {
+    width: 2px;
+    height: 40px;
+    background: #5B5B5B;
+}
+
+.right {
+    width: 55%;
+}
+
+.right p {
+    font-size: 13px;
+    color: #5B5B5B;
+    font-weight: 500;
+}
+
+.link {
+    color: #0000E6;
+    cursor: pointer;
+    margin: 0 4px;
+}
+
+.office-section {
+    padding: 50px 4%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 30px;
+}
+
+.office-title {
+    font-size: 90px;
+    font-weight: 800;
+    color: #0000E6;
+    line-height: 1;
+}
+
+.office-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.office-list p {
+    font-size: 25px;
+    color: #898989;
+}
+
+.office-bold {
+    font-weight: 700;
+    color: #898989;
+}

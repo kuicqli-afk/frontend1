@@ -1,0 +1,384 @@
+import React, { useState,useEffect } from "react";
+import "./FareLink.css";
+import axios from 'axios'
+import Navbar from "../Navbar/Navbar";
+import Footer from "../Footer/Footer";
+
+import TwoWheeler from "../../assets/2wheeler.png";
+import MiniAuto from "../../assets/MiniAuto.png";
+import Eloader from "../../assets/Eloader.png";
+import ThreeWheeler from "../../assets/3wheeler.png";
+import MiniTruck from "../../assets/MiniTruck.png";
+import Weight from "../../assets/weight.png";
+
+import GreenCircle from "../../assets/greencircle.png";
+import Drop from "../../assets/Drop.png";
+import PhoneNumber from "../../assets/phonenumber.png";
+import Username from "../../assets/username.png";
+import { useNavigate } from "react-router-dom";
+
+const FareLink = () => {
+  const [pickup, setPickup] = useState("");
+  const [drop, setDrop] = useState("");
+  const [phone, setPhone] = useState("");
+  const [name, setName] = useState("");
+  const [predictions,setPredictions]=useState();
+  const [fare,setFare]=useState()
+  const [activeInput, setActiveInput] = useState(null);
+  const [phoneType, setPhoneType] = useState("receiver");
+  const [nameType, setNameType] = useState("receiver");
+  const [showSummary, setShowSummary] = useState(false);
+
+  const navigate=useNavigate();
+
+  const isFormFilled =
+    pickup.trim() &&
+    drop.trim() &&
+    phone.trim() &&
+    name.trim();
+
+  const vehicleData = {
+    "2 Wheeler.": { img: TwoWheeler, weight: "18kg.", price: "140",name:"bike" },
+    "Mini Auto.": { img: MiniAuto, weight: "45kg.", price: "180",name:"miniAuto"},
+    "E Loader.": { img: Eloader, weight: "400kg.", price: "260",name:"ELoader" },
+    "3 Wheeler.": { img: ThreeWheeler, weight: "550kg.", price: "350" ,name:"threeWheeler"},
+    "Mini Truck.": { img: MiniTruck, weight: "720kg.", price: "520" ,name:"miniTruck"}
+  };
+
+
+  const tabs = Object.keys(vehicleData);
+  const [activeTab, setActiveTab] = useState("2 Wheeler.");
+  const selected = vehicleData[activeTab];
+
+useEffect(() => {
+  let query = "";
+
+    if (activeInput === "pickup") query = pickup;
+    if (activeInput === "drop") query = drop;
+
+    if (!query) return;
+  
+  axios.get('http://localhost:4000/maps/getSuggestion', {
+    params: {
+      input: query
+    }
+  })
+  .then((response) => {
+    console.log(response.data);
+    setPredictions(response.data.results)
+    console.log(predictions)
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+}, [pickup,drop,activeInput]);
+
+//On Mouse Click Select The Predeiction
+
+const handleSelectPrediction = (item) => {
+  if (activeInput === "pickup") {
+    setPickup(`${item.name}, ${item.formatted_address}`);
+  } else if (activeInput === "drop") {
+    setDrop(`${item.name}, ${item.formatted_address}`);
+  }
+  setActiveInput(null);
+};
+
+const handleSubmit=async()=>{
+
+ const response=await axios.get(`https://thetest-h9x3.onrender.com/maps/get-fair-estimate`,{
+    params:{
+      origin:pickup,
+      destination:drop,
+      vehicle:"bike"
+    }
+  })
+
+  if(response)
+  {
+    console.log(response.data)
+    setFare(response.data.fare)
+  
+  }
+
+  
+ 
+
+}
+
+const handleRequestedRide=async()=>{
+  //Crete A From
+ const userPhone=localStorage.getItem('phone')
+ if(!userPhone)
+ {
+   alert('Please Login')
+ }else{
+     const formdata=new FormData();
+      formdata.append('name',name);
+      formdata.append('phone',phone);
+      formdata.append('pickup',pickup)
+      formdata.append('drop',drop);
+      formdata.append('userPhone',userPhone);
+      formdata.append('fare',fare)
+
+
+      for (const [key, value] of formdata.entries()) {
+        console.log(key, value);
+      }
+
+      // Sending Request For Ride Registration
+
+        const response = await axios.post(
+          'https://thetest-h9x3.onrender.com/ride/createRide',
+          formdata,
+          {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          }
+        );
+
+      if(response.data.success)
+      {
+        alert('Tour Ride Registered Successfully')
+        localStorage.setItem("ride",JSON.stringify(response.data.data))
+        navigate('/search/ride')
+      }
+      else{
+        console.log(response.error);
+      }
+ }
+
+}
+
+  return (
+    <>
+      <Navbar />
+
+      <div className="fare-container">
+        <div className="fare-body">
+
+          {/* LEFT CARD */}
+          <div className="fare-card">
+
+            <div className="fare-top">
+              <img src={selected.img} alt="vehicle" />
+            </div>
+
+            {!showSummary && (
+              <div className="fare-weight">
+                <img src={Weight} alt="" />
+                <p>{selected.weight}</p>
+              </div>
+            )}
+
+            <div className="fare-detail">
+
+              {showSummary && (
+                <div className="address-box">
+                  <p>Address Details</p>
+                  <div className="address-item">
+                    <span className="dot green"></span>
+                    <div className="address-content">
+                      <p className="label">Pickup Location</p>
+                      <p className="value">{pickup}</p>
+                    </div>
+                  </div>
+
+                  <div className="address-line"></div>
+
+                  <div className="address-item">
+                    <span className="dot red"></span>
+                    <div className="address-content">
+                      <p className="label">
+                        Drop Location
+                        <span className="name"> {name}</span>
+                        <span className="mid-dot">•</span>
+                        <span className="phone">{phone}</span>
+                      </p>
+
+                      <p className="value">{drop}</p>
+                    </div>
+                  </div>
+                </div>
+
+              )}
+
+              <h3>{activeTab}</h3>
+
+              {!showSummary && <p>Starting from</p>}
+
+              <h4>{fare?'₹'+fare +'/-':'₹'+selected.price+'/-'}</h4>
+
+              {showSummary && (
+                <p id="price-edit" onClick={() => {setShowSummary(false) ;setFare('')}}>
+                  Edit.
+                </p>
+              )}
+            </div>
+          </div>
+
+          <div className="fare-divider"></div>
+
+          {/* RIGHT SIDE */}
+          <div className="fare-right">
+
+            <div className="fare-tabs">
+              {tabs.map((t, i) => (
+                <p
+                  key={i}
+                  className={activeTab === t ? "active-tab" : ""}
+                  onClick={() => setActiveTab(t)}
+                >
+                  {t.replace(".", "")}
+                </p>
+              ))}
+            </div>
+
+            {!showSummary ? (
+              <>
+                <div className="fare-input-row">
+                  <img src={GreenCircle} alt="" />
+                  <input
+                    placeholder="Enter Pickup Location"
+                    value={pickup}
+                     onFocus={() => setActiveInput("pickup")}
+                     onBlur={() => setActiveInput(null)}
+                     onChange={(e) => setPickup(e.target.value)} 
+                     style={{position:"relative"}}
+                  />
+                </div>
+
+
+              {activeInput && (
+                      <div className="prediction-box">
+                        {predictions?.map((item) => (
+                          <div
+                            key={item.place_id}
+                            className="prediction"
+                            onMouseDown={() => handleSelectPrediction(item)}
+                          >
+                            <p className="place">{item.name}</p>
+                            <p className="address">{item.formatted_address}</p>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+
+                <div className="fare-input-row">
+                  <img src={Drop} alt="" />
+                  <input
+                    placeholder="Enter Drop Location"
+                    value={drop}
+                    onChange={(e) => setDrop(e.target.value)}
+                    onFocus={() => setActiveInput("drop")}
+                    onBlur={() => setActiveInput(null)}
+                  />
+                </div>
+
+                <div className="fare-input-extended">
+                  <div className="fare-input-row no-bg">
+                    <img src={PhoneNumber} alt="" />
+                    <input
+                      placeholder="Enter Phone Number"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                    />
+                  </div>
+
+                  <div className="right-toggle">
+                    <div
+                      className={`radio ${phoneType === "receiver" ? "active" : ""}`}
+                      onClick={() => setPhoneType("receiver")}
+                    >
+                      <span className="dot"></span> Receiver
+                    </div>
+                    <div
+                      className={`radio ${phoneType === "sender" ? "active" : ""}`}
+                      onClick={() => setPhoneType("sender")}
+                    >
+                      <span className="dot"></span> Sender
+                    </div>
+                  </div>
+                </div>
+
+                <div className="fare-input-extended">
+                  <div className="fare-input-row no-bg">
+                    <img src={Username} alt="" />
+                    <input
+                      placeholder="Enter Name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                    />
+                  </div>
+
+                  <div className="right-toggle">
+                    <div
+                      className={`radio ${nameType === "receiver" ? "active" : ""}`}
+                      onClick={() => setNameType("receiver")}
+                    >
+                      <span className="dot"></span> Receiver
+                    </div>
+                    <div
+                      className={`radio ${nameType === "sender" ? "active" : ""}`}
+                      onClick={() => setNameType("sender")}
+                    >
+                      <span className="dot"></span> Sender
+                    </div>
+                  </div>
+                </div>
+
+                <button
+                  className={`fare-submit ${isFormFilled ? "active" : "inactive"}`}
+                  disabled={!isFormFilled}
+                  onClick={() => {setShowSummary(true); handleSubmit() }}
+                >
+                  GET FARE ESTIMATE
+                </button>
+              </>
+            ) : (
+              <div className="fare-summary">
+
+                <div className="summary-row">
+                  <img src={GreenCircle} alt="" />
+                  <p>{pickup}</p>
+                </div>
+
+                <div className="summary-row">
+                  <img src={Drop} alt="" />
+                  <p>{drop}</p>
+                </div>
+
+                <div className="summary-row split">
+                  <div className="summary-left">
+                    <img src={PhoneNumber} alt="" />
+                    <p>{phone}</p>
+                  </div>
+                  <span className="tag">{phoneType}</span>
+                </div>
+
+                <div className="summary-row split">
+                  <div className="summary-left">
+                    <img src={Username} alt="" />
+                    <p>{name}</p>
+                  </div>
+                  <span className="tag">{nameType}</span>
+                </div>
+
+                <button className="fare-submit active" onClick={handleRequestedRide}>
+                  BOOK NOW
+                </button>
+              </div>
+            )}
+
+          </div>
+        </div>
+      </div>
+
+      <Footer />
+    </>
+  );
+};
+
+export default FareLink;

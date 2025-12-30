@@ -1,0 +1,116 @@
+/* ========================= */
+/*      MAIN SECTION         */
+/* ========================= */
+
+.service-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 50px 4%;   
+    gap: 40px;
+    overflow: hidden;
+    flex-wrap: nowrap;          /* keep boxes in one line on desktop */
+}
+
+.service-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.service-box img {
+    height: 110px;
+    width: auto;
+    object-fit: contain;
+}
+
+.service-box h2 {
+    font-size: 60px;
+    line-height: 0.8;
+    color: #898989;
+}
+
+.service-box p {
+    font-size: 25px;
+    color: #898989;
+    margin-right: 25%;
+}
+
+
+/* ========================= */
+/*      RESPONSIVE CSS       */
+/* ========================= */
+
+/* -------- Tablets (1024px ↓) -------- */
+@media (max-width: 1024px) {
+    .service-container {
+        padding: 50px 40px;
+        gap: 30px;
+    }
+
+    .service-box h2 {
+        font-size: 45px;
+    }
+
+    .service-box p {
+        font-size: 26px;
+    }
+
+    .service-box {
+        width: 32%;
+    }
+}
+
+
+/* -------- Large Mobile (768px ↓) -------- */
+@media (max-width: 768px) {
+    .service-container {
+        flex-direction: column;   /* stack */
+        padding: 40px 20px;
+        gap: 50px;
+        text-align: left;
+    }
+
+    .service-box {
+        width: 100%;             /* full width */
+        align-items: left;
+    }
+
+    .service-box img {
+        height: 80px;
+    }
+
+    .service-box h2 {
+        font-size: 40px;
+    }
+
+    .service-box p {
+        font-size: 22px;
+        width: 90%;
+        text-align: left;
+    }
+}
+
+
+/* -------- Small Mobile (480px ↓) -------- */
+@media (max-width: 480px) {
+    .service-container {
+        padding: 30px 20px;
+        gap: 40px;
+    }
+
+    .service-box img {
+        height: 60px;
+    }
+
+    .service-box h2 {
+        font-size: 32px;
+    }
+
+    .service-box p {
+        font-size: 18px;
+        width: 100%;
+    }
+}
