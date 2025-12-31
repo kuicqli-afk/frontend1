@@ -439,7 +439,7 @@ const FareLink = () => {
 
                   <button
                     className="fare-submit active"
-                    onClick={() => setIsSearching(true)}
+                    onClick={() => handleRequestedRide()}
                   >
                     Book Now
                   </button>
