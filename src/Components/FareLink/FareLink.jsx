@@ -1,8 +1,10 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./FareLink.css";
 import axios from 'axios'
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
+
+import SLIDER from "../../assets/SLIDER.png"
 
 import TwoWheeler from "../../assets/2wheeler.png";
 import MiniAuto from "../../assets/MiniAuto.png";
@@ -18,21 +20,27 @@ import Username from "../../assets/username.png";
 import { useNavigate } from "react-router-dom";
 
 const FareLink = () => {
+
   const [pickup, setPickup] = useState("");
   const [drop, setDrop] = useState("");
   const [phone, setPhone] = useState("");
   const [name, setName] = useState("");
-  const [predictions,setPredictions]=useState();
-  const [fare,setFare]=useState()
+
+  const [fare, setFare] = useState();
   const [activeInput, setActiveInput] = useState(null);
-   const [activeInput2, setActiveInput2] = useState(null);
+
   const [phoneType, setPhoneType] = useState("receiver");
   const [nameType, setNameType] = useState("receiver");
+
   const [showSummary, setShowSummary] = useState(false);
+  const [isSearching, setIsSearching] = useState(false);
+
   const [pickupPredictions, setPickupPredictions] = useState([]);
   const [dropPredictions, setDropPredictions] = useState([]);
 
-  const navigate=useNavigate();
+
+
+  const navigate = useNavigate();
 
   const isFormFilled =
     pickup.trim() &&
@@ -41,11 +49,11 @@ const FareLink = () => {
     name.trim();
 
   const vehicleData = {
-    "2 Wheeler.": { img: TwoWheeler, weight: "18kg.", price: "140",name:"bike" },
-    "Mini Auto.": { img: MiniAuto, weight: "45kg.", price: "180",name:"miniAuto"},
-    "E Loader.": { img: Eloader, weight: "400kg.", price: "260",name:"ELoader" },
-    "3 Wheeler.": { img: ThreeWheeler, weight: "550kg.", price: "350" ,name:"threeWheeler"},
-    "Mini Truck.": { img: MiniTruck, weight: "720kg.", price: "520" ,name:"miniTruck"}
+    "2 Wheeler.": { img: TwoWheeler, weight: "18kg.", price: "140", name: "bike" },
+    "Mini Auto.": { img: MiniAuto, weight: "45kg.", price: "180", name: "miniAuto" },
+    "E Loader.": { img: Eloader, weight: "400kg.", price: "260", name: "ELoader" },
+    "3 Wheeler.": { img: ThreeWheeler, weight: "550kg.", price: "350", name: "threeWheeler" },
+    "Mini Truck.": { img: MiniTruck, weight: "720kg.", price: "520", name: "miniTruck" }
   };
 
 
@@ -53,77 +61,80 @@ const FareLink = () => {
   const [activeTab, setActiveTab] = useState("2 Wheeler.");
   const selected = vehicleData[activeTab];
 
-useEffect(() => {
-  let query = "";
+  useEffect(() => {
+    let query = "";
 
     if (activeInput === "pickup") query = pickup;
     if (activeInput === "drop") query = drop;
 
     if (!query) return;
-  
-  axios.get('https://thetest-h9x3.onrender.com/maps/getSuggestion', {
-    params: {
-      input: query
+
+    axios.get('https://thetest-h9x3.onrender.com/maps/getSuggestion', {
+      params: {
+        input: query
+      }
+    })
+      .then((response) => {
+        console.log(response.data);
+        setPredictions(response.data.results)
+        console.log(predictions)
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [pickup, drop, activeInput]);
+
+  //On Mouse Click Select The Predeiction
+
+  const handleSelectPrediction = (item) => {
+    if (activeInput === "pickup") {
+      setPickup(item.formatted_address);
+      setPickupPredictions([]);
     }
-  })
-  .then((response) => {
-    console.log(response.data);
-    setPredictions(response.data.results)
-    console.log(predictions)
-  })
-  .catch((error) => {
-    console.error(error);
-  });
-}, [pickup,drop,activeInput]);
 
-//On Mouse Click Select The Predeiction
-
-const handleSelectPrediction = (item) => {
-  if (activeInput === "pickup") {
-    setPickup(`${item.name}, ${item.formatted_address}`);
-  } else if (activeInput === "drop") {
-    setDrop(`${item.name}, ${item.formatted_address}`);
-  }
-  setActiveInput(null);
-};
-
-const handleSubmit=async()=>{
-
- const response=await axios.get(`https://thetest-h9x3.onrender.com/maps/get-fair-estimate`,{
-    params:{
-      origin:pickup,
-      destination:drop,
-      vehicle:"bike"
+    if (activeInput === "drop") {
+      setDrop(item.formatted_address);
+      setDropPredictions([]);
     }
-  })
 
-  if(response)
-  {
-    console.log(response.data)
-    setFare(response.data.fare)
-  
+    setActiveInput(null);
+  };
+
+  const handleSubmit = async () => {
+
+    const response = await axios.get('https://thetest-h9x3.onrender.com/maps/get-fair-estimate', {
+      params: {
+        origin: pickup,
+        destination: drop,
+        vehicle: "bike"
+      }
+    })
+
+    if (response) {
+      console.log(response.data)
+      setFare(response.data.fare)
+
+    }
+
+
+
+
   }
 
-  
- 
-
-}
-
-const handleRequestedRide=async()=>{
-  //Crete A From
- const userPhone=localStorage.getItem('phone')
- if(!userPhone)
- {
-   alert('Please Login')
-   navigate('/user-login')
- }else{
-     const formdata=new FormData();
-      formdata.append('name',name);
-      formdata.append('phone',phone);
-      formdata.append('pickup',pickup)
-      formdata.append('drop',drop);
-      formdata.append('userPhone',userPhone);
-      formdata.append('fare',fare)
+  const handleRequestedRide = async () => {
+    //Crete A From
+    const userPhone = localStorage.getItem('phone')
+    if (!userPhone) {
+      alert('Please Login')
+       navigate('/user-login')
+    } else {
+      const formdata = new FormData();
+      formdata.append('name', name);
+      formdata.append('phone', phone);
+      formdata.append('pickup', pickup)
+      formdata.append('drop', drop);
+      formdata.append('userPhone', userPhone);
+      formdata.append('fare', fare)
 
 
       for (const [key, value] of formdata.entries()) {
@@ -132,28 +143,63 @@ const handleRequestedRide=async()=>{
 
       // Sending Request For Ride Registration
 
-        const response = await axios.post(
-          'https://thetest-h9x3.onrender.com/ride/createRide',
-          formdata,
-          {
-            headers: {
-              'Content-Type': 'application/json'
-            }
+      const response = await axios.post(
+        'https://thetest-h9x3.onrender.com/ride/createRide',
+        formdata,
+        {
+          headers: {
+            'Content-Type': 'application/json'
           }
-        );
+        }
+      );
 
-      if(response.data.success)
-      {
+      if (response.data.success) {
         alert('Tour Ride Registered Successfully')
-        localStorage.setItem("ride",JSON.stringify(response.data.data))
+        localStorage.setItem("ride", JSON.stringify(response.data.data))
         navigate('/search/ride')
       }
-      else{
+      else {
         console.log(response.error);
       }
- }
+    }
 
-}
+  }
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (!e.target.closest(".fare-input-row")) {
+        setActiveInput(null);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () =>
+      document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  useEffect(() => {
+    let query = "";
+    let setter = null;
+
+    if (activeInput === "pickup") {
+      query = pickup;
+      setter = setPickupPredictions;
+    }
+
+    if (activeInput === "drop") {
+      query = drop;
+      setter = setDropPredictions;
+    }
+
+    if (!query) return;
+
+    axios
+      .get("https://thetest-h9x3.onrender.com/maps/getSuggestion", {
+        params: { input: query }
+      })
+      .then((res) => setter(res.data.results || []))
+      .catch(console.error);
+  }, [pickup, drop, activeInput]);
 
   return (
     <>
@@ -212,10 +258,10 @@ const handleRequestedRide=async()=>{
 
               {!showSummary && <p>Starting from</p>}
 
-              <h4>{fare?'₹'+fare +'/-':'₹'+selected.price+'/-'}</h4>
+              <h4>{fare ? '₹' + fare + '/-' : '₹' + selected.price + '/-'}</h4>
 
               {showSummary && (
-                <p id="price-edit" onClick={() => {setShowSummary(false) ;setFare('')}}>
+                <p id="price-edit" onClick={() => { setShowSummary(false); setFare('') }}>
                   Edit.
                 </p>
               )}
@@ -243,7 +289,8 @@ const handleRequestedRide=async()=>{
               <>
                 <div className="fare-input-row">
                   <img src={GreenCircle} alt="" />
-                                   <input
+
+                  <input
                     placeholder="Enter Pickup Location"
                     value={pickup}
                     onFocus={() => setActiveInput("pickup")}
@@ -299,6 +346,7 @@ const handleRequestedRide=async()=>{
                   )}
                 </div>
 
+
                 <div className="fare-input-extended">
                   <div className="fare-input-row no-bg">
                     <img src={PhoneNumber} alt="" />
@@ -311,13 +359,13 @@ const handleRequestedRide=async()=>{
 
                   <div className="right-toggle">
                     <div
-                      className={`radio ${phoneType === "receiver" ? "active" : ""}`}
+                      className={radio ${phoneType === "receiver" ? "active" : ""}}
                       onClick={() => setPhoneType("receiver")}
                     >
                       <span className="dot"></span> Receiver
                     </div>
                     <div
-                      className={`radio ${phoneType === "sender" ? "active" : ""}`}
+                      className={radio ${phoneType === "sender" ? "active" : ""}}
                       onClick={() => setPhoneType("sender")}
                     >
                       <span className="dot"></span> Sender
@@ -354,49 +402,52 @@ const handleRequestedRide=async()=>{
                 <button
                   className={`fare-submit ${isFormFilled ? "active" : "inactive"}`}
                   disabled={!isFormFilled}
-                  onClick={() => {setShowSummary(true); handleSubmit() }}
+                  onClick={() => { setShowSummary(true); handleSubmit() }}
                 >
                   GET FARE ESTIMATE
                 </button>
               </>
             ) : (
-              <div className="fare-summary">
+                /* ================= SUMMARY SCREEN ================= */
+                <div className="fare-summary">
 
-                <div className="summary-row">
-                  <img src={GreenCircle} alt="" />
-                  <p>{pickup}</p>
-                </div>
-
-                <div className="summary-row">
-                  <img src={Drop} alt="" />
-                  <p>{drop}</p>
-                </div>
-
-                <div className="summary-row split">
-                  <div className="summary-left">
-                    <img src={PhoneNumber} alt="" />
-                    <p>{phone}</p>
+                  <div className="summary-row">
+                    <img src={GreenCircle} alt="" />
+                    <input value={pickup} readOnly />
                   </div>
-                  <span className="tag">{phoneType}</span>
-                </div>
 
-                <div className="summary-row split">
-                  <div className="summary-left">
-                    <img src={Username} alt="" />
-                    <p>{name}</p>
+                  <div className="summary-row">
+                    <img src={Drop} alt="" />
+                    <input value={drop} readOnly />
                   </div>
-                  <span className="tag">{nameType}</span>
-                </div>
 
-                <button className="fare-submit active" onClick={handleRequestedRide}>
-                  BOOK NOW
-                </button>
-              </div>
+                  <div className="summary-row split">
+                    <div className="summary-left">
+                      <img src={PhoneNumber} alt="" />
+                      <input value={phone} readOnly />
+                    </div>
+                    <span className="tag">{phoneType}</span>
+                  </div>
+
+                  <div className="summary-row split">
+                    <div className="summary-left">
+                      <img src={Username} alt="" />
+                      <input value={name} readOnly />
+                    </div>
+                    <span className="tag">{nameType}</span>
+                  </div>
+
+                  <button
+                    className="fare-submit active"
+                    onClick={() => setIsSearching(true)}
+                  >
+                    Book Now
+                  </button>
+                </div>
             )}
-
           </div>
         </div>
-      </div>
+      </div >
 
       <Footer />
     </>
