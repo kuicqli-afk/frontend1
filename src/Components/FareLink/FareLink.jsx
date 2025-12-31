@@ -402,7 +402,7 @@ const FareLink = () => {
                 </div>
 
                 <button
-                  className={fare-submit ${isFormFilled ? "active" : "inactive"}}
+                  className={`fare-submit ${isFormFilled ? "active" : "inactive"}`}
                   disabled={!isFormFilled}
                   onClick={() => { setShowSummary(true); handleSubmit() }}
                 >
