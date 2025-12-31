@@ -25,7 +25,7 @@ const FareLink = () => {
   const [predictions,setPredictions]=useState();
   const [fare,setFare]=useState()
   const [activeInput, setActiveInput] = useState(null);
-  const [activeInput, setActiveInput] = useState(null);
+  const [activeInput2, setActiveInput2] = useState(null);
   const [phoneType, setPhoneType] = useState("receiver");
   const [nameType, setNameType] = useState("receiver");
   const [showSummary, setShowSummary] = useState(false);
