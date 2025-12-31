@@ -29,6 +29,8 @@ const FareLink = () => {
   const [phoneType, setPhoneType] = useState("receiver");
   const [nameType, setNameType] = useState("receiver");
   const [showSummary, setShowSummary] = useState(false);
+  const [pickupPredictions, setPickupPredictions] = useState([]);
+  const [dropPredictions, setDropPredictions] = useState([]);
 
   const navigate=useNavigate();
 
