@@ -360,14 +360,13 @@ const FareLink = () => {
 
                   <div className="right-toggle">
                     <div
-                      className=className={phoneType === "receiver" ? "radio active" : "radio"}
-
+                      className={radio ${phoneType === "receiver" ? "active" : ""}}
                       onClick={() => setPhoneType("receiver")}
                     >
                       <span className="dot"></span> Receiver
                     </div>
                     <div
-                      className={phoneType === "sender" ? "radio active" : "radio"}
+                      className={radio ${phoneType === "sender" ? "active" : ""}}
                       onClick={() => setPhoneType("sender")}
                     >
                       <span className="dot"></span> Sender
@@ -494,6 +493,7 @@ const FareLink = () => {
       </div >
 
       <Footer />
+    
     </>
   );
 };
