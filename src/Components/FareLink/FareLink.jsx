@@ -387,13 +387,13 @@ const FareLink = () => {
 
                   <div className="right-toggle">
                     <div
-                      className={radio ${nameType === "receiver" ? "active" : ""}}
+                     className={`radio ${nameType === "receiver" ? "active" : ""}`}
                       onClick={() => setNameType("receiver")}
                     >
                       <span className="dot"></span> Receiver
                     </div>
                     <div
-                      className={radio ${nameType === "sender" ? "active" : ""}}
+                      className={`radio ${nameType === "sender" ? "active" : ""}`}
                       onClick={() => setNameType("sender")}
                     >
                       <span className="dot"></span> Sender
