@@ -106,7 +106,7 @@ const FareLink = () => {
       params: {
         origin: pickup,
         destination: drop,
-        vehicle: "bike"
+        vehicle: selected
       }
     })
 
