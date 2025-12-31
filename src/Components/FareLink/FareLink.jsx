@@ -365,7 +365,7 @@ const FareLink = () => {
                       <span className="dot"></span> Receiver
                     </div>
                     <div
-                      className={radio ${phoneType === "sender" ? "active" : ""}}
+                      className={`radio ${phoneType === "sender" ? "active" : ""}`}
                       onClick={() => setPhoneType("sender")}
                     >
                       <span className="dot"></span> Sender
