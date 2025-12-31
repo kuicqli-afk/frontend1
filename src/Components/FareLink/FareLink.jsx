@@ -58,7 +58,7 @@ useEffect(() => {
 
     if (!query) return;
   
-  axios.get('http://localhost:4000/maps/getSuggestion', {
+  axios.get('https://thetest-h9x3.onrender.com/maps/getSuggestion', {
     params: {
       input: query
     }
