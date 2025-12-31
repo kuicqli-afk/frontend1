@@ -60,7 +60,7 @@
     justify-content: center;
     gap: 10px;
     color: #A1A1A1;
-    padding: 0 0px;
+    padding: 0 20px;
 }
 
 .fare-detail h3 {
@@ -118,7 +118,6 @@
     background: #f5f7fa;
     padding: 12px 14px;
     border-radius: 10px;
-    position: relative;
 }
 
 .fare-input-row input::placeholder {
@@ -192,11 +191,10 @@
 .fare-input-extended {
     display: flex;
     align-items: center;
-    gap: 10px;
+    justify-content: space-between;
     background: #f5f7fa;
     padding: 12px 14px;
     border-radius: 10px;
-    position: relative;
 }
 
 /* REMOVE DOUBLE BACKGROUND */
@@ -218,15 +216,13 @@
 .radio {
     display: flex;
     align-items: center;
-    justify-content: center;
     gap: 6px;
-    font-size: 12px;
+    font-size: 13px;
     color: #888;
     cursor: pointer;
 }
 
 .radio .dot {
-    margin-bottom: 5px;
     width: 13px;
     height: 13px;
     border-radius: 50%;
@@ -244,7 +240,7 @@
 }
 
 .address-box {
-    /* margin-top: 10px; */
+    margin-top: 10px;
     position: relative;
 }
 
@@ -252,7 +248,7 @@
     font-size: 15px;
     font-weight: 600;
     color: black;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 
 /* ADDRESS ROW */
@@ -338,7 +334,7 @@
 
 
 #price-edit {
-    font-size: 12px;
+    font-size: 20px;
     color: #0000E6;
     font-weight: 600;
     cursor: pointer;
@@ -347,18 +343,18 @@
 .fare-summary {
     display: flex;
     flex-direction: column;
-    gap: 18px;
-    max-width: 550px;
+    gap: 16px;
+    max-width: 600px;
 }
 
 .summary-row {
     display: flex;
     align-items: center;
-    gap: 10px;
-    background: #f5f7fa;
-    padding: 12px 14px;
-    border-radius: 10px;
-    position: relative;
+    font-size: 14px;
+    gap: 12px;
+    background: rgb(246, 247, 249);
+    padding: 14px;
+    border-radius: 12px;
 }
 
 .summary-left {
@@ -368,25 +364,9 @@
 }
 
 .summary-row img {
-    width: 15px;
-    height: 15px;
-    object-fit: contain;
-}
-
-.summary-row input {
-    flex: 1;
-    border: none;
-    outline: none;
-    background: transparent;
-    font-size: 15px;
-    color: #222;
-    pointer-events: none;
-}
-
-.summary-row.split {
-    justify-content: space-between;
-    padding: 14px 14px;
-    padding-right: 10%;
+    width: 18px;
+    height: auto;
+    opacity: 0.7;
 }
 
 .tag {
@@ -394,238 +374,39 @@
     color: #888;
     text-transform: capitalize;
 }
+.prediction-box{
+    display: flex;
+    flex-direction: column;
+    padding: 2px;
+    margin-left: 10px;
+    /* border-radius: 10px; */
+    width:500px;
+    height:200px;
+    overflow-y: scroll;
+    background:white;
+  
+    position:absolute;
+     top:46%;
+    /* box-shadow:2px 2px 5px gray ; */
+    z-index:2;
+    font-size: small;
 
-.prediction-box {
-    position: absolute;
-    top: calc(100% + 6px);
-    /* directly below input */
-    left: 0;
-
-    width: 100%;
-    max-width: 520px;
-    max-height: 220px;
-
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-
-    overflow-y: auto;
-    z-index: 9999;
-
-    font-size: 13px;
+   
+   
 }
-
-/* Prediction row */
-.prediction {
-    padding: 12px 14px;
-    cursor: pointer;
-    border-bottom: 1px solid #eee;
-}
-
-.prediction:hover {
-    background: #eef4ff;
-}
-
-/* Place name */
-.place {
-    font-size: 13px;
+.place{
+    font-size: small;
     font-weight: 600;
-    color: #111;
-    margin-bottom: 2px;
+   
 }
-
-/* Address */
-.prediction .address {
-    font-size: 12px;
-    color: #666;
-}
-
-
-
-/* ================= SEARCHING DRIVER SCREEN ================= */
-
-.searching-driver-wrapper {
-    display: flex;
-    width: 100%;
-    min-height: 500px;
-    background: #fff;
-    border-radius: 20px;
-    overflow: hidden;
-}
-
-.searching-left {
-    width: 30%;
-    padding: 30px;
-    border-right: 1px dashed #ddd;
-}
-
-.trip-id {
-    font-size: 14px;
-    color: #666;
-}
-
-.vehicle-icon {
-    width: 120px;
-    margin: 20px 0;
-}
-
-.address-block p {
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.green-dot,
-.red-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-}
-
-.green-dot {
-    background: green;
-}
-
-.red-dot {
-    background: red;
-}
-
-.searching-left h2 {
-    font-size: 32px;
-    margin-top: 10px;
-}
-
-.action-links {
-    margin-top: 20px;
-    display: flex;
-    gap: 20px;
-    font-size: 14px;
-}
-
-.action-links .cancel {
-    color: red;
+.prediction{
+    margin: 5px;
+    padding: 10px;
+   
+   
     cursor: pointer;
+      border-bottom: 1px rgb(209, 207, 207) solid;
 }
-
-/* ================= RIGHT ================= */
-
-.searching-right {
-    width: 70%;
-    padding: 30px;
-}
-
-.searching-right h1 {
-    font-size: 28px;
-    color: #1a2cff;
-}
-
-.map-container {
-    position: relative;
-    height: 300px;
-    margin-top: 20px;
-    background: #eaeaea;
-    border-radius: 16px;
-    overflow: hidden;
-}
-
-.map-overlay {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-/* ================= PROGRESS ================= */
-
-.search-progress {
-    width: 100%;
-    height: 10px;
-    background: #eee;
-    border-radius: 50px;
-    margin-top: 25px;
-}
-
-.progress-fill {
-    width: 35%;
-    height: 100%;
-    background: #1a2cff;
-    border-radius: 50px;
-    animation: loading 2s infinite;
-}
-
-@keyframes loading {
-    0% {
-        width: 10%;
-    }
-
-    50% {
-        width: 60%;
-    }
-
-    100% {
-        width: 10%;
-    }
-}
-
-/* ===== SUMMARY ACTIONS ===== */
-.summary-actions {
-  display: flex;
-  gap: 16px;
-}
-
-.view-detail {
-  cursor: pointer;
-  color: #2563eb;
-  font-weight: 600;
-}
-
-/* ===== FULL SCREEN POPUP ===== */
-.detail-popup-overlay {
-  position: fixed;
-  inset: 0;
-  background: #ffffff;
-  z-index: 9999;
-  display: flex;
-  flex-direction: column;
-}
-
-.detail-popup {
-  width: 100%;
-  height: 100%;
-  padding: 20px;
-}
-
-/* HEADER */
-.detail-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  border-bottom: 1px solid #e5e7eb;
-  padding-bottom: 12px;
-}
-
-.back-arrow {
-  font-size: 24px;
-  cursor: pointer;
-}
-
-.detail-header h3 {
-  font-size: 18px;
-  font-weight: 600;
-}
-
-/* CONTENT */
-.detail-content {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.detail-row {
-  display: flex;
-  justify-content: space-between;
-  font-size: 14px;
+.prediction:hover{
+    background-color: #d6e4ff;
 }
