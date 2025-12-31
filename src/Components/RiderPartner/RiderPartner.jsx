@@ -16,7 +16,7 @@ import TwoWheeler from "../../assets/2wheelernew.png";
 import MiniAuto from "../../assets/miniautonew.png";
 import Eloader from "../../assets/Eloadernew.png";
 import ThreeWheeler from "../../assets/3wheelernew.png";
-import MiniTruck from "../../assets/minitrucknew.png";
+import MiniTruck from "../../assets/Minitrucknew.png";
 
 import Profile from '../../assets/greencircle.png';
 import Number from '../../assets/Drop.png';
