@@ -4,7 +4,7 @@ import "./Navbar.css";
 import Logo from "../../assets/Logo.png";
 import Address from "../../assets/Address.png";
 import Marchentpartner from "../../assets/Marchentpartner.png";
-import Rider from "../../assets/Rider.png";
+import Rider from "../../assets/RIDER.png";
 import support from "../../assets/support.png";
 import signup from "../../assets/signup.png";
 import Rupee from "../../assets/rupee.png";
