@@ -25,6 +25,7 @@ const FareLink = () => {
   const [predictions,setPredictions]=useState();
   const [fare,setFare]=useState()
   const [activeInput, setActiveInput] = useState(null);
+  const [activeInput, setActiveInput] = useState(null);
   const [phoneType, setPhoneType] = useState("receiver");
   const [nameType, setNameType] = useState("receiver");
   const [showSummary, setShowSummary] = useState(false);
@@ -273,10 +274,25 @@ const handleRequestedRide=async()=>{
                     placeholder="Enter Drop Location"
                     value={drop}
                     onChange={(e) => setDrop(e.target.value)}
-                    onFocus={() => setActiveInput("drop")}
-                    onBlur={() => setActiveInput(null)}
+                    onFocus={() => setActiveInput2("drop")}
+                    onBlur={() => setActiveInput2(null)}
                   />
                 </div>
+
+                {activeInput2 && (
+                      <div className="prediction-box" style={{top:"475px"}}>
+                        {predictions?.map((item) => (
+                          <div
+                            key={item.place_id}
+                            className="prediction"
+                            onMouseDown={() => handleSelectPrediction(item)}
+                          >
+                            <p className="place">{item.name}</p>
+                            <p className="address">{item.formatted_address}</p>
+                          </div>
+                        ))}
+                      </div>
+                    )}
 
                 <div className="fare-input-extended">
                   <div className="fare-input-row no-bg">
