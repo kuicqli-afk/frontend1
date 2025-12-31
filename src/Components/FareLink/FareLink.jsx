@@ -241,58 +241,61 @@ const handleRequestedRide=async()=>{
               <>
                 <div className="fare-input-row">
                   <img src={GreenCircle} alt="" />
-                  <input
+                                   <input
                     placeholder="Enter Pickup Location"
                     value={pickup}
-                     onFocus={() => setActiveInput("pickup")}
-                     onBlur={() => setActiveInput(null)}
-                     onChange={(e) => setPickup(e.target.value)} 
-                     style={{position:"relative"}}
+                    onFocus={() => setActiveInput("pickup")}
+                    onChange={(e) => setPickup(e.target.value)}
                   />
+
+                  {activeInput === "pickup" && (
+                    <div
+                      className="prediction-box"
+                      onMouseDown={(e) => e.stopPropagation()}
+                    >
+                      {pickupPredictions.map((item) => (
+                        <div
+                          key={item.place_id}
+                          className="prediction"
+                          onMouseDown={() => handleSelectPrediction(item)}
+                        >
+                          <p className="place">{item.name}</p>
+                          <p className="address">{item.formatted_address}</p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
-
-              {activeInput && (
-                      <div className="prediction-box">
-                        {predictions?.map((item) => (
-                          <div
-                            key={item.place_id}
-                            className="prediction"
-                            onMouseDown={() => handleSelectPrediction(item)}
-                          >
-                            <p className="place">{item.name}</p>
-                            <p className="address">{item.formatted_address}</p>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-
-
+                {/* DROP */}
                 <div className="fare-input-row">
                   <img src={Drop} alt="" />
+
                   <input
                     placeholder="Enter Drop Location"
                     value={drop}
+                    onFocus={() => setActiveInput("drop")}
                     onChange={(e) => setDrop(e.target.value)}
-                    onFocus={() => setActiveInput2("drop")}
-                    onBlur={() => setActiveInput2(null)}
                   />
-                </div>
 
-                {activeInput2 && (
-                      <div className="prediction-box" style={{top:"475px"}}>
-                        {predictions?.map((item) => (
-                          <div
-                            key={item.place_id}
-                            className="prediction"
-                            onMouseDown={() => handleSelectPrediction(item)}
-                          >
-                            <p className="place">{item.name}</p>
-                            <p className="address">{item.formatted_address}</p>
-                          </div>
-                        ))}
-                      </div>
-                    )}
+                  {activeInput === "drop" && (
+                    <div
+                      className="prediction-box"
+                      onMouseDown={(e) => e.stopPropagation()}
+                    >
+                      {dropPredictions.map((item) => (
+                        <div
+                          key={item.place_id}
+                          className="prediction"
+                          onMouseDown={() => handleSelectPrediction(item)}
+                        >
+                          <p className="place">{item.name}</p>
+                          <p className="address">{item.formatted_address}</p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
 
                 <div className="fare-input-extended">
                   <div className="fare-input-row no-bg">
