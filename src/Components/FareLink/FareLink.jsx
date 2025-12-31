@@ -112,6 +112,7 @@ const handleRequestedRide=async()=>{
  if(!userPhone)
  {
    alert('Please Login')
+   navigate('/user-login')
  }else{
      const formdata=new FormData();
       formdata.append('name',name);
