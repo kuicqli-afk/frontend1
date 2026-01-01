@@ -132,11 +132,11 @@
     transition: transform 0.3s ease;
 }
 
-.fare-link:hover img {
+.vehicle-card:hover .fare-link img {
     animation: bounceRight 0.6s ease;
 }
 
-.fare-link:hover {
+.vehicle-card:hover .fare-link {
     background-color: #f6f6f680;
 }
 

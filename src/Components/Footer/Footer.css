@@ -21,6 +21,18 @@
   text-decoration: underline;
 }
 
+.footer-container a {
+  color: #ffffff;         
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.check-fare-links a {
+  color: #ffffff;
+}
+
+
+
 /* ===============================
    LEFT COLUMN
 =============================== */

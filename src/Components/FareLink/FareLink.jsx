@@ -17,7 +17,7 @@ import GreenCircle from "../../assets/greencircle.png";
 import Drop from "../../assets/Drop.png";
 import PhoneNumber from "../../assets/phonenumber.png";
 import Username from "../../assets/username.png";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const FareLink = () => {
 
@@ -38,6 +38,7 @@ const FareLink = () => {
   const [pickupPredictions, setPickupPredictions] = useState([]);
   const [dropPredictions, setDropPredictions] = useState([]);
 
+  const [showViewDetail, setShowViewDetail] = useState(false);
 
 
   const navigate = useNavigate();
@@ -60,6 +61,31 @@ const FareLink = () => {
   const tabs = Object.keys(vehicleData);
   const [activeTab, setActiveTab] = useState("2 Wheeler.");
   const selected = vehicleData[activeTab];
+  const location = useLocation();
+
+  useEffect(() => {
+    // 🔹 Scroll page to top
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+
+    // 🔹 Auto select vehicle from Footer
+    if (location.state?.vehicle) {
+      const map = {
+        "2-wheeler": "2 Wheeler.",
+        "mini-auto": "Mini Auto.",
+        "e-loader": "E Loader.",
+        "3-wheeler": "3 Wheeler.",
+        "mini-truck": "Mini Truck."
+      };
+
+      const tab = map[location.state.vehicle];
+      if (tab) setActiveTab(tab);
+    }
+  }, [location.state]);
+
+
 
   useEffect(() => {
     let query = "";
@@ -126,7 +152,7 @@ const FareLink = () => {
     const userPhone = localStorage.getItem('phone')
     if (!userPhone) {
       alert('Please Login')
-       navigate('/user-login')
+      navigate('/user-login')
     } else {
       const formdata = new FormData();
       formdata.append('name', name);
@@ -261,10 +287,100 @@ const FareLink = () => {
               <h4>{fare ? '₹' + fare + '/-' : '₹' + selected.price + '/-'}</h4>
 
               {showSummary && (
-                <p id="price-edit" onClick={() => { setShowSummary(false); setFare('') }}>
-                  Edit.
-                </p>
+                <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
+                  <p
+                    id="price-edit"
+                    onClick={() => {
+                      setShowSummary(false);
+                      setFare("");
+                    }}
+                  >
+                    Edit.
+                  </p>
+
+                  <p
+                    id="price-edit"
+                    onClick={() => setShowViewDetail(true)}
+                  >
+                    View Detail.
+                  </p>
+                </div>
               )}
+
+
+              {showViewDetail && (
+                <div className="view-detail-overlay">
+                  <div className="view-detail-modal">
+
+                    {/* CLOSE */}
+                    <span
+                      className="view-detail-close"
+                      onClick={() => setShowViewDetail(false)}
+                    >
+                      ✕
+                    </span>
+
+
+                    <div className="view-detail-body">
+
+                      {/* LEFT */}
+                      <div className="view-left">
+                        <img src={selected.img} alt="vehicle" />
+                        <h4>{activeTab}</h4>
+                        <h2>₹{fare || selected.price}/-</h2>
+                      </div>
+
+                      <div className="view-divider"></div>
+
+                      {/* RIGHT */}
+                      <div className="view-right">
+                        <h3>View Detail.</h3>
+                        {/* Pickup */}
+                        <div className="info-block">
+                          <h5>Pickup Location</h5>
+                          <p>
+                            <img src={GreenCircle} alt="" />
+                            <span className="text">{pickup}</span>
+                          </p>
+                        </div>
+
+                        {/* Drop */}
+                        <div className="info-block">
+                          <h5>Drop Location</h5>
+                          <p>
+                            <img src={Drop} alt="" />
+                            <span className="text">{drop}</span>
+                          </p>
+                        </div>
+
+                        {/* Phone */}
+                        <div className="info-block meta-row">
+                          <p>
+                            <img src={PhoneNumber} alt="" />
+                            <span className="text">+91 {phone}</span>
+                          </p>
+                          <span className="meta-label receiver">Receiver</span>
+                        </div>
+
+                        {/* Name */}
+                        <div className="info-block meta-row">
+                          <p>
+                            <img src={Username} alt="" />
+                            <span className="text">{name}</span>
+                          </p>
+                          <span className="meta-label receiver">Receiver</span>
+                        </div>
+
+                        <button className="view-book-btn" onClick={handleRequestedRide}>
+                          BOOK NOW
+                        </button>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              )}
+
             </div>
           </div>
 
@@ -408,42 +524,42 @@ const FareLink = () => {
                 </button>
               </>
             ) : (
-                /* ================= SUMMARY SCREEN ================= */
-                <div className="fare-summary">
+              /* ================= SUMMARY SCREEN ================= */
+              <div className="fare-summary">
 
-                  <div className="summary-row">
-                    <img src={GreenCircle} alt="" />
-                    <input value={pickup} readOnly />
-                  </div>
-
-                  <div className="summary-row">
-                    <img src={Drop} alt="" />
-                    <input value={drop} readOnly />
-                  </div>
-
-                  <div className="summary-row split">
-                    <div className="summary-left">
-                      <img src={PhoneNumber} alt="" />
-                      <input value={phone} readOnly />
-                    </div>
-                    <span className="tag">{phoneType}</span>
-                  </div>
-
-                  <div className="summary-row split">
-                    <div className="summary-left">
-                      <img src={Username} alt="" />
-                      <input value={name} readOnly />
-                    </div>
-                    <span className="tag">{nameType}</span>
-                  </div>
-
-                  <button
-                    className="fare-submit active"
-                    onClick={() => handleRequestedRide()}
-                  >
-                    Book Now
-                  </button>
+                <div className="summary-row">
+                  <img src={GreenCircle} alt="" />
+                  <input value={pickup} readOnly />
                 </div>
+
+                <div className="summary-row">
+                  <img src={Drop} alt="" />
+                  <input value={drop} readOnly />
+                </div>
+
+                <div className="summary-row split">
+                  <div className="summary-left">
+                    <img src={PhoneNumber} alt="" />
+                    <input value={phone} readOnly />
+                  </div>
+                  <span className="tag">{phoneType}</span>
+                </div>
+
+                <div className="summary-row split">
+                  <div className="summary-left">
+                    <img src={Username} alt="" />
+                    <input value={name} readOnly />
+                  </div>
+                  <span className="tag">{nameType}</span>
+                </div>
+
+                <button
+                  className="fare-submit active"
+                  onClick={() => handleRequestedRide()}
+                >
+                  Book Now
+                </button>
+              </div>
             )}
           </div>
         </div>

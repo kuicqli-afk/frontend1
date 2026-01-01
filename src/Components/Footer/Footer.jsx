@@ -2,6 +2,7 @@ import React from 'react'
 import './Footer.css'
 
 import logo from '../../assets/Logo.png'
+import { Link } from 'react-router-dom'
 
 const Footer = () => {
     return (
@@ -23,12 +24,33 @@ const Footer = () => {
                         </ul>
                     </div>
                     <div className="middle-bottom">
-                        <h2>Quick Links</h2>
-                        <ul>
-                            <li>2 Wheeler</li>
-                            <li>E Loader</li>
-                            <li>3 Wheeler</li>
-                            <li>Mini Truck</li>
+                        <h2>Check Fare</h2>
+                        <ul className="check-fare-links">
+                            <li>
+                                <Link to="/fare-link" state={{ vehicle: "2-wheeler" }}>
+                                    2 Wheeler
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/fare-link" state={{ vehicle: "mini-auto" }}>
+                                    Mini Auto
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/fare-link" state={{ vehicle: "e-loader" }}>
+                                    E Loader
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/fare-link" state={{ vehicle: "3-wheeler" }}>
+                                    3 Wheeler
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/fare-link" state={{ vehicle: "mini-truck" }}>
+                                    Mini Truck
+                                </Link>
+                            </li>
                         </ul>
                     </div>
                 </div>
