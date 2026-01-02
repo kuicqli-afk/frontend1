@@ -5,7 +5,7 @@ import TwoWheeler from "../../assets/2wheeler.png";
 import MiniAuto from "../../assets/MiniAuto.png";
 import Eloader from "../../assets/Eloader.png";
 import ThreeWheeler from "../../assets/3wheeler.png";
-import MiniTruck from "../../assets/MiniTruck.png";
+import MiniTruck from "../../assets/Minitruck.png";
 import WhiteArrow from "../../assets/whitearrow.png";
 import BlueArrow from "../../assets/bluearrow.png";
 import Weight from "../../assets/weight.png";
