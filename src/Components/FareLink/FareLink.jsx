@@ -156,6 +156,7 @@ const FareLink = () => {
       formdata.append('drop', drop);
       formdata.append('userPhone', userPhone);
       formdata.append('fare', fare)
+      formdata.append('vehcile', selected.name)
 
 
       for (const [key, value] of formdata.entries()) {
