@@ -4,8 +4,6 @@ import axios from 'axios'
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 
-import SLIDER from "../../assets/SLIDER.png"
-
 import TwoWheeler from "../../assets/2wheeler.png";
 import MiniAuto from "../../assets/MiniAuto.png";
 import Eloader from "../../assets/Eloader.png";
@@ -33,7 +31,6 @@ const FareLink = () => {
   const [nameType, setNameType] = useState("receiver");
 
   const [showSummary, setShowSummary] = useState(false);
-  const [isSearching, setIsSearching] = useState(false);
 
   const [pickupPredictions, setPickupPredictions] = useState([]);
   const [dropPredictions, setDropPredictions] = useState([]);
@@ -84,8 +81,6 @@ const FareLink = () => {
       if (tab) setActiveTab(tab);
     }
   }, [location.state]);
-
-
 
   useEffect(() => {
     let query = "";

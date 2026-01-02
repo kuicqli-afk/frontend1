@@ -662,7 +662,7 @@
 .view-divider {
     width: 2px;
     border-right: 3px dotted #ddd;
-    height: 300px;
+    height: 350px;
     margin-right: 50px;
 }
 
@@ -773,20 +773,4 @@
 
 .view-book-btn:hover {
     background: #e85c12;
-}
-
-/* ===== Responsive ===== */
-@media (max-width: 768px) {
-    .view-detail-body {
-        flex-direction: column;
-    }
-
-    .view-left {
-        width: 100%;
-        text-align: center;
-    }
-
-    .view-divider {
-        display: none;
-    }
 }
