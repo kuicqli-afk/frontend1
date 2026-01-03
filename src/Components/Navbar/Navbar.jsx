@@ -72,12 +72,12 @@ const Navbar = () => {
                 <p>Merchant Partner.</p>
               </li>
             </Link> */}
-            <Link className={`nav-link ${location.pathname === "/ride-partner" ? "active" : ""}`} to="/ride-partner">
+            {/* <Link className={`nav-link ${location.pathname === "/ride-partner" ? "active" : ""}`} to="/ride-partner">
               <li>
                 <img src={Rider} alt="" />
                 <p>Ride Partner.</p>
               </li>
-            </Link>
+            </Link> */}
             </>
 
         

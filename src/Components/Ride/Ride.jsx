@@ -44,7 +44,7 @@ function Ride() {
     socket.on('ride-confirmed', ride => {
     alert("Status: " + ride.status + "\nDriver: " + ride.driverId.name);
     console.log(ride);
-    localStorage.setItem("ride",ride);
+    localStorage.setItem("ride",JSON.stringify(ride));
     navigate('/ride/confirmed');
 
   });

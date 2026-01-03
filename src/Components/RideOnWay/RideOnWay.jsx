@@ -37,8 +37,6 @@ const RideOnWay = () => {
     const [pickupPredictions, setPickupPredictions] = useState([]);
     const [dropPredictions, setDropPredictions] = useState([]);
 
-    const [phoneType, setPhoneType] = useState("receiver");
-    const [nameType, setNameType] = useState("receiver");
 
     const [showCancelPopup, setShowCancelPopup] = useState(false);
 
@@ -55,6 +53,8 @@ const RideOnWay = () => {
     const tabs = Object.keys(vehicleData);
     const [activeTab, setActiveTab] = useState("2 Wheeler.");
     const selected = vehicleData[activeTab];
+
+    const ride=JSON.parse(localStorage.getItem('ride'));
 
     /* ================= AUTO VEHICLE FROM FOOTER ================= */
     useEffect(() => {
@@ -183,7 +183,7 @@ const RideOnWay = () => {
                     <div className="fare-card" id="fare-card">
                         <div className="fare-trip">
                             <p>Trip Id.</p>
-                            <p>CRN1238650422</p>
+                            <p>{ride._id}</p>
                         </div>
                         {/* VEHICLE IMAGE */}
                         <div className="fare-top">
@@ -201,7 +201,7 @@ const RideOnWay = () => {
                                     <div className="address-content">
                                         <p className="label">Pickup Location</p>
                                         <p className="value">
-                                            {pickup || "Pickup location not selected"}
+                                            {ride.pickUp|| "Pickup location not selected"}
                                             <img
                                                 src={success}
                                                 alt="success"
@@ -220,15 +220,15 @@ const RideOnWay = () => {
                                         <p className="label">
                                             Drop Location
                                             <span className="name">
-                                                {" "}• {name || "Name not added"}
+                                                {" "}• {ride.userId.name || "Name not added"}
                                             </span>
                                             <span className="mid-dot"> • </span>
                                             <span className="phone">
-                                                {phone || "Phone not added"}
+                                                {ride.userId.phone || "Phone not added"}
                                             </span>
                                         </p>
                                         <p className="value">
-                                            {drop || "Drop location not selected"}
+                                            {ride.drop || "Drop location not selected"}
                                             <span className="route-dot red"></span>
                                             <span className="route-dot red"></span>
                                             <span className="route-dot red"></span>
@@ -243,7 +243,7 @@ const RideOnWay = () => {
                             <h3>{activeTab}</h3>
 
                             {/* PRICE */}
-                            <h4>{fare ? `₹${fare}/-` : `₹${selected.price}/-`}</h4>
+                            <h4>{ride ? `₹${ride.fare}/-` : `₹${selected.price}/-`}</h4>
 
                             {/* EDIT & VIEW DETAIL */}
                             <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
@@ -348,7 +348,7 @@ const RideOnWay = () => {
                                                 <div className="info-block meta-row">
                                                     <p>
                                                         <img src={PhoneNumber} alt="" />
-                                                        <span className="text">+91 {phone}</span>
+                                                        <span className="text">+91 {ride.phone}</span>
                                                     </p>
                                                     <span className="meta-label receiver">Receiver</span>
                                                 </div>
@@ -390,17 +390,17 @@ const RideOnWay = () => {
                             {/* LEFT */}
                             <div className="driver-left">
                                 <img
-                                    src={Username}
+                                    src={ride.driverId.documents.profilePhoto}
                                     alt="driver"
                                     className="driver-avatar"
                                 />
 
                                 <div className="driver-info">
-                                    <h2 className="vehicle-number">UP32KZ2366</h2>
-                                    <p className="call-driver">Call Driver - 8177000316</p>
+                                    <h2 className="vehicle-number">{ride.driverId.numberPlate}</h2>
+                                    <p className="call-driver">Call Driver - {ride.driverId.phone}</p>
 
                                     <div className="driver-name">
-                                        <strong>Bader</strong>
+                                        <strong>{ride.driverId.name}</strong>
                                         <span>View</span>
                                     </div>
                                 </div>
@@ -413,7 +413,7 @@ const RideOnWay = () => {
                             <div className="driver-right">
                                 <div className="ride-status-row">
                                     <p className="ride-type">
-                                        2 Wheeler - <span className="green">05 min</span> ( 2 km )
+                                        {ride.driverId.vehcile} - <span className="green">05 min</span> ( 2 km )
                                     </p>
                                 </div>
 
