@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./FareLink.css";
 import axios from 'axios'
 import Navbar from "../Navbar/Navbar";
@@ -16,6 +16,7 @@ import Drop from "../../assets/Drop.png";
 import PhoneNumber from "../../assets/phonenumber.png";
 import Username from "../../assets/username.png";
 import { useNavigate, useLocation } from "react-router-dom";
+import { SocketContext } from "../../context/Socketcontext";
 
 const FareLink = () => {
 
@@ -39,6 +40,8 @@ const FareLink = () => {
 
 
   const navigate = useNavigate();
+
+  const {socket,sendMessage}=useContext(SocketContext)
 
   const isFormFilled =
     pickup.trim() &&
@@ -101,7 +104,7 @@ const FareLink = () => {
         console.log(predictions)
       })
       .catch((error) => {
-        console.error(error);
+        console.log(error);
       });
   }, [pickup, drop, activeInput]);
 
@@ -178,6 +181,9 @@ const FareLink = () => {
       if (response.data.success) {
         alert('Tour Ride Registered Successfully')
         localStorage.setItem("ride", JSON.stringify(response.data.data))
+        console.log(response.data.data)
+        sendMessage("join",{userId:response.data.data.userId,userType:"user"})
+        
         navigate('/search/ride')
       }
       else {

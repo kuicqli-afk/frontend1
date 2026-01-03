@@ -15,6 +15,7 @@ import Dashboard from './Components/DashboardUser/DashboardUser';
 import RiderDashboard from './Components/RiderDashboard/RiderDashboard';
 import Support from './Components/Support/Support';
 import Ride from './Components/Ride/Ride.jsx'
+import RideOnWay from './Components/RideOnWay/RideOnWay.jsx'
 function App() {
 
   const location = useLocation();
@@ -24,7 +25,8 @@ function App() {
     "/fare-link",
     "/ride-partner",
     "/support",
-    "/search/ride"
+    "/search/ride",
+    "/ride/confirmed"
   ];
 
     const isDriver=localStorage.getItem("driver");
@@ -57,6 +59,7 @@ function App() {
         <Route path="/support" element={<Support />} />
         <Route path="/ride-partner" element={isDriver?<Dashboard/>:<RiderPartner />} />
         <Route path="/search/ride" element={<Ride/>}/>
+        <Route path="/ride/confirmed" element={<RideOnWay/>}/>
       </Routes>
     </>
   )
