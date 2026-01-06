@@ -35,6 +35,28 @@ const RideOnWay = () => {
   const [distance,setDistance]=useState('')
   const [travelTime,setTravelTime]=useState('')
 
+
+  const darkMapStyle = [
+  { elementType: "geometry", stylers: [{ color: "#242f3e" }] },
+  { elementType: "labels.text.stroke", stylers: [{ color: "#242f3e" }] },
+  { elementType: "labels.text.fill", stylers: [{ color: "#746855" }] },
+  {
+    featureType: "road",
+    elementType: "geometry",
+    stylers: [{ color: "#38414e" }],
+  },
+  {
+    featureType: "road",
+    elementType: "geometry.stroke",
+    stylers: [{ color: "#212a37" }],
+  },
+  {
+    featureType: "water",
+    elementType: "geometry",
+    stylers: [{ color: "#17263c" }],
+  },
+];
+
   const vehicleData = {
     "2 Wheeler.": { img: TwoWheeler, price: "140", name: "bike" },
     "Mini Auto.": { img: MiniAuto, price: "180", name: "miniAuto" },
@@ -157,7 +179,10 @@ const RideOnWay = () => {
               >
                 Cancel Trip
               </p>
+
+              
             </div>
+            <p style={{fontWeight:"600",color:"blue"}}>OTP - {ride.otp}</p>
           </div>
 
           <div className="rideon-divider"></div>
@@ -165,25 +190,43 @@ const RideOnWay = () => {
           <div className="ride-right">
             <div className="right-text">
               <h2>DRIVER ON THE WAY <br /> TO PICKUP.</h2>
-              <p>Finding Driver near you.</p>
+              <p>Driver is on the way.</p>
             </div>
 
             <div className="ride-map">
               {ride?.driverId?.location && (
                 <GoogleMap
-                  mapContainerStyle={{ width: "100%", height: "400px" ,borderRadius:"6px"}}
+                  mapContainerStyle={{ width: "100%", height: "400px" ,borderRadius:"0px"}}
                   center={{
                     lat: ride.driverId.location.coordinates[1],
                     lng: ride.driverId.location.coordinates[0],
                   }}
                   zoom={10}
+                //    options={{ styles: darkMapStyle }}
+                    options={{   mapTypeControl: false,    
+                                streetViewControl: false,  
+                                fullscreenControl: false,  }}
                 >
-                  <Marker
+                  {/* <Marker
                     position={{
                       lat: ride.driverId.location.coordinates[1],
                       lng: ride.driverId.location.coordinates[0],
                     }}
-                  />
+                  /> */}
+                  <Marker
+                position={{
+                    lat: ride.driverId.location.coordinates[1],
+                    lng: ride.driverId.location.coordinates[0],
+                }}
+                icon={{
+                    path: window.google.maps.SymbolPath.CIRCLE,
+                    scale: 8,
+                    fillColor: "blue",
+                    fillOpacity: 1,
+                    strokeWeight: 2,
+                    strokeColor: "#fff",
+                }}
+                />
 
                   {directionResponse && (
                     <DirectionsRenderer directions={directionResponse} />
