@@ -23,7 +23,7 @@ import {
   Marker,
   DirectionsRenderer,
 } from "@react-google-maps/api";
-import SocketContext from '../../context/Socketcontext'
+import {SocketContext} from '../../context/Socketcontext'
 const RideOnWay = () => { 
   const navigate = useNavigate();
   const location = useLocation();
@@ -70,9 +70,21 @@ const RideOnWay = () => {
 
   const ride = JSON.parse(localStorage.getItem("ride"));
 
-   socket.on('start-ride',(data)=>{
-    
-   })
+   useEffect(() => {
+  if (!socket) return;
+
+  const handleStartRide = (data) => {
+    console.log("Ride started:", data);
+    // update state / navigate / etc
+  };
+
+  socket.on("start-ride", handleStartRide);
+
+  return () => {
+    socket.off("start-ride", handleStartRide);
+  };
+}, [socket]);
+
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
