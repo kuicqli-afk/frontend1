@@ -75,7 +75,7 @@ const RideOnWay = () => {
 
   const handleStartRide = (data) => {
     console.log("Ride started:", data);
-    // update state / navigate / etc
+    navigate('/ride/started')
   };
 
   socket.on("start-ride", handleStartRide);
