@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./RideOnWay.css";
 import axios from "axios";
 import Navbar from "../Navbar/Navbar";
@@ -23,11 +23,11 @@ import {
   Marker,
   DirectionsRenderer,
 } from "@react-google-maps/api";
-
-const RideOnWay = () => {
+import SocketContext from '../../context/Socketcontext'
+const RideOnWay = () => { 
   const navigate = useNavigate();
   const location = useLocation();
-
+  const { socket }= useContext(SocketContext); 
   const [fare, setFare] = useState("");
   const [showViewDetail, setShowViewDetail] = useState(false);
   const [showCancelPopup, setShowCancelPopup] = useState(false);
@@ -69,6 +69,10 @@ const RideOnWay = () => {
   const selected = vehicleData[activeTab];
 
   const ride = JSON.parse(localStorage.getItem("ride"));
+
+   socket.on('start-ride',(data)=>{
+    
+   })
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });

@@ -16,6 +16,7 @@ import RiderDashboard from './Components/RiderDashboard/RiderDashboard';
 import Support from './Components/Support/Support';
 import Ride from './Components/Ride/Ride.jsx'
 import RideOnWay from './Components/RideOnWay/RideOnWay.jsx'
+import RideStarted from './Components/RideStarted/RideStarted.jsx';
 function App() {
 
   const location = useLocation();
@@ -60,6 +61,7 @@ function App() {
         <Route path="/ride-partner" element={isDriver?<Dashboard/>:<RiderPartner />} />
         <Route path="/search/ride" element={<Ride/>}/>
         <Route path="/ride/confirmed" element={<RideOnWay/>}/>
+        <Route path="/ride/started" element={<RideStarted/>}/>
       </Routes>
     </>
   )
