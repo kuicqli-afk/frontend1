@@ -27,7 +27,8 @@ function App() {
     "/ride-partner",
     "/support",
     "/search/ride",
-    "/ride/confirmed"
+    "/ride/confirmed",
+    "/ride/started"
   ];
 
     const isDriver=localStorage.getItem("driver");
