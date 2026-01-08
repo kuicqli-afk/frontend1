@@ -6,10 +6,22 @@ function RideStarted() {
     const {socket}=useContext(SocketContext);
     const [data,setData]=useState('')
     const ride =JSON.parse(localStorage.getItem("ride"))
-    socket.on('ride-completed',(newRide)=>{
-        alert('Ride Completed');
-        console.log(newRide)
-    })
+// 🔌 Socket listener
+  useEffect(() => {
+    if (!socket) return
+
+    const handleRideCompleted = (newRide) => {
+      alert('Ride Completed')
+      console.log(newRide)
+    }
+
+    socket.on('ride-completed', handleRideCompleted)
+
+    // 🧹 Cleanup
+    return () => {
+      socket.off('ride-completed', handleRideCompleted)
+    }
+  }, [socket])
     useEffect(()=>{
       axios.post('https://thetest-h9x3.onrender.com/ride/get-ride-detail',{
         rideId:ride._id,
