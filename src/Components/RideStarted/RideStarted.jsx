@@ -1,10 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Navbar from '../Navbar/Navbar'
 import axios from 'axios'
-
+import { SocketContext } from '../../context/Socketcontext'
 function RideStarted() {
+    const {socket}=useContext(SocketContext);
     const [data,setData]=useState('')
     const ride =JSON.parse(localStorage.getItem("ride"))
+    socket.on('ride-completed',(newRide)=>{
+        alert('Ride Completed');
+        console.log(newRide)
+    })
     useEffect(()=>{
       axios.post('https://thetest-h9x3.onrender.com/ride/get-ride-detail',{
         rideId:ride._id,
