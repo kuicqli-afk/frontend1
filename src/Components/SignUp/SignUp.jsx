@@ -31,7 +31,7 @@ const SignUp = () => {
 
       try {
         const response = await axios.post(
-        'http://localhost:4000/user/login/send-otp',
+        'https://thetest-h9x3.onrender.com/user/login/send-otp',
         {
             phone: data.phone
         },
@@ -64,7 +64,7 @@ const SignUp = () => {
         }
 
         try {
-            const response = await axios.post('http://localhost:4000/user/register/send-otp', {
+            const response = await axios.post('https://thetest-h9x3.onrender.com/user/register/send-otp', {
                 phone: data.phone
             });
 
@@ -97,7 +97,7 @@ const SignUp = () => {
         }
 
         try {
-            const response = await axios.post('http://localhost:4000/user/verify-otp', {
+            const response = await axios.post('https://thetest-h9x3.onrender.com/user/verify-otp', {
                 phone: data.phone,
                 otp: data.otp,
                 name:data.name,
