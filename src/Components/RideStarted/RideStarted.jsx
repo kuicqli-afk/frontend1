@@ -21,6 +21,7 @@ function RideStarted() {
 
     const handleRideCompleted = (newRide) => {
       alert('Ride Completed')
+      socket.leave(`order_${orderId}`);
       console.log(newRide)
     }
 

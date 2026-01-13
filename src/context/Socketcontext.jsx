@@ -2,8 +2,12 @@ import { createContext, useEffect } from "react";
 import {io} from 'socket.io-client';
 
 export const SocketContext=createContext()
-
-const socket=io('https://thetest-h9x3.onrender.com')
+const token =localStorage.getItem('token');
+const socket=io('https://thetest-h9x3.onrender.com',{
+      auth: { token },
+      reconnectionAttempts: 5, // try 5 times
+      transports: ["websocket"],
+})
 
 const SocketProvider=({children})=>{
     useEffect(()=>{
@@ -11,6 +15,7 @@ const SocketProvider=({children})=>{
 
        socket.on('connect',()=>{
         console.log('Connected to Server')
+       
        });
 
        socket.on('disconnect',()=>{

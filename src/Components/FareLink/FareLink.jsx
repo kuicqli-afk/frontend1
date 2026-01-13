@@ -3,7 +3,7 @@ import "./FareLink.css";
 import axios from 'axios'
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
-
+import logo from '../../assets/Logo.png'
 import TwoWheeler from "../../assets/2wheeler.png";
 import MiniAuto from "../../assets/MiniAuto.png";
 import Eloader from "../../assets/Eloader.png";
@@ -24,7 +24,7 @@ const FareLink = () => {
   const [drop, setDrop] = useState("");
   const [phone, setPhone] = useState("");
   const [name, setName] = useState("");
-
+  const [login,setLogin]=useState(false);
   const [fare, setFare] = useState();
   const [activeInput, setActiveInput] = useState(null);
 
@@ -182,7 +182,7 @@ const FareLink = () => {
         alert('Tour Ride Registered Successfully')
         localStorage.setItem("ride", JSON.stringify(response.data.data))
         console.log(response.data.data)
-        sendMessage("join",{userId:response.data.data.userId,userType:"user"})
+        sendMessage("joinOrder",{orderId:response.data.data._id,userId:response.data.data.userId})
         
         navigate('/search/ride')
       }
@@ -233,7 +233,51 @@ const FareLink = () => {
     <>
       <Navbar />
 
+      {/* Login PopUp */}
+
+      {/* <div className="login-popup">
+        <div>
+          <img src={logo} alt="" style={{background:"blue",padding:"10px"}} width={200}/>
+        </div>
+        {login?
+        <>
+           <div style={{display:"flex",flexDirection:"column"}}>
+          <label htmlFor="">
+             Enter Your Phone Number
+          </label>
+          <input type="text" placeholder="Enter Your Phone Number" maxLength={10} />
+        </div>
+        <input type="submit" />
+        <p>Don't have Account <span style={{color:"blue",cursor:"pointer"}} onClick={()=>setLogin(false)}>SignUp</span></p>
+        </>
+        
+        :
+        <>
+         <div style={{display:"flex",flexDirection:"column"}}>
+          <label htmlFor="">
+             Enter Your Name
+          </label>
+          <input type="text" placeholder="Enter Your Name" />
+        </div>
+         <div style={{display:"flex",flexDirection:"column"}}>
+          <label htmlFor="">
+             Enter Your Phone
+          </label>
+          <input type="text" placeholder="Enter Your Phone" />
+        </div>
+        <input type="submit" />
+        <p>Don't have Account <span style={{color:"blue",cursor:"pointer"}} onClick={()=>setLogin(true)}>LogIn</span></p>
+        </>
+        
+        }
+     
+      </div> */}
+
+      {/* End of Login PopUp */}
+
+
       <div className="fare-container">
+     
         <div className="fare-body">
 
           {/* LEFT CARD */}

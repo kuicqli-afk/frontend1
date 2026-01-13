@@ -774,3 +774,15 @@
 .view-book-btn:hover {
     background: #e85c12;
 }
+
+.login-popup{
+    position: absolute;
+    top: 20%;
+    left: 40%;
+    z-index: 1;
+    background-color: white;
+    box-shadow: 2px 2px 5px gray;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}

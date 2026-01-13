@@ -31,7 +31,7 @@ const SignUp = () => {
 
       try {
         const response = await axios.post(
-        'https://thetest-h9x3.onrender.com/user/login/send-otp',
+        'http://localhost:4000/user/login/send-otp',
         {
             phone: data.phone
         },
@@ -64,7 +64,7 @@ const SignUp = () => {
         }
 
         try {
-            const response = await axios.post('https://thetest-h9x3.onrender.com/user/register/send-otp', {
+            const response = await axios.post('http://localhost:4000/user/register/send-otp', {
                 phone: data.phone
             });
 
@@ -97,7 +97,7 @@ const SignUp = () => {
         }
 
         try {
-            const response = await axios.post('https://thetest-h9x3.onrender.com/user/verify-otp', {
+            const response = await axios.post('http://localhost:4000/user/verify-otp', {
                 phone: data.phone,
                 otp: data.otp,
                 name:data.name,
@@ -107,11 +107,11 @@ const SignUp = () => {
                 toast.success(response.data.message, {
                     toastStyle: { border: '2px solid blue', borderRadius: '8px' }
                 });
-
+                console.log(response.data)
                 localStorage.setItem('token', response.data.token);
                 localStorage.setItem('name',response.data.user.name);
                 localStorage.setItem('phone',response.data.user.phone);
-                navigate('/');
+                 navigate('/');
             } else {
                 toast.error(response.data.message, {
                     toastStyle: { border: '2px solid blue', borderRadius: '8px' }

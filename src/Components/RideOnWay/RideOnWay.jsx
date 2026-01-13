@@ -35,6 +35,22 @@ const RideOnWay = () => {
   const [distance,setDistance]=useState('')
   const [travelTime,setTravelTime]=useState('')
 
+//   useEffect(() => {
+//   if (!orderId) return;
+
+//   socket.emit("joinOrder", { orderId });
+
+//   const handleLocation = (location) => {
+//     setDriverLocation(location); // update map marker
+//   };
+
+//   socket.on("driverLocation", handleLocation);
+
+//   return () => {
+//     socket.off("driverLocation", handleLocation);
+//   };
+// }, [orderId, socket])
+
 
   const darkMapStyle = [
   { elementType: "geometry", stylers: [{ color: "#242f3e" }] },
@@ -115,7 +131,7 @@ const RideOnWay = () => {
 
     try {
       const result = await directionsService.route({
-        origin:{
+             origin:{
             lat:ride.driverId.location.coordinates[1],
             lng:ride.driverId.location.coordinates[0],
         },
@@ -137,6 +153,8 @@ const RideOnWay = () => {
   }, [isLoaded]);
 
   if (!isLoaded) return <div>Loading Map...</div>;
+
+  socket.emit('joinOrder',{orderId:ride._id,userId:ride.userId._id,driverId:ride.driverId._id})
 
   return (
     <>
