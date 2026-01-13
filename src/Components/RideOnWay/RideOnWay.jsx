@@ -31,14 +31,23 @@ const RideOnWay = () => {
   const ride = JSON.parse(localStorage.getItem("ride"));
 
   // ====== STATE ======
-  const [driverLocation, setDriverLocation] = useState(null);
+  const [driverLocation, setDriverLocation] = useState(
+    ride?.driverId?.location
+      ? {
+          lat: ride.driverId.location.coordinates[1],
+          lng: ride.driverId.location.coordinates[0],
+        }
+      : null
+  );
   const [directionResponse, setDirectionResponse] = useState(null);
   const [distance, setDistance] = useState("");
   const [travelTime, setTravelTime] = useState("");
   const [activeTab, setActiveTab] = useState("2 Wheeler.");
 
   const mapRef = useRef(null);
-  const initialCenterRef = useRef(null);
+  const markerRef = useRef(null);
+  const animationRef = useRef(null);
+  const targetLocationRef = useRef(driverLocation);
 
   const vehicleData = {
     "2 Wheeler.": { img: TwoWheeler, price: "140", name: "bike" },
@@ -88,52 +97,50 @@ const RideOnWay = () => {
     });
   }, [socket, ride?._id]);
 
-  // ====== SOCKET: DRIVER LOCATION TRACKING ======
+  // ====== SOCKET: DRIVER LOCATION TRACKING WITH SMOOTH ANIMATION ======
   useEffect(() => {
     if (!socket) return;
 
-    const handleDriverLocation = (location) => {
-      setDriverLocation((prev) => {
-        if (
-          prev &&
-          prev.lat === location.lat &&
-          prev.lng === location.lng
-        ) {
-          return prev;
-        }
-        return location;
-      });
+    const animateMarker = () => {
+      if (!driverLocation || !targetLocationRef.current) return;
 
-      // Smooth pan
-      mapRef.current?.panTo(location);
+      const latDiff = targetLocationRef.current.lat - driverLocation.lat;
+      const lngDiff = targetLocationRef.current.lng - driverLocation.lng;
+
+      // small step for smooth animation
+      const step = 0.02; // adjust speed: smaller = slower
+      if (Math.abs(latDiff) < 0.00001 && Math.abs(lngDiff) < 0.00001) {
+        cancelAnimationFrame(animationRef.current);
+        return;
+      }
+
+      setDriverLocation((prev) => ({
+        lat: prev.lat + latDiff * step,
+        lng: prev.lng + lngDiff * step,
+      }));
+
+      animationRef.current = requestAnimationFrame(animateMarker);
+    };
+
+    const handleDriverLocation = (location) => {
+      targetLocationRef.current = location;
+      cancelAnimationFrame(animationRef.current);
+      animationRef.current = requestAnimationFrame(animateMarker);
     };
 
     socket.on("driverLocation", handleDriverLocation);
 
     return () => {
       socket.off("driverLocation", handleDriverLocation);
+      cancelAnimationFrame(animationRef.current);
     };
-  }, [socket]);
-
-  // ====== LOCK MAP CENTER ONCE ======
-  useEffect(() => {
-    if (!initialCenterRef.current && driverLocation) {
-      initialCenterRef.current = driverLocation;
-    }
-  }, [driverLocation]);
+  }, [socket, driverLocation]);
 
   // ====== CALCULATE ROUTE ======
   useEffect(() => {
-    if (
-      !isLoaded ||
-      !driverLocation ||
-      !ride?.pickUp ||
-      directionResponse
-    )
-      return;
+    if (!isLoaded || !driverLocation || !ride?.pickUp || directionResponse) return;
 
     const service = new window.google.maps.DirectionsService();
-
     service.route(
       {
         origin: driverLocation,
@@ -222,14 +229,16 @@ const RideOnWay = () => {
             <div className="ride-map">
               <GoogleMap
                 mapContainerStyle={{ width: "100%", height: "400px" }}
-                center={initialCenterRef.current}
+                center={driverLocation}
                 zoom={14}
                 options={mapOptions}
                 onLoad={(map) => (mapRef.current = map)}
               >
+                {/* DRIVER MARKER */}
                 {driverLocation && (
                   <Marker
                     position={driverLocation}
+                    ref={markerRef}
                     icon={{
                       path: window.google.maps.SymbolPath.CIRCLE,
                       scale: 8,
@@ -241,6 +250,7 @@ const RideOnWay = () => {
                   />
                 )}
 
+                {/* ROUTE */}
                 {directionResponse && (
                   <DirectionsRenderer
                     directions={directionResponse}
