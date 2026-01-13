@@ -157,6 +157,15 @@ const RideOnWay = () => {
     );
   }, [isLoaded, driverLocation, ride?.pickUp, directionResponse]);
 
+  // Ride Started
+
+  useEffect(()=>{
+    socket.on('start-ride',(ride)=>{
+      navigate('/ride/started')
+      alert('Ride Started')
+    })
+  },[])
+
   if (!isLoaded) return <div>Loading Map...</div>;
   if (!ride) return <h2>No Ride Found</h2>;
 
