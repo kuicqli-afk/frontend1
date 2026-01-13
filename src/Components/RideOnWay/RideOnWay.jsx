@@ -1,310 +1,167 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef, useMemo } from "react";
 import "./RideOnWay.css";
-import axios from "axios";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import { useNavigate, useLocation } from "react-router-dom";
 
-import success from "../../assets/success.png";
-import TwoWheeler from "../../assets/2wheeler.png";
-import MiniAuto from "../../assets/MiniAuto.png";
-import Eloader from "../../assets/Eloader.png";
-import ThreeWheeler from "../../assets/3wheeler.png";
-import MiniTruck from "../../assets/Minitruck.png";
-
-import GreenCircle from "../../assets/greencircle.png";
-import Drop from "../../assets/Drop.png";
-import PhoneNumber from "../../assets/phonenumber.png";
-import Username from "../../assets/username.png";
-import { ScrollToTopButton } from "../ScrollToTopButton/ScrollToTopButton";
 import {
   GoogleMap,
   useJsApiLoader,
   Marker,
   DirectionsRenderer,
 } from "@react-google-maps/api";
-import {SocketContext} from '../../context/Socketcontext'
-const RideOnWay = () => { 
+
+import { SocketContext } from "../../context/Socketcontext";
+
+const RideOnWay = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { socket }= useContext(SocketContext); 
-  const [fare, setFare] = useState("");
-  const [showViewDetail, setShowViewDetail] = useState(false);
-  const [showCancelPopup, setShowCancelPopup] = useState(false);
-  const [directionResponse, setDirectionResponse] = useState(null);
-  const [distance,setDistance]=useState('')
-  const [travelTime,setTravelTime]=useState('')
-
-//   useEffect(() => {
-//   if (!orderId) return;
-
-//   socket.emit("joinOrder", { orderId });
-
-//   const handleLocation = (location) => {
-//     setDriverLocation(location); // update map marker
-//   };
-
-//   socket.on("driverLocation", handleLocation);
-
-//   return () => {
-//     socket.off("driverLocation", handleLocation);
-//   };
-// }, [orderId, socket])
-
-
-  const darkMapStyle = [
-  { elementType: "geometry", stylers: [{ color: "#242f3e" }] },
-  { elementType: "labels.text.stroke", stylers: [{ color: "#242f3e" }] },
-  { elementType: "labels.text.fill", stylers: [{ color: "#746855" }] },
-  {
-    featureType: "road",
-    elementType: "geometry",
-    stylers: [{ color: "#38414e" }],
-  },
-  {
-    featureType: "road",
-    elementType: "geometry.stroke",
-    stylers: [{ color: "#212a37" }],
-  },
-  {
-    featureType: "water",
-    elementType: "geometry",
-    stylers: [{ color: "#17263c" }],
-  },
-];
-
-  const vehicleData = {
-    "2 Wheeler.": { img: TwoWheeler, price: "140", name: "bike" },
-    "Mini Auto.": { img: MiniAuto, price: "180", name: "miniAuto" },
-    "E Loader.": { img: Eloader, price: "260", name: "ELoader" },
-    "3 Wheeler.": { img: ThreeWheeler, price: "350", name: "threeWheeler" },
-    "Mini Truck.": { img: MiniTruck, price: "520", name: "miniTruck" },
-  };
-
-  const [activeTab, setActiveTab] = useState("2 Wheeler.");
-  const selected = vehicleData[activeTab];
+  const { socket } = useContext(SocketContext);
 
   const ride = JSON.parse(localStorage.getItem("ride"));
 
-   useEffect(() => {
-  if (!socket) return;
+  /* ================= STATE ================= */
+  const [driverLocation, setDriverLocation] = useState(null);
+  const [directionResponse, setDirectionResponse] = useState(null);
+  const [distance, setDistance] = useState("");
+  const [travelTime, setTravelTime] = useState("");
 
-  const handleStartRide = (data) => {
-    console.log("Ride started:", data);
-    navigate('/ride/started')
-  };
+  /* ================= MAP REFS ================= */
+  const mapRef = useRef(null);
+  const initialCenterRef = useRef(null);
 
-  socket.on("start-ride", handleStartRide);
-
-  return () => {
-    socket.off("start-ride", handleStartRide);
-  };
-}, [socket]);
-
-
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-
-    if (location.state?.vehicle) {
-      const map = {
-        "2-wheeler": "2 Wheeler.",
-        "mini-auto": "Mini Auto.",
-        "e-loader": "E Loader.",
-        "3-wheeler": "3 Wheeler.",
-        "mini-truck": "Mini Truck.",
-      };
-      setActiveTab(map[location.state.vehicle] || "2 Wheeler.");
-    }
-  }, [location.state]);
-
-  /* ================= GOOGLE MAP ================= */
-
+  /* ================= GOOGLE MAP LOADER ================= */
   const { isLoaded } = useJsApiLoader({
-    id: "google-map-script",
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAP_API,
   });
 
-  const calculateRoute = async () => {
-    if (!window.google || !ride?.pickUp || !ride?.drop) return;
+  const mapOptions = useMemo(
+    () => ({
+      mapTypeControl: false,
+      streetViewControl: false,
+      fullscreenControl: false,
+    }),
+    []
+  );
 
-    const directionsService = new window.google.maps.DirectionsService();
+  /* ================= JOIN ORDER ROOM ================= */
+  useEffect(() => {
+    if (!socket || !ride?._id) return;
 
-    try {
-      const result = await directionsService.route({
-             origin:{
-            lat:ride.driverId.location.coordinates[1],
-            lng:ride.driverId.location.coordinates[0],
-        },
+    socket.emit("joinOrder", {
+      orderId: ride._id,
+      userId: ride.userId._id,
+      driverId: ride.driverId._id,
+    });
+  }, [socket, ride?._id]);
+
+  /* ================= DRIVER LOCATION TRACKING ================= */
+  useEffect(() => {
+    if (!socket) return;
+
+    const handleDriverLocation = (location) => {
+      setDriverLocation((prev) => {
+        if (
+          prev &&
+          prev.lat === location.lat &&
+          prev.lng === location.lng
+        ) {
+          return prev;
+        }
+        return location;
+      });
+
+      mapRef.current?.panTo(location);
+    };
+
+    socket.on("driverLocation", handleDriverLocation);
+
+    return () => {
+      socket.off("driverLocation", handleDriverLocation);
+    };
+  }, [socket]);
+
+  /* ================= LOCK MAP CENTER ================= */
+  useEffect(() => {
+    if (!initialCenterRef.current && driverLocation) {
+      initialCenterRef.current = driverLocation;
+    }
+  }, [driverLocation]);
+
+  /* ================= ROUTE (CALCULATE ONCE) ================= */
+  useEffect(() => {
+    if (
+      !isLoaded ||
+      !driverLocation ||
+      !ride?.pickUp ||
+      directionResponse
+    )
+      return;
+
+    const service = new window.google.maps.DirectionsService();
+
+    service.route(
+      {
+        origin: driverLocation,
         destination: ride.pickUp,
         travelMode: window.google.maps.TravelMode.DRIVING,
-      });
-     setDistance( result.routes[0].legs[0].distance.text )  // "12.4 km"
-     setTravelTime( result.routes[0].legs[0].duration.text)
-      setDirectionResponse(result);
-    } catch (err) {
-      console.error("Route error:", err);
-    }
-  };
-
-  useEffect(() => {
-    if (isLoaded) {
-      calculateRoute();
-    }
-  }, [isLoaded]);
+      },
+      (result, status) => {
+        if (status === "OK" && result) {
+          setDirectionResponse(result);
+          setDistance(result.routes[0].legs[0].distance.text);
+          setTravelTime(result.routes[0].legs[0].duration.text);
+        }
+      }
+    );
+  }, [isLoaded, driverLocation, ride?.pickUp, directionResponse]);
 
   if (!isLoaded) return <div>Loading Map...</div>;
-
-  socket.emit('joinOrder',{orderId:ride._id,userId:ride.userId._id,driverId:ride.driverId._id})
 
   return (
     <>
       <Navbar />
-      <div className="fare-container">
-        <div className="fare-body">
-          <div className="fare-card" id="fare-card">
-            <div className="fare-trip">
-              <p>Trip Id.</p>
-              <p>{ride?._id}</p>
-            </div>
 
-            <div className="fare-top">
-              <img src={selected.img} alt="vehicle" />
-            </div>
+      <div className="ride-map">
+        <GoogleMap
+          mapContainerStyle={{ width: "100%", height: "400px" }}
+          center={initialCenterRef.current}
+          zoom={14}
+          options={mapOptions}
+          onLoad={(map) => (mapRef.current = map)}
+        >
+          {/* DRIVER LIVE MARKER */}
+          {driverLocation && (
+            <Marker
+              position={driverLocation}
+              icon={{
+                path: window.google.maps.SymbolPath.CIRCLE,
+                scale: 8,
+                fillColor: "blue",
+                fillOpacity: 1,
+                strokeWeight: 2,
+                strokeColor: "#fff",
+              }}
+            />
+          )}
 
-            <div className="fare-detail">
-              <div className="address-box">
-                <p className="address-title">Address Details</p>
-
-                <div className="address-item">
-                  <span className="dot green"></span>
-                  <div className="address-content">
-                    <p className="label">Pickup Location</p>
-                    <p className="value">
-                      {ride?.pickUp}
-                      <img src={success} alt="success" className="pickup-success-icon" />
-                    </p>
-                  </div>
-                </div>
-
-                <div className="address-line"></div>
-
-                <div className="address-item">
-                  <span className="dot red"></span>
-                  <div className="address-content">
-                    <p className="label">
-                      Drop Location • {ride?.userId?.name} • {ride?.userId?.phone}
-                    </p>
-                    <p className="value">{ride?.drop}</p>
-                  </div>
-                </div>
-              </div>
-
-              <h3>{activeTab}</h3>
-              <h4>₹{ride?.fare || selected.price}/-</h4>
-
-              <p id="ride-detail" onClick={() => setShowViewDetail(true)}>
-                View Detail
-              </p>
-
-              <p
-                id="price-cancel"
-                className="cancel-trip"
-                onClick={() => setShowCancelPopup(true)}
-              >
-                Cancel Trip
-              </p>
-
-              
-            </div>
-            <p style={{fontWeight:"600",color:"blue"}}>OTP - {ride.otp}</p>
-          </div>
-
-          <div className="rideon-divider"></div>
-
-          <div className="ride-right">
-            <div className="right-text">
-              <h2>DRIVER ON THE WAY <br /> TO PICKUP.</h2>
-              <p>Driver is on the way.</p>
-            </div>
-
-            <div className="ride-map">
-              {ride?.driverId?.location && (
-                <GoogleMap
-                  mapContainerStyle={{ width: "100%", height: "400px" ,borderRadius:"0px"}}
-                  center={{
-                    lat: ride.driverId.location.coordinates[1],
-                    lng: ride.driverId.location.coordinates[0],
-                  }}
-                  zoom={10}
-                //    options={{ styles: darkMapStyle }}
-                    options={{   mapTypeControl: false,    
-                                streetViewControl: false,  
-                                fullscreenControl: false,  }}
-                >
-                  {/* <Marker
-                    position={{
-                      lat: ride.driverId.location.coordinates[1],
-                      lng: ride.driverId.location.coordinates[0],
-                    }}
-                  /> */}
-                  <Marker
-                position={{
-                    lat: ride.driverId.location.coordinates[1],
-                    lng: ride.driverId.location.coordinates[0],
-                }}
-                icon={{
-                    path: window.google.maps.SymbolPath.CIRCLE,
-                    scale: 8,
-                    fillColor: "blue",
-                    fillOpacity: 1,
-                    strokeWeight: 2,
-                    strokeColor: "#fff",
-                }}
-                />
-
-                  {directionResponse && (
-                    <DirectionsRenderer directions={directionResponse} />
-                  )}
-                </GoogleMap>
-              )}
-            </div>
-
-            <div className="driver-card">
-              <div className="driver-left">
-                <img
-                  src={ride?.driverId?.documents?.profile_photo}
-                  alt="driver"
-                  className="driver-avatar"
-                />
-
-                <div className="driver-info">
-                  <h2 className="vehicle-number">{ride?.driverId?.numberPlate}</h2>
-                  <p className="call-driver">Call Driver - {ride?.driverId?.phone}</p>
-
-                  <div className="driver-name">
-                    <strong>{ride?.driverId?.name}</strong>
-                    <span>View</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="driver-divider"></div>
-
-              <div className="driver-right">
-                <p className="ride-type">
-                  {ride?.driverId?.vehcile} - 
-                  <span style={{color:"green",fontWeight:"600",marginLeft:"10px"}}>{travelTime}</span>
-                  <span style={{marginLeft:"20px"}}>({distance})</span>
-                </p>
-                
-                <p className="coming-text">Coming soon wait for while</p>
-              </div>
-            </div>
-          </div>
-        </div>
+          {/* ROUTE */}
+          {directionResponse && (
+            <DirectionsRenderer
+              directions={directionResponse}
+              options={{ suppressMarkers: true }}
+            />
+          )}
+        </GoogleMap>
       </div>
+
+      <div className="driver-card">
+        <p>
+          ETA: <strong>{travelTime}</strong> ({distance})
+        </p>
+      </div>
+
       <Footer />
-      <ScrollToTopButton />
     </>
   );
 };
