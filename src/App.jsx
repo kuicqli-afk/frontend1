@@ -17,6 +17,7 @@ import Support from './Components/Support/Support';
 import Ride from './Components/Ride/Ride.jsx'
 import RideOnWay from './Components/RideOnWay/RideOnWay.jsx'
 import RideStarted from './Components/RideStarted/RideStarted.jsx';
+import DiverApplication from './Components/DriverApplication/DiverApplication.jsx';
 function App() {
 
   const location = useLocation();
@@ -59,7 +60,7 @@ function App() {
         <Route path="/user-login" element={isUser?<Dashboard/>:<SignUp />} />
         <Route path="/fare-link" element={<FareLink />} />
         <Route path="/support" element={<Support />} />
-        <Route path="/ride-partner" element={isDriver?<Dashboard/>:<RiderPartner />} />
+        <Route path="/ride-partner" element={isDriver?<DiverApplication/>:<RiderPartner />} />
         <Route path="/search/ride" element={<Ride/>}/>
         <Route path="/ride/confirmed" element={<RideOnWay/>}/>
         <Route path="/ride/started" element={<RideStarted/>}/>

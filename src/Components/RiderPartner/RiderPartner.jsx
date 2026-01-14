@@ -48,6 +48,7 @@ const RiderPartner = () => {
   const [final,setFinal]=useState(false)
 
   useEffect(() => {
+    
      axios.post(
           "https://thetest-h9x3.onrender.com/caption/getCaption",
           { phone: phone },
@@ -58,7 +59,8 @@ const RiderPartner = () => {
           }
         )
           .then((res)=>{
-            console.log(res.data);    
+            console.log(res.data);
+            navigate('/ride-partner')    
         
           })
           .catch((err)=>{
@@ -140,13 +142,16 @@ const RiderPartner = () => {
     }
     try {
       const response = await axios.post("https://thetest-h9x3.onrender.com/caption/caption/varify-otp", { phone: data.phone, otp: data.otp });
+      console.log(response);
       if (response.data.success) {
         console.log(response.data);
         if(response.data.driver){
-          localStorage.setItem("driver",JSON.stringify(response.data.driver));
+           localStorage.setItem("driver",JSON.stringify(response.data.driver));
+           localStorage.setItem("name", response.data.driver.name)
+           localStorage.setItem("phone", response.data.driver.phone)
         }
-        localStorage.setItem("name", response.data.driver.name)
-        localStorage.setItem("phone", response.data.driver.phone)
+        localStorage.setItem("name", response.data.user.name)
+        localStorage.setItem("phone", response.data.user.phone)
         toast.success("OTP Verified Successfully!");
         navigate("/ride-partner");
         setShowOtp(false);
