@@ -17,6 +17,7 @@ import PhoneNumber from "../../assets/phonenumber.png";
 import Username from "../../assets/username.png";
 import { useNavigate, useLocation } from "react-router-dom";
 import { SocketContext } from "../../context/Socketcontext";
+import { RideContext } from "../../context/RideContext";
 
 const FareLink = () => {
 
@@ -38,6 +39,7 @@ const FareLink = () => {
 
   const [showViewDetail, setShowViewDetail] = useState(false);
 
+  const { setPendingRide,pendingRide, clearPendingRide } = useContext(RideContext);
 
   const navigate = useNavigate();
 
@@ -145,11 +147,67 @@ const FareLink = () => {
 
   }
 
+  useEffect(() => {
+  const userPhone = localStorage.getItem('phone');
+  console.log(pendingRide)
+  // Condition 1: Must have a user logged in
+  // Condition 2: Must have a ride waiting in context
+  if (userPhone && pendingRide) {
+    
+    // Logic to prevent double-calling
+    const rideToBook = pendingRide;
+    rideToBook.userPhone=userPhone;
+    const finalizeRide = async () => {
+      try {
+        
+
+      // Sending Request For Ride Registration
+
+      const response = await axios.post(
+        'https://thetest-h9x3.onrender.com/ride/createRide',
+        rideToBook,
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+
+      if (response.data.success) {
+        alert('Tour Ride Registered Successfully')
+        localStorage.setItem("ride", JSON.stringify(response.data.data))
+        console.log(response.data.data)
+        sendMessage("joinOrder",{orderId:response.data.data._id,userId:response.data.data.userId})
+        // IMPORTANT: Clear context immediately after success 
+        // to break the dependency loop
+        clearPendingRide(); 
+        navigate('/search/ride');
+      }
+        
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    finalizeRide();
+  }
+}, [pendingRide]); // This is the only dependency needed
+
+
   const handleRequestedRide = async () => {
     //Crete A From
     const userPhone = localStorage.getItem('phone')
     if (!userPhone) {
       alert('Please Login')
+      setPendingRide({
+        name,
+        phone,
+        pickup,
+        drop,
+        fare,
+        userPhone,
+        vehcile: selected.name
+      });
       navigate('/user-login')
     } else {
       const formdata = new FormData();
@@ -231,8 +289,15 @@ const FareLink = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar/>
 
+{
+  pendingRide&&<div style={{width:"200vb",height:"100vh",background:"black",opacity:"50%",color:"white",fontWeight:"600",position:"absolute",top:0,left:0,zIndex:"1",textAlign:"center",verticalAlign:"middle"}}>
+       <h1 style={{opacity:"100%"}}> Loading...</h1>
+     </div>
+
+}
+     
       {/* Login PopUp */}
 
       {/* <div className="login-popup">

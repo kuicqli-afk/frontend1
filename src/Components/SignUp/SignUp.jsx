@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
 import './SignUp.css';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
@@ -7,13 +7,14 @@ import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+import { RideContext } from '../../context/RideContext';
 
 
 const SignUp = () => {
     const [data, setData] = useState({name:'', phone: '', otp: '' });
     const [showOtp, setShowOtp] = useState(false);
     const [login,setLogin]=useState(false)
-
+    const {pendingRide}=useContext(RideContext);
     const navigate = useNavigate();
     const name=localStorage.getItem("name");
 
@@ -111,7 +112,15 @@ const SignUp = () => {
                 localStorage.setItem('token', response.data.token);
                 localStorage.setItem('name',response.data.user.name);
                 localStorage.setItem('phone',response.data.user.phone);
-                 navigate('/');
+                console.log(pendingRide)
+                if(pendingRide)
+                {
+                    navigate('/fare-link')
+                }else{
+                     navigate('/');
+                }
+                
+                
             } else {
                 toast.error(response.data.message, {
                     toastStyle: { border: '2px solid blue', borderRadius: '8px' }
