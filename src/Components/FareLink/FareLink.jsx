@@ -237,7 +237,7 @@ const FareLink = () => {
       );
 
       if (response.data.success) {
-        alert('Tour Ride Registered Successfully')
+        alert('New Ride Registered Successfully')
         localStorage.setItem("ride", JSON.stringify(response.data.data))
         console.log(response.data.data)
         sendMessage("joinOrder",{orderId:response.data.data._id,userId:response.data.data.userId})
@@ -292,8 +292,8 @@ const FareLink = () => {
       <Navbar/>
 
 {
-  pendingRide&&<div style={{width:"200vb",height:"100vh",background:"black",opacity:"50%",color:"white",fontWeight:"600",position:"absolute",top:0,left:0,zIndex:"1",textAlign:"center",verticalAlign:"middle"}}>
-       <h1 style={{opacity:"100%"}}> Loading...</h1>
+  pendingRide&&<div style={{display:"flex",flexDirection:"row",justifyContent:"center",alignItems:"center",width:"200vb",height:"100vh",background:"black",opacity:"50%",color:"white",fontWeight:"600",position:"absolute",top:0,left:0,zIndex:"1",textAlign:"center",verticalAlign:"middle"}}>
+       <h1 style={{opacity:"100%"}}> Creating New Ride For You...</h1>
      </div>
 
 }
