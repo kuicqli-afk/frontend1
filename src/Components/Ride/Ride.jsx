@@ -15,6 +15,7 @@ import Footer from "../Footer/Footer";
 import { useNavigate } from "react-router-dom";
 
 import { GoogleMap, Marker } from "@react-google-maps/api";
+import bikeIcon from '../../assets/bike-2.png'
 
 function Ride() {
   const ride = JSON.parse(localStorage.getItem("ride"));
@@ -130,6 +131,11 @@ function Ride() {
                             position={{
                               lat: element[1],
                               lng: element[0],
+                            }}
+                            icon={{
+                              url: bikeIcon,
+                              scaledSize: new window.google.maps.Size(60, 60),
+                              anchor: new window.google.maps.Point(20, 20),
                             }}
                           />
                         ))}
