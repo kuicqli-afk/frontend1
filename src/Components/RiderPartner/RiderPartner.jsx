@@ -140,7 +140,7 @@ const RiderPartner = () => {
       toast.error("Please enter OTP");
       return;
     }
-    try {
+   
       const response = await axios.post("https://thetest-h9x3.onrender.com/caption/caption/varify-otp", { phone: data.phone, otp: data.otp });
       console.log(response);
       if (response) {
@@ -165,9 +165,7 @@ const RiderPartner = () => {
       } else {
         toast.error(response.data.message);
       }
-    } catch (error) {
-      toast.error("Server error. Please try again.");
-    }
+  
   };
 
  
