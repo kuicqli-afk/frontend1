@@ -143,7 +143,7 @@ const RiderPartner = () => {
     try {
       const response = await axios.post("https://thetest-h9x3.onrender.com/caption/caption/varify-otp", { phone: data.phone, otp: data.otp });
       console.log(response);
-      if (response.data.success) {
+      if (response.data) {
         console.log(response.data);
         if(response.data.driver){
            localStorage.setItem("driver",JSON.stringify(response.data.driver));

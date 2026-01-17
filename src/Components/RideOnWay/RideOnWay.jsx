@@ -62,6 +62,7 @@ const RideOnWay = () => {
   // ====== GOOGLE MAP LOADER ======
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAP_API,
+     libraries: ["places"],
   });
 
   const mapOptions = useMemo(
