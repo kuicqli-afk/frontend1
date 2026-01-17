@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "../FareLink/FareLink.css";
 import "./Ride.css";
 
@@ -7,36 +7,49 @@ import MiniAuto from "../../assets/MiniAuto.png";
 import Eloader from "../../assets/Eloader.png";
 import ThreeWheeler from "../../assets/3wheeler.png";
 import MiniTruck from "../../assets/Minitruck.png";
-import GreenCircle from "../../assets/greencircle.png";
-import Drop from "../../assets/Drop.png";
-import MapImage from "../../assets/SLIDER.png";
 
 import { SocketContext } from "../../context/Socketcontext";
+import { useGoogleMaps } from "../../providers/GoogleMapsProvider.jsx";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import { useNavigate } from "react-router-dom";
 
-import {
-  GoogleMap,
-  useJsApiLoader,
-  Marker,
-} from "@react-google-maps/api";
+import { GoogleMap, Marker } from "@react-google-maps/api";
 
 function Ride() {
   const ride = JSON.parse(localStorage.getItem("ride"));
-  const [showCancelPopup, setShowCancelPopup] = useState(false);
-  const [showViewDetail, setShowViewDetail] = useState(false);
-  const [activeInput, setActiveInput] = useState(null);
-
-  const name = localStorage.getItem("name");
   const { socket } = useContext(SocketContext);
+  const { isLoaded } = useGoogleMaps();
   const navigate = useNavigate();
+  const name = localStorage.getItem("name");
+   const [progress, setProgress] = useState(0);
+  const pickupLocation =ride.pickupCoordinates
+  const nearByDrivers=ride.nearbyDrivers;
 
-  const tripId = ride._id;
-  const pickup = ride.pickUp;
-  const drop = ride.drop;
-  const price = `₹${ride.fare}/-`;
-  const vehcile = ride.vehcile;
+
+    useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress((prev) => (prev >= 100 ? 0 : prev + 0.5));
+    }, 1000); // increment progress every 100ms
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    if (!socket) return;
+
+    const handleRideConfirmed = (ride) => {
+      alert(`Status: ${ride.status}\nDriver: ${ride.driverId.name}`);
+      localStorage.setItem("ride", JSON.stringify(ride));
+      navigate("/ride/confirmed");
+    };
+
+    socket.on("ride-confirmed", handleRideConfirmed);
+
+    return () => socket.off("ride-confirmed", handleRideConfirmed);
+  }, [socket, navigate]);
+
+  if (!ride) return <p>No ride found</p>;
+  if (!isLoaded || !pickupLocation) return <p>Loading map...</p>;
 
   const vehicleData = {
     bike: { img: TwoWheeler, name: "2 Wheeler." },
@@ -46,38 +59,22 @@ function Ride() {
     miniTruck: { img: MiniTruck, name: "Mini Truck" },
   };
 
-  socket.on("ride-confirmed", (ride) => {
-    alert("Status: " + ride.status + "\nDriver: " + ride.driverId.name);
-    localStorage.setItem("ride", JSON.stringify(ride));
-    navigate("/ride/confirmed");
-  });
 
-  /* -------- GOOGLE MAP -------- */
-   const { isLoaded } = useJsApiLoader({
-     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAP_API,
-   });
-
-  // TEMP pickup location (replace later)
-  const pickupLocation = {
-    lat: 28.6139,
-    lng: 77.2090,
-  };
 
   return (
     <>
       <Navbar />
-
       <div className="fare-container">
         <div className="fare-body">
           {/* LEFT CARD */}
-          <div className="fare-card" id="fare-card">
+          <div className="fare-card">
             <div className="fare-trip">
               <p>Trip Id.</p>
-              <p>{tripId}</p>
+              <p>{ride._id}</p>
             </div>
 
             <div className="fare-top">
-              <img src={vehicleData[vehcile].img} alt="vehicle" />
+              <img src={vehicleData[ride.vehcile].img} alt="vehicle" />
             </div>
 
             <div className="fare-detail">
@@ -88,7 +85,7 @@ function Ride() {
                   <span className="dot green"></span>
                   <div className="address-content">
                     <p className="label">Pickup Location</p>
-                    <p className="value">{pickup}</p>
+                    <p className="value">{ride.pickUp}</p>
                   </div>
                 </div>
 
@@ -97,28 +94,14 @@ function Ride() {
                 <div className="address-item">
                   <span className="dot red"></span>
                   <div className="address-content">
-                    <p className="label">
-                      Drop Location <span className="name">• {name}</span>
-                    </p>
-                    <p className="value">{drop}</p>
+                    <p className="label">Drop Location • {name}</p>
+                    <p className="value">{ride.drop}</p>
                   </div>
                 </div>
               </div>
 
-              <h3>{vehicleData[vehcile].name}</h3>
-              <h4>{price}</h4>
-
-              <p id="ride-detail" onClick={() => setShowViewDetail(true)}>
-                View Detail
-              </p>
-
-              <p
-                id="price-cancel"
-                className="cancel-trip"
-                onClick={() => setShowCancelPopup(true)}
-              >
-                Cancel Trip
-              </p>
+              <h3>{vehicleData[ride.vehcile].name}</h3>
+              <h4>₹{ride.fare}/-</h4>
             </div>
           </div>
 
@@ -127,24 +110,31 @@ function Ride() {
           {/* RIGHT SIDE */}
           <div className="ride-right">
             <div className="right-text">
-              <h2>
-                SEARCHING FOR <br /> DRIVER NEARBY
-              </h2>
+              <h2>SEARCHING FOR DRIVER NEARBY</h2>
               <p>Finding Driver near you.</p>
             </div>
 
             {/* GOOGLE MAP */}
-          <div className="ride-map" style={{ width: "700px", height: "400px", position: "relative" }}>
-                    {isLoaded && (
+            <div className="ride-map" style={{ width: "700px", height: "400px", position: "relative" }}>
+                    
                       <GoogleMap
                         mapContainerStyle={{ width: "100%", height: "100%" }}
                         center={pickupLocation}
-                        zoom={14}
+                        zoom={10}
                         options={{ disableDefaultUI: true, zoomControl: true }}
                       >
                         <Marker position={pickupLocation} />
-                      </GoogleMap>
-                    )}
+                        {nearByDrivers.map((element, index) => (
+                          <Marker
+                            key={index}
+                            position={{
+                              lat: element[1],
+                              lng: element[0],
+                            }}
+                          />
+                        ))}
+                        </GoogleMap>
+                   
 
                     {/* Centered animations */}
                     <div className="animation-box"></div>
@@ -152,12 +142,11 @@ function Ride() {
                   </div>
 
             <div className="progress-container">
-              <div className="progress-bar"></div>
+              <div className="progress-bar"   style={{ width: `${progress}%` }}></div>
             </div>
           </div>
         </div>
       </div>
-
       <Footer />
     </>
   );
