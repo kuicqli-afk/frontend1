@@ -24,6 +24,8 @@ import Phone from '../../assets/phonenumber.png';
 import Mail from '../../assets/username.png';
 import Vehicle from '../../assets/username.png';
 import RiderSection from '../RiderPage/RiderSection';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 const vehcileImages = {
   "Bike": TwoWheeler,
@@ -38,7 +40,7 @@ const RiderPartner = () => {
 
   const navigate = useNavigate();
   
-  const driver = JSON.parse(localStorage.getItem("driver") || "null");
+  // const driver = JSON.parse(localStorage.getItem("driver") || "null");
   const phone = localStorage.getItem("phone") || "";
   const name = localStorage.getItem("name") || "";
 
@@ -46,27 +48,11 @@ const RiderPartner = () => {
   const [showOtp, setShowOtp] = useState(false);
   const [showFinalForm, setShowFinalForm] = useState(false);
   const [final,setFinal]=useState(false)
+  const [application,setApplication]=useState('')
+  const [driver,setDriver]=useState()
 
-  useEffect(() => {
-    
-     axios.post(
-          "https://thetest-h9x3.onrender.com/caption/getCaption",
-          { phone: phone },
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        )
-          .then((res)=>{
-            console.log(res.data);
-            navigate('/ride-partner')    
-        
-          })
-          .catch((err)=>{
-            console.log(err);
-          })
-  }, []);
+
+  
 
   const [finalData, setFinalData] = useState({
     name: driver?.name || name || "",
@@ -92,8 +78,8 @@ const RiderPartner = () => {
       if (response.data.success) {
         toast.success("Form submitted successfully!");
         console.log(response.data)
-        localStorage.setItem("driver",JSON.stringify(response.data.data));
-        localStorage.setItem("name", response.data.data.name)
+        setApplication('pending')
+        setShowFinalForm(false);
       } else {
         toast.error(response.data.message || "Submission failed");
       }
@@ -104,13 +90,7 @@ const RiderPartner = () => {
   };
 
   // Initialize the correct step
-  useEffect(() => {
-    if (driver) {
-      setShowFinalForm(true);
-    } else if (phone) {
-      setShowFinalForm(true);
-    }
-  }, [driver, phone,final,name]);
+
 
   // SEND OTP
   const handleSubmit = async (e) => {
@@ -122,8 +102,17 @@ const RiderPartner = () => {
     try {
       const response = await axios.post("https://thetest-h9x3.onrender.com/caption/send-otp", { phone: data.phone });
       if (response.data.success) {
-        setShowOtp(true);
-        toast.success(response.data.message);
+      
+          toast.success(response.data.message);
+          if(response.data.application)
+          {
+            setApplication(response.data.application)
+            setDriver(response.data.data)
+            console.log(application)
+            
+          }else{
+            setShowOtp(true)
+          }
        
       } else {
         toast.error(response.data.message);
@@ -146,20 +135,15 @@ const RiderPartner = () => {
       if (response) {
         console.log(response.data);
         if(response.data.driver){
-           localStorage.setItem("driver",JSON.stringify(response.data.driver));
-           localStorage.setItem("name", response.data.driver.name)
-           localStorage.setItem("phone", response.data.driver.phone)
-             toast.success("OTP Verified Successfully!");
-        navigate("/ride-partner");
-        setShowOtp(false);
-        setShowFinalForm(true);
+          //  localStorage.setItem("driver",JSON.stringify(response.data.driver));
+           toast.success("OTP Verified Successfully!");
+
+          
+           setShowOtp(false);
+           setShowFinalForm(true);
         }else{
-            localStorage.setItem("name", response.data.user.name)
-        localStorage.setItem("phone", response.data.user.phone)
-        toast.success("OTP Verified Successfully!");
-        navigate("/ride-partner");
-        setShowOtp(false);
-        setShowFinalForm(true);
+       
+          toast.error('No Driver Registeration Found By This Number')
         }
       
       } else {
@@ -173,8 +157,90 @@ const RiderPartner = () => {
   return (
     <>
       <ToastContainer />
-      <Navbar />
-      <div className="rider-top">
+      {application && (
+  <div className="modal-overlay">
+    {application === 'pending' ? (
+      /* PENDING STATE */
+      <div className="status-card pending-state">
+        
+        <div className="illustration-area">
+          
+           <svg width="220" height="220" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{marginLeft:"20px"}}>
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+                <path d="M20.2 7.8c.4 1.2.6 2.5.6 3.9 0 5.5-4.5 10-10 10S1.4 17.2 1.4 11.7 5.9 1.7 11.4 1.7c1.4 0 2.7.3 3.9.8" strokeDasharray="2 2"/>
+                <rect x="15" y="2" width="7" height="9" rx="1" fill="#eff6ff" />
+                <line x1="17" y1="5" x2="20" y2="5" />
+                <line x1="17" y1="7" x2="20" y2="7" />
+              </svg>
+        </div>
+
+        <div className="content-area">
+          <div style={{display:"flex",flexDirection:'row',justifyContent:'end',padding:"10px"}}>
+             
+          
+           <button  style={{padding:"5px",borderRadius:"20px",background:'white',color:'blue', border:'1px solid blue',cursor:'pointer'}} onClick={()=>setApplication('')}><FontAwesomeIcon icon={faXmark}/></button>
+          </div>
+         <span className="badge">PENDING</span>
+          <h1>We’re reviewing your application!</h1>
+          <p>
+            Our team is currently verifying your documents. This usually takes
+            24–48 hours.
+          </p>
+
+          <div className="progress-stepper">
+            <div className="step active">Submitted</div>
+            <div className="step current">Reviewing</div>
+            <div className="step">Approved</div>
+            <div className="progress-bar">
+              <div className="progress-fill" style={{ width: "50%" }} />
+            </div>
+          </div>
+
+          <button className="text-link">Contact Support</button>
+        </div>
+      </div>
+    ) : (
+      /* APPROVED STATE */
+      <div className="status-card approved-state">
+        <div className="illustration-area success-icon">
+          <svg width="100" height="100" viewBox="0 0 24 24" fill="none" >
+                <circle cx="12" cy="12" r="11" fill="#1d52ff" />
+                <path d="M7 13l3 3 7-7" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+        </div>
+
+        <div className="content-area text-center">
+          <h1>You’re all ready Registered With Us {driver?.name}!</h1>
+          <p>
+            Your application was approved. You can now access your dashboard.
+          </p>
+          <div className="btn-container">
+            <a href="https://driver-n7zj.onrender.com" className="primary-btn">
+            Go to Dashboard
+          </a>
+          <button className="close-btn" onClick={()=>setApplication('')}>Close</button>
+          </div>
+          
+        </div>
+      </div>
+    )}
+  </div>
+)}
+
+    
+
+
+ 
+      <Navbar/>
+
+
+
+
+
+      
+      <div className="rider-top"style={application ? { filter:"blur(5px)" } : {}}
+>
         <div className="rider-card">
           <div className="rider-left">
             <img src={arrow} alt="" />
@@ -184,9 +250,7 @@ const RiderPartner = () => {
               {/* FINAL FORM */}
               {showFinalForm ? (
                 <>
-                {
-                  driver?<h2>Welcome To Your Profile</h2>: <h2>Attach Vehicle Now</h2>
-                }
+               
                  
                   <div className="input-row">
                     <img src={Profile} className="input-icon" alt="" />
@@ -194,7 +258,7 @@ const RiderPartner = () => {
                       type="text"
                       value={finalData.name}
                       onChange={(e) => setFinalData({ ...finalData, name: e.target.value })}
-                      readOnly={!!driver?.name || !name}
+                 
                       placeholder="Enter your Name*"
                     />
                   </div>
@@ -208,7 +272,7 @@ const RiderPartner = () => {
                     <img src={Mail} className="input-icon" alt="" />
                     <input
                       type="email"
-                      placeholder="Enter your Email ID*"
+                      placeholder="Enter your Email ID*(Optional)"
                       value={driver?driver.email:finalData.email}
                       onChange={(e) => setFinalData({ ...finalData, email: e.target.value })}
                     />
@@ -257,22 +321,11 @@ const RiderPartner = () => {
                     <a href="#"> Privacy Policy</a>.
                   </p>
                     
-                    {
-                      driver
-                      ?
-                  <div style={{display:"flex" ,flexDirection:"row", gap:"10px"}}>
-                  <button className="otp-btn" type="button">
-                    Edit
-                  </button>
-                  <button className="otp-btn" type="button" >
-                    Delete
-                  </button>
-                   </div>
-                      :
+                   
                   <button className="otp-btn" type="button" onClick={handleFinalSubmit}>
                     Submit
                   </button>
-                    }
+              
                  
                 </>
               ) : showOtp ? (
