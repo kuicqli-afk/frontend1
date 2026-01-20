@@ -25,7 +25,7 @@ import Mail from '../../assets/username.png';
 import Vehicle from '../../assets/username.png';
 import RiderSection from '../RiderPage/RiderSection';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faSleigh, faXmark } from "@fortawesome/free-solid-svg-icons";
 
 const vehcileImages = {
   "Bike": TwoWheeler,
@@ -50,8 +50,7 @@ const RiderPartner = () => {
   const [final,setFinal]=useState(false)
   const [application,setApplication]=useState('')
   const [driver,setDriver]=useState()
-
-
+  const [loading,setLoading]=useState(false);
   
 
   const [finalData, setFinalData] = useState({
@@ -64,6 +63,7 @@ const RiderPartner = () => {
 
    // FINAL FORM SUBMIT
   const handleFinalSubmit = async (e) => {
+    setLoading(true)
     e.preventDefault();
     const submitData = { ...finalData, phone: data.phone };
     console.log(submitData);
@@ -87,6 +87,7 @@ const RiderPartner = () => {
       toast.error(error.response?.data?.message || error.message);
     }
     setFinal(true)
+    setLoading(false)
   };
 
   // Initialize the correct step
@@ -94,9 +95,11 @@ const RiderPartner = () => {
 
   // SEND OTP
   const handleSubmit = async (e) => {
+    setLoading(true)
     e.preventDefault();
     if (!data.phone) {
       toast.error("Please enter your phone number");
+      setLoading(false)
       return;
     }
     try {
@@ -120,13 +123,17 @@ const RiderPartner = () => {
     } catch (error) {
       toast.error("Server error. Please try again.");
     }
+    setLoading(false)
+
   };
 
   // VERIFY OTP
   const handleSubmit2 = async (e) => {
+    setLoading(true)
     e.preventDefault();
     if (!data.otp) {
       toast.error("Please enter OTP");
+      setLoading(false)
       return;
     }
    
@@ -149,7 +156,7 @@ const RiderPartner = () => {
       } else {
         toast.error(response.data.message);
       }
-  
+     setLoading(false)
   };
 
  
@@ -192,9 +199,9 @@ const RiderPartner = () => {
             <div className="step active">Submitted</div>
             <div className="step current">Reviewing</div>
             <div className="step">Approved</div>
-            <div className="progress-bar">
+            {/* <div className="progress-bar">
               <div className="progress-fill" style={{ width: "50%" }} />
-            </div>
+            </div> */}
           </div>
 
           <button className="text-link">Contact Support</button>
@@ -323,7 +330,7 @@ const RiderPartner = () => {
                     
                    
                   <button className="otp-btn" type="button" onClick={handleFinalSubmit}>
-                    Submit
+                    {loading?'Submitting..':'Submit'}
                   </button>
               
                  
@@ -343,7 +350,7 @@ const RiderPartner = () => {
                     />
                   </div>
                   <button className="otp-btn" type="button" onClick={handleSubmit2}>
-                    Verify OTP
+                    {loading?'Varifying OTP':'Verify OTP'}
                   </button>
                 </>
               ) : (
@@ -381,12 +388,12 @@ const RiderPartner = () => {
                   </p>
 
                   <button className="otp-btn" type="button" onClick={handleSubmit}>
-                    Request OTP
+                    {loading?'Requesting...':
+                    'Request OTP'}
+
                   </button>
 
-                  <p className="bottom-text-rider">
-                    New to kuicqii? <a href="#">Create an account</a>
-                  </p>
+                 
                 </>
               )}
             </div>

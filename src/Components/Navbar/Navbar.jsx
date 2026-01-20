@@ -88,7 +88,7 @@ const Navbar = () => {
             
 
             <Link className={`nav-link ${location.pathname === "/user-login" ? "active" : ""}`} to="/user-login">
-              <li>
+              <li style={{width:'200px'}}>
                 <img src={signup} alt="" />
                 {
                   name ? <div style={{ display: "flex", flexDirection: "row", color: "white", alignItems: "center", gap: "5px" }}>
@@ -98,7 +98,7 @@ const Navbar = () => {
                       Logout
                     </div>
                   </div>
-                    : <p> Sign <span>in</span></p>
+                    : <div style={{color:'white'}}>Sign Up / Sign In</div>
                 }
 
               </li>
