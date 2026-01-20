@@ -210,7 +210,7 @@ const RiderPartner = () => {
           <div style={{display:"flex",flexDirection:'row',justifyContent:'end',padding:"10px"}}>
              
           
-           <button  style={{padding:"5px",borderRadius:"20px",background:'white',color:'blue', border:'1px solid blue',cursor:'pointer'}} onClick={()=>setApplication('')}><FontAwesomeIcon icon={faXmark}/></button>
+           <button  style={{padding:"5px",borderRadius:"20px",background:'white',color:'blue', border:'1px solid blue',cursor:'pointer'}} onClick={()=>{setApplication('');navigate('/')}}><FontAwesomeIcon icon={faXmark}/></button>
           </div>
          <span className="badge">PENDING</span>
           <h1>We’re reviewing your application!</h1>
@@ -250,7 +250,7 @@ const RiderPartner = () => {
             <a href="https://driver-n7zj.onrender.com" className="primary-btn">
             Go to Dashboard
           </a>
-          <button className="close-btn" onClick={()=>setApplication('')}>Close</button>
+          <button className="close-btn" onClick={()=>{setApplication('');navigate('/')}}>Close</button>
           </div>
           
         </div>
