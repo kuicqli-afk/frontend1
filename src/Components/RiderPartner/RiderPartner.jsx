@@ -51,6 +51,7 @@ const RiderPartner = () => {
   const [application,setApplication]=useState('')
   const [driver,setDriver]=useState()
   const [loading,setLoading]=useState(false);
+  const [popUp,setPopUp]=useState('')
   
 
   const [finalData, setFinalData] = useState({
@@ -114,11 +115,13 @@ const RiderPartner = () => {
             console.log(application)
             
           }else{
+           
             setShowOtp(true)
           }
        
       } else {
-        toast.error(response.data.message);
+         setPopUp(response.data.message)
+        // toast.error(response.data.message);
       }
     } catch (error) {
       toast.error("Server error. Please try again.");
@@ -164,6 +167,27 @@ const RiderPartner = () => {
   return (
     <>
       <ToastContainer />
+       {popUp&&
+                    
+                      <div className='model-overlay' style={{width:'100%',height:"100vh",position:'absolute',display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',background:'#000000b3',zIndex:'1'}}>
+                      
+                         <div style={{display:'flex',flexDirection:'column',padding:'30px',background:'white',boxShadow:'2px 2px 5px gray',filter:'none',borderRadius:'10px',alignItems:'end'}}>
+                         <div style={{color:'blue',border:'1px solid blue',padding:'10px',borderRadius:'20px',cursor:'pointer'}}>
+                             <FontAwesomeIcon icon={faXmark}  onClick={()=>setPopUp(false)}/>
+                         </div>
+                         <div style={{display:'flex',flexDirection:'row',padding:'60px',background:'white',alignItems:'center',borderRadius:'5px',width:'800px',justifyContent:'center',alignItems:'center',paddingTop:'20px'}}>
+                              <div style={{color:'blue',fontSize:'30px',border:'1px solid blue',borderRadius:'30px',padding:'5px',width:'45px',height:"45px",textAlign:'center', fontWeight:'500'}}>
+                               i 
+                            </div>
+                            <div style={{marginLeft:'10px', textAlign:'justify',marginLeft:'20px'}}dangerouslySetInnerHTML={{ __html: popUp }}>
+                     
+                            </div>
+                         </div>
+                            
+                          
+                         </div>
+                  </div>
+                  }
       {application && (
   <div className="modal-overlay">
     {application === 'pending' ? (
