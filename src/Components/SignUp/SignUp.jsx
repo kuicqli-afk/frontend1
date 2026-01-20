@@ -288,10 +288,10 @@ const SignUp = () => {
                                 {
                                     login
                                     ?
-                                    <> New to kuicqii? Create New Account <span onClick={()=>{setLogin(false)}} style={{fontWeight:"600",textDecoration:'underLine',color:'blue',cursor:'pointer'}}>SignUp</span></>
+                                    <> New to kuicqli?  <span onClick={()=>{setLogin(false)}} style={{fontWeight:"600",textDecoration:'underLine',color:'blue',cursor:'pointer'}}>SignUp</span></>
 
                                     :
-                                     <> New to kuicqii? Already have an Account <span  style={{fontWeight:"600",textDecoration:'underLine',color:'blue',cursor:'pointer'}} onClick={()=>{setLogin(true)}}>Login</span></>
+                                     <>  Already have an Account <span  style={{fontWeight:"600",textDecoration:'underLine',color:'blue',cursor:'pointer'}} onClick={()=>{setLogin(true)}}>Login</span></>
                                 }
                                
                             </p>

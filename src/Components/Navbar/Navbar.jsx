@@ -98,7 +98,7 @@ const Navbar = () => {
                       Logout
                     </div>
                   </div>
-                    : <div style={{color:'white'}}>Sign Up / Sign In</div>
+                    : <div style={{color:'white'}}>Log In</div>
                 }
 
               </li>
