@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import Navbar from '../Navbar/Navbar'
 import axios from 'axios'
 import { SocketContext } from '../../context/Socketcontext'
+import { useGoogleMaps } from "../../providers/GoogleMapsProvider.jsx";
 import {
   GoogleMap,
   useJsApiLoader,
@@ -15,6 +16,7 @@ function RideStarted() {
     const {socket}=useContext(SocketContext);
     const [data,setData]=useState('')
     const ride =JSON.parse(localStorage.getItem("ride"))
+     const { isLoaded } = useGoogleMaps();
 // 🔌 Socket listener
   useEffect(() => {
     if (!socket) return
@@ -46,10 +48,7 @@ function RideStarted() {
 
       /* ================= GOOGLE MAP ================= */
     
-      const { isLoaded } = useJsApiLoader({
-        id: "google-map-script",
-        googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAP_API,
-      });
+     
     
       const calculateRoute = async () => {
         if (!window.google || !ride?.pickUp || !ride?.drop) return;

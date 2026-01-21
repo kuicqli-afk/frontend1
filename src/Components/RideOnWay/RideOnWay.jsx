@@ -10,7 +10,7 @@ import {
   Marker,
   DirectionsRenderer,
 } from "@react-google-maps/api";
-
+import { useGoogleMaps } from "../../providers/GoogleMapsProvider.jsx";
 import { SocketContext } from "../../context/Socketcontext";
 
 // Assets
@@ -43,6 +43,7 @@ const RideOnWay = () => {
   const [distance, setDistance] = useState("");
   const [travelTime, setTravelTime] = useState("");
   const [activeTab, setActiveTab] = useState("2 Wheeler.");
+   const { isLoaded } = useGoogleMaps();
 
   const mapRef = useRef(null);
   const markerRef = useRef(null);
@@ -60,10 +61,7 @@ const RideOnWay = () => {
   const selected = vehicleData[activeTab];
 
   // ====== GOOGLE MAP LOADER ======
-  const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAP_API,
-     libraries: ["places"],
-  });
+
 
   const mapOptions = useMemo(
     () => ({
