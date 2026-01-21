@@ -130,7 +130,7 @@ const FareLink = () => {
 
   const handleSubmit = async () => {
 
-    const newPhone=phone.trim();
+    const newPhone=phone.replace(/\D/g, "");
     if(newPhone.length!=10)
     {
         setError(true)
@@ -214,7 +214,7 @@ const FareLink = () => {
   const handleRequestedRide = async () => {
     //Crete A From
     const userPhone = localStorage.getItem('phone')
-    const newPhone=phone.trim();
+    const newPhone=phone.replace(/\D/g, "");
     if(newPhone.length!=10)
     {
       alert('Enter 10 digit phone number')

@@ -150,11 +150,11 @@ const SignUp = () => {
                    <div style={{color:'blue',border:'1px solid blue',padding:'10px',borderRadius:'20px',cursor:'pointer'}}>
                        <FontAwesomeIcon icon={faXmark}  onClick={()=>setPopUp(false)}/>
                    </div>
-                   <div style={{display:'flex',flexDirection:'row',padding:'60px',background:'white',alignItems:'center',borderRadius:'5px',width:'800px',justifyContent:'center',alignItems:'center',paddingTop:'20px'}}>
+                   <div style={{display:'flex',flexDirection:'row',padding:'60px',background:'white',borderRadius:'5px',width:'800px',justifyContent:'center',alignItems:'center',paddingTop:'20px'}}>
                         <div style={{color:'blue',fontSize:'30px',border:'1px solid blue',borderRadius:'30px',padding:'5px',width:'45px',height:"45px",textAlign:'center', fontWeight:'500'}}>
                          i 
                       </div>
-                      <div style={{marginLeft:'10px', textAlign:'justify',marginLeft:'20px'}}dangerouslySetInnerHTML={{ __html: popUp }}>
+                      <div style={{ textAlign:'justify',marginLeft:'20px'}}dangerouslySetInnerHTML={{ __html: popUp }}>
                
                       </div>
                    </div>
