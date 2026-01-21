@@ -137,6 +137,7 @@ const FareLink = () => {
         return;
     }
      setShowSummary(true)
+     setError(false)
      try{
          const response = await axios.get('https://thetest-h9x3.onrender.com/maps/get-fair-estimate', {
       params: {
