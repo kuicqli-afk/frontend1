@@ -62,6 +62,11 @@ const RiderPartner = () => {
     numberPlate:""
   });
 
+
+useEffect(() => {
+  window.scrollTo(0, 0);
+}, []);
+
    // FINAL FORM SUBMIT
   const handleFinalSubmit = async (e) => {
     setLoading(true)

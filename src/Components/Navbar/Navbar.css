@@ -96,6 +96,9 @@
     animation: bounce 0.8s;
 }
 
+.bounce:hover{
+     animation: bounce 0.8s;
+}
 /* Keyframes for bounce */
 @keyframes bounce {
     0% {

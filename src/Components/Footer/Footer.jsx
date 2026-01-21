@@ -82,14 +82,17 @@ const Footer = () => {
                                 textDecoration: "none",
                                 transition: "color 0.2s ease",
                             }}
+                     
                             >
+                          
                             <img
                                 src={Rider}
                                 alt="Ride Partner"
                                 width={60}
                                 style={{ opacity: 0.85 }}
+                                className='bounce'
                             />
-                            <div>Become a <br />Ride Partner</div>
+                            <div style={{fontWeight:"600"}}>Become a <br />Ride Partner</div>
                             </Link>
 
                         <h2>City</h2>
