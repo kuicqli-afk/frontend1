@@ -9,6 +9,7 @@ import {
   Marker,
   DirectionsRenderer,
 } from "@react-google-maps/api";
+import { useNavigate } from 'react-router-dom';
 function RideStarted() {
     const [directionResponse, setDirectionResponse] = useState(null);
     const [distance,setDistance]=useState('')
@@ -17,6 +18,7 @@ function RideStarted() {
     const [data,setData]=useState('')
     const ride =JSON.parse(localStorage.getItem("ride"))
      const { isLoaded } = useGoogleMaps();
+     const navigate=useNavigate()
 // 🔌 Socket listener
   useEffect(() => {
     if (!socket) return
@@ -25,6 +27,7 @@ function RideStarted() {
       alert('Ride Completed')
       socket.leave(`order_${orderId}`);
       console.log(newRide)
+      navigate('/')
     }
 
     socket.on('ride-completed', handleRideCompleted)
@@ -82,7 +85,7 @@ function RideStarted() {
   return (<>
   <Navbar/>
     <div style={{
-padding:"20px"
+        padding:"20px"
     }}>
         <h1>Ride Started</h1>
         <div style={{width:"full",height:"500px",border:"2px solid black",marginTop:"10px"}}>

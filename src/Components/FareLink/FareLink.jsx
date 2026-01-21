@@ -43,6 +43,8 @@ const FareLink = () => {
 
   const navigate = useNavigate();
 
+  const[error,setError]=useState(false)
+
   const {socket,sendMessage}=useContext(SocketContext)
 
   const isFormFilled =
@@ -128,7 +130,15 @@ const FareLink = () => {
 
   const handleSubmit = async () => {
 
-    const response = await axios.get('https://thetest-h9x3.onrender.com/maps/get-fair-estimate', {
+    const newPhone=phone.trim();
+    if(newPhone.length!=10)
+    {
+        setError(true)
+        return;
+    }
+     setShowSummary(true)
+     try{
+         const response = await axios.get('https://thetest-h9x3.onrender.com/maps/get-fair-estimate', {
       params: {
         origin: pickup,
         destination: drop,
@@ -136,11 +146,17 @@ const FareLink = () => {
       }
     })
 
+    
     if (response) {
       console.log(response.data)
       setFare(response.data.fare)
 
     }
+     }catch(error)
+     {
+      alert(error.message)
+     }
+   
 
 
 
@@ -197,6 +213,12 @@ const FareLink = () => {
   const handleRequestedRide = async () => {
     //Crete A From
     const userPhone = localStorage.getItem('phone')
+    const newPhone=phone.trim();
+    if(newPhone.length!=10)
+    {
+      alert('Enter 10 digit phone number')
+      return;
+    }
     if (!userPhone) {
       alert('Please Login')
       setPendingRide({
@@ -209,10 +231,13 @@ const FareLink = () => {
         vehcile: selected.name
       });
       navigate('/user-login')
+
+      
     } else {
+
       const formdata = new FormData();
       formdata.append('name', name);
-      formdata.append('phone', phone);
+      formdata.append('phone', newPhone);
       formdata.append('pickup', pickup)
       formdata.append('drop', drop);
       formdata.append('userPhone', userPhone);
@@ -574,17 +599,19 @@ const FareLink = () => {
                 </div>
 
 
-                <div className="fare-input-extended">
+                <div className="fare-input-extended" style={ error?{border:"1px solid red",color:'red'}:{}}>
                   <div className="fare-input-row no-bg">
                     <img src={PhoneNumber} alt="" />
                     <input
-                      placeholder="Enter Phone Number"
+                      placeholder="Enter Receiver Phone Number"
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
+                      style={{width:"300px"}}
                     />
                   </div>
+                  
 
-                  <div className="right-toggle">
+                  {/* <div className="right-toggle">
                     <div
                       className={`radio ${phoneType === "receiver" ? "active" : ""}`}
                       onClick={() => setPhoneType("receiver")}
@@ -597,20 +624,25 @@ const FareLink = () => {
                     >
                       <span className="dot"></span> Sender
                     </div>
-                  </div>
-                </div>
+                  </div> */}
 
-                <div className="fare-input-extended">
-                  <div className="fare-input-row no-bg">
+                </div>
+                <span style={error?{fontSize:'12px',marginTop:'-10px',marginLeft:'20px',color:'red'}:{display:'none'}}>
+                    Invalid Number
+                  </span>
+
+                <div className="fare-input-extended"  >
+                  <div className="fare-input-row no-bg"   >
                     <img src={Username} alt="" />
                     <input
-                      placeholder="Enter Name"
+                      placeholder="Enter Receiver Name"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
+                    
                     />
                   </div>
 
-                  <div className="right-toggle">
+                  {/* <div className="right-toggle">
                     <div
                       className={`radio ${nameType === "receiver" ? "active" : ""}`}
                       onClick={() => setNameType("receiver")}
@@ -623,13 +655,13 @@ const FareLink = () => {
                     >
                       <span className="dot"></span> Sender
                     </div>
-                  </div>
+                  </div> */}
                 </div>
 
                 <button
                   className={`fare-submit ${isFormFilled ? "active" : "inactive"}`}
                   disabled={!isFormFilled}
-                  onClick={() => { setShowSummary(true); handleSubmit() }}
+                  onClick={() => {handleSubmit() }}
                 >
                   GET FARE ESTIMATE
                 </button>
