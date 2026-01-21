@@ -4,7 +4,7 @@ import "./Navbar.css";
 import Logo from "../../assets/Logo.png";
 import Address from "../../assets/Address.png";
 import Marchentpartner from "../../assets/Marchentpartner.png";
-import Rider from "../../assets/RIDER.png";
+
 import support from "../../assets/support.png";
 import signup from "../../assets/signup.png";
 import Rupee from "../../assets/rupee.png";
@@ -72,12 +72,7 @@ const Navbar = () => {
                 <p>Merchant Partner.</p>
               </li>
             </Link> */}
-            <Link className={`nav-link ${location.pathname === "/ride-partner" ? "active" : ""}`} to="/ride-partner">
-              <li>
-                <img src={Rider} alt="" />
-                <p>Ride Partner.</p>
-              </li>
-            </Link>
+          
             </>
 
         
@@ -98,7 +93,7 @@ const Navbar = () => {
                       Logout
                     </div>
                   </div>
-                    : <div style={{color:'white' ,width:"70px"}}>Log In</div>
+                    : <div style={{color:'white' ,width:"60px"}}>Log In</div>
                 }
 
               </li>

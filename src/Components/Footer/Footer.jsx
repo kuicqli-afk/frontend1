@@ -3,6 +3,7 @@ import './Footer.css'
 
 import logo from '../../assets/Logo.png'
 import { Link } from 'react-router-dom'
+import Rider from "../../assets/RIDER.png";
 
 const Footer = () => {
     return (
@@ -70,6 +71,27 @@ const Footer = () => {
 
                 <div className="footer-right">
                     <div className="right-top">
+                        <Link
+                            to="/ride-partner"
+                            style={{
+                                display: "flex",
+                                alignItems: "start",
+                                gap: "10px",
+                                fontSize: "14px",
+                                flexDirection:'column',
+                                textDecoration: "none",
+                                transition: "color 0.2s ease",
+                            }}
+                            >
+                            <img
+                                src={Rider}
+                                alt="Ride Partner"
+                                width={60}
+                                style={{ opacity: 0.85 }}
+                            />
+                            <div>Become a <br />Ride Partner</div>
+                            </Link>
+
                         <h2>City</h2>
                         <ul>
                             <li>Lucknow</li>
