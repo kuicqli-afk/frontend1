@@ -26,12 +26,18 @@ const SignUp = () => {
 
     const handleSubmitLogin= async (e)=>{
       e.preventDefault();
-
+      
       if(!data.phone)
       {
         toast.error("Please Enter Your Phone Number");
         return;
       }
+      const newPhone=data.phone.replace(/\D/g, "");
+      if(newPhone.length!=10)
+        {
+            toast.error('Please Enter Valid Phone Number');
+            return;
+        }
 
       try {
         const response = await axios.post(
@@ -63,9 +69,15 @@ const SignUp = () => {
     // Send OTP
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        const newPhone=data.phone.replace(/\D/g, "");
         if (!data.phone) {
             toast.error('Please enter your phone number');
+            return;
+        }
+
+        if(newPhone.length!=10)
+        {
+            toast.error('Please Enter Valid Phone Number');
             return;
         }
 
@@ -176,7 +188,7 @@ const SignUp = () => {
                            {name}
                        </div>
                       :
-                      <form>
+                      <form style={{width:"50%"}}>
                         <div className="sign-right">
                             {showOtp ? (
                                 <>
@@ -284,17 +296,19 @@ const SignUp = () => {
                                 
                             )}
 
-                            <p className="bottom-text">
+                           {
+                             !showOtp&&<p className="bottom-text">
                                 {
                                     login
                                     ?
                                     <> New to kuicqli?  <span onClick={()=>{setLogin(false)}} style={{fontWeight:"600",textDecoration:'underLine',color:'blue',cursor:'pointer'}}>SignUp</span></>
 
                                     :
-                                     <>  Already have an Account <span  style={{fontWeight:"600",textDecoration:'underLine',color:'blue',cursor:'pointer'}} onClick={()=>{setLogin(true)}}>Login</span></>
+                                     <>Already have an Account <span  style={{fontWeight:"600",textDecoration:'underLine',color:'blue',cursor:'pointer'}} onClick={()=>{setLogin(true)}}>Login</span></>
                                 }
                                
                             </p>
+                           } 
                         </div>
                     </form>}
                     

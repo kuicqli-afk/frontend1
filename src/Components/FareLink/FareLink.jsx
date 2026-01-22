@@ -372,7 +372,7 @@ const FareLink = () => {
         <div className="fare-body">
 
           {/* LEFT CARD */}
-          <div className="fare-card">
+          <div className="fare-card" >
 
             <div className="fare-top">
               <img src={selected.img} alt="vehicle" />
@@ -419,9 +419,9 @@ const FareLink = () => {
 
               <h3>{activeTab}</h3>
 
-              {!showSummary && <p>Starting from</p>}
+              {/* {!showSummary && <p>Starting from</p>} */}
 
-              <h4>{fare ? '₹' + fare + '/-' : '₹' + selected.price + '/-'}</h4>
+              {/* <h4>{fare ? '₹' + fare + '/-' : '₹' + selected.price + '/-'}</h4> */}
 
               {showSummary && (
                 <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>

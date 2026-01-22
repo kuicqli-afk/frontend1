@@ -146,7 +146,14 @@
   opacity: 0.9;
 }
 
-
+.rider{
+   padding: 5px;
+   border-radius: 10px;
+}
+.rider:hover{
+  background-color:rgb(33, 33, 255);
+  padding: 5px;
+}
 
 /* ===============================
    RESPONSIVE BREAKPOINTS

@@ -84,8 +84,8 @@ const Footer = () => {
                             }}
                      
                             >
-                          
-                            <img
+                          <div className='rider' >
+                                <img
                                 src={Rider}
                                 alt="Ride Partner"
                                 width={60}
@@ -93,6 +93,8 @@ const Footer = () => {
                                 className='bounce'
                             />
                             <div style={{fontWeight:"600"}}>Become a <br />Ride Partner</div>
+                          </div>
+                           
                             </Link>
 
                         <h2>City</h2>

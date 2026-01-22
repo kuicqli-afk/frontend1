@@ -93,7 +93,7 @@ const Navbar = () => {
                       Logout
                     </div>
                   </div>
-                    : <div style={{color:'white' ,width:"60px"}}>Log In</div>
+                    : <div style={{color:'white' ,width:"60px",fontWeight:"600"}}>Log In</div>
                 }
 
               </li>

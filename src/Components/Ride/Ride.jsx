@@ -135,7 +135,7 @@ function Ride() {
                             icon={{
                               url: bikeIcon,
                               scaledSize: new window.google.maps.Size(60, 60),
-                              anchor: new window.google.maps.Point(20, 20),
+                              anchor: new window.google.maps.Point(15, 15),
                             }}
                           />
                         ))}

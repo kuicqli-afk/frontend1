@@ -1,91 +1,118 @@
+:root {
+  /* Professional Color Palette */
+  --primary-color: #2563eb;
+  --sidebar-bg: #1e293b;
+  --sidebar-hover: #334155;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --bg-light: #f8fafc;
+  --white: #ffffff;
+  --border-color: #e2e8f0;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  
+  /* Sizing */
+  --sidebar-width: 260px;
+  --navbar-height: 64px;
+  --transition: all 0.2s ease-in-out;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Layout Container */
 .dashboard-sidebar-container {
   display: flex;
-  flex-direction: row;
   width: 100vw;
   height: 100vh;
+  background-color: var(--bg-light);
 }
 
+/* Sidebar Styling */
 .dashboard-sidebar {
-  width: 250px;
+  width: var(--sidebar-width);
   height: 100vh;
+  background-color: var(--sidebar-bg);
+  color: var(--white);
   display: flex;
   flex-direction: column;
-  padding: 10px;
-  background-color: #0000e6;
-  color: white; 
+  padding: 1.5rem 1rem;
+  flex-shrink: 0;
 }
-.dashboard-sidebar ul {
-  list-style-type: none;
-  padding: 10px;
-  padding-left: 0px;
 
+.dashboard-sidebar ul {
+  list-style: none;
+  margin-top: 2rem;
 }
 
 .dashboard-sidebar ul li {
-  padding: 15px 10px;
-  margin: 2px 0;
+  padding: 12px 16px;
+  margin-bottom: 4px;
   cursor: pointer;
-  border-radius: 5px;
-  padding-left: 0px;
-}
-
-.dashboard-content {
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: var(--transition);
   display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-
-  width: calc(100vw - 250px);
-}
-.dashboard-navbar {
-  height: 60px;
-  background-color: #f5f5f5;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-
   align-items: center;
-  padding: 0 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-.navbar-2{
-  display: flex;
-  flex-direction: row;
-  
-
-}
-.sub-navbar{
-  display: flex;
-  flex-direction: row;
-  gap:20px;
+  color: #cbd5e1;
 }
 
 .dashboard-sidebar li:hover {
-  background-color: #ffffff;
-  color: blue;
-  font-weight: bold;
+  background-color: var(--sidebar-hover);
+  color: var(--white);
 }
-.info-div{
-  display: flex;
-  flex-direction: row;
-  gap:20px;
-  width: 100%;
-}
-.personal-info, .documents-info{
-  border: 1px solid black;
-  padding:10px;
-  border-radius:5px;
+
+/* Main Content Area */
+.dashboard-content {
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
-  gap:10px;
-  width: 100%;
+  overflow-y: auto;
 }
+
+/* Navbar Styling */
+.dashboard-navbar {
+  height: var(--navbar-height);
+  background-color: var(--white);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+/* Info Cards Section */
+.info-div {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+.personal-info, .documents-info {
+  background: var(--white);
+  border: 1px solid var(--border-color);
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Popups */
 .popup-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -93,9 +120,70 @@
 }
 
 .popup-content {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  width: 300px;
-  text-align: center;
+  background: var(--white);
+  padding: 2rem;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: var(--shadow-md);
+}
+
+/* Mobile Bottom Navigation */
+.bottom-sidebar {
+  display: none; /* Hidden on desktop */
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 65px;
+  background-color: #ffffff;
+  border-top: 1px solid #e2e8f0;
+ 
+  justify-content: space-around;
+  align-items: center;
+  padding-bottom: env(safe-area-inset-bottom); /* Fix for iPhones with notches */
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+  z-index: 1000;
+}
+
+/* Ensure the Link and List Item act as one clickable block */
+.bottom-sidebar a, 
+.bottom-sidebar li {
+  text-decoration: none;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  color: #64748b; /* Professional muted gray */
+  font-size: 0.7rem;
+  font-weight: 500;
+  gap: 4px;
+  transition: color 0.2s ease;
+  cursor: pointer;
+}
+
+/* Active/Hover State */
+.bottom-sidebar a:hover, 
+.bottom-sidebar li:hover {
+  color: #2563eb; /* Modern primary blue */
+}
+
+/* Fix Icon sizing */
+.bottom-sidebar svg {
+  height: 20px !important;
+  margin-bottom: 2px;
+}
+
+/* Responsive Logic */
+@media (max-width: 768px) {
+  
+   .bottom-sidebar{
+    display: flex;
+   }
+
+  .dashboard-sidebar{
+    display:none
+   }
 }
