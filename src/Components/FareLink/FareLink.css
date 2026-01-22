@@ -789,3 +789,186 @@
     flex-direction: column;
     padding: 20px;
 }
+
+
+@media (max-width: 1024px) {
+
+  .fare-body {
+    gap: 30px;
+  }
+
+  .fare-divider {
+    height: 380px;
+  }
+
+  .fare-card {
+    margin-top: 20px;
+  }
+
+  .fare-detail h3,
+  .fare-detail p {
+    font-size: 26px;
+  }
+
+  .fare-detail h4 {
+    font-size: 30px;
+  }
+
+  .fare-right {
+    margin-top: 20px;
+  }
+
+  .searching-driver-wrapper {
+    flex-direction: column;
+  }
+
+  .searching-left,
+  .searching-right {
+    width: 100%;
+    border: none;
+  }
+}
+
+
+
+@media (max-width: 768px) {
+
+  /* ===== Fare Section ===== */
+  .fare-container {
+    padding: 40px 12px;
+  }
+
+  .fare-body {
+    flex-direction: column;
+    gap: 25px;
+  }
+
+  .fare-divider {
+    display: none;
+  }
+
+  .fare-card {
+    width: 100%;
+    align-items: center;
+  }
+
+  .fare-top {
+    width: 100%;
+    height: auto;
+  }
+
+  .fare-detail h3,
+  .fare-detail p,
+  .fare-detail h4 {
+    font-size: 24px;
+    text-align: center;
+  }
+
+  /* ===== Form Right ===== */
+  .fare-right {
+    margin-top: 0;
+    width: 100%;
+  }
+
+  .fare-summary {
+    max-width: 100%;
+  }
+
+  .prediction-box {
+    max-width: 100%;
+  }
+
+  /* ===== Searching Screen ===== */
+  .searching-left h2 {
+    font-size: 24px;
+  }
+
+  .searching-right h1 {
+    font-size: 22px;
+  }
+
+  .map-container {
+    height: 240px;
+  }
+}
+
+
+@media (max-width: 480px) {
+
+  /* ===== Fare Cards ===== */
+  .fare-card {
+    display: none;
+  }
+
+  .fare-tabs{
+    padding: 5px;
+  }
+  .fare-tabs p{
+      font-size: 12px;
+  }
+
+  .fare-card .fare-weight {
+    font-size: 22px;
+  }
+
+  .fare-weight img {
+    width: 22px;
+  }
+
+  .fare-detail h3,
+  .fare-detail p {
+    font-size: 20px;
+  }
+
+  .fare-detail h4 {
+    font-size: 24px;
+  }
+
+  /* ===== Inputs ===== */
+  .fare-input-row input,
+  .summary-row input {
+    font-size: 14px;
+  }
+
+  /* ===== Modal ===== */
+  .view-detail-modal {
+    padding: 16px;
+  }
+
+  .view-detail-body {
+    flex-direction: column;
+  }
+
+  .view-divider {
+    display: none;
+  }
+
+  .view-left {
+    width: 100%;
+    align-items: center;
+    text-align: center;
+  }
+
+  .view-left h4 {
+    font-size: 24px;
+  }
+
+  .view-left h2 {
+    font-size: 28px;
+  }
+
+  .view-right {
+    padding-right: 0;
+  }
+
+  .view-book-btn {
+    width: 100%;
+  }
+
+  /* ===== Login Popup ===== */
+  .login-popup {
+    left: 5%;
+    right: 5%;
+    top: 15%;
+  }
+}

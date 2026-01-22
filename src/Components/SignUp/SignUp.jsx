@@ -188,7 +188,7 @@ const SignUp = () => {
                            {name}
                        </div>
                       :
-                      <form style={{width:"50%"}}>
+                      <form style={{width:"100%"}}>
                         <div className="sign-right">
                             {showOtp ? (
                                 <>

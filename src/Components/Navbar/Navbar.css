@@ -222,4 +222,7 @@
     .navbar-right p {
         font-size: 14px;
     }
+    .navbar-left li{
+        display: none;
+    }
 }

@@ -186,4 +186,8 @@
   .dashboard-sidebar{
     display:none
    }
+   .dashboard-navbar{
+    background-color: #1e293b;
+    color: white;
+   }
 }
