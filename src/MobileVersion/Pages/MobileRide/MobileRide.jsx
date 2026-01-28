@@ -1,9 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import "./MobileRide.css";
 import { GoogleMap, Marker } from "@react-google-maps/api";
 import { useGoogleMaps } from "../../../providers/GoogleMapsProvider.jsx";
 import { SocketContext } from "../../../context/Socketcontext";
 import bikeIcon from "../../../assets/bike-2.png";
+import Popup from "../../Components/Popup/Popup.jsx";
+import SuccessPopUp from "../../Components/SuccessPopUp/SuccessPopUp.jsx";
+import Driver from '../../../assets/driver2.jpg'
+import { useNavigate } from "react-router-dom";
 
 function MobileRide() {
   const [search, setSearch] = useState(true);
@@ -11,6 +15,7 @@ function MobileRide() {
   const { socket } = useContext(SocketContext);
   const ride = JSON.parse(localStorage.getItem("ride"));
   const nearByDrivers = ride?.nearbyDrivers || [];
+
 
   if (!isLoaded) return <div className="loading">Loading map…</div>;
 
@@ -20,7 +25,8 @@ function MobileRide() {
       const handleRideConfirmed = (ride) => {
         alert(`Status: ${ride.status}\nDriver: ${ride.driverId.name}`);
         localStorage.setItem("ride", JSON.stringify(ride));
-        navigate("/ride/confirmed");
+        
+        
       };
   
       socket.on("ride-confirmed", handleRideConfirmed);
@@ -30,9 +36,9 @@ function MobileRide() {
 
   return (
     <>
-      {search ? (
         <div className="searching-page">
           {/* MAP */}
+           {/* <SuccessPopUp heading={'Driver Accepted Your Order'} para={'Your Order is Accepted by Driver He is on the way to reach Pickup Location'} btn={'OK'}/> */}
           <div className="map-container2">
             <GoogleMap
               mapContainerStyle={{ width: "100%", height: "100%" }}
@@ -79,12 +85,14 @@ function MobileRide() {
             <div className="ride-details">
               <div className="location-row">
                 <span className="dot pickup"></span>
-                <span>{ride.pickUp}</span>
+                <div><strong>PickUp Location </strong></div>
+                <div>{ride.pickUp}</div>
               </div>
-
+             
               <div className="location-row">
                 <span className="dot drop"></span>
-                <span>{ride.drop}</span>
+                <strong>Drop Location </strong>
+                <div>{ride.drop}</div>
               </div>
 
               <div className="ride-meta">
@@ -112,11 +120,9 @@ function MobileRide() {
             </div>
           </div>
         </div>
-      ) : (
-        <div className="confirmed">Ride Cancelled</div>
-      )}
+      
     </>
-  );
+  )
 }
 
 export default MobileRide;

@@ -8,7 +8,7 @@
     height: 100vh;
 }
 .bg-blue{
-background: linear-gradient(135deg, #0045e7, #001679);
+background:#0000E6;
 
 }
 @media (max-width:750px) {

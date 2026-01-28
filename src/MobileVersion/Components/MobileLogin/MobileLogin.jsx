@@ -109,14 +109,15 @@ function MobileLogin({setPopUp}) {
         {
             showOtp? <div>
             <input type="text" placeholder='OTP' style={{textAlign:'center'}} maxLength={4} minLength={4}  onChange={(e) => setData({ ...data,otp: e.target.value })}  value={data.otp} />
+             <p style={{fontSize:'12px',padding:'10px',lineHeight:'20px'}}>Four Digit OTP is Send To Your Number</p>
             <button className="login-btn" on onClick={handleSubmit2}>Log In</button>
-        </div> :<><input type="text" placeholder="Phone Number"  onChange={(e) => setData({ ...data, phone: e.target.value })}value={data.phone}/>
-        <p style={{fontSize:'12px',padding:'10px',lineHeight:'20px'}}>By continuing, you agree to kuicqli’s Terms of use and Privacy Policy.</p>
-          <button className="login-btn" onClick={handleSubmitLogin}>Request Otp</button></>
-        }
-          
+            </div> :<><input type="text" placeholder="User Phone Number"  onChange={(e) => setData({ ...data, phone: e.target.value })}value={data.phone}/>
+            <p style={{fontSize:'12px',padding:'10px',lineHeight:'20px'}}>If you are already registered, an OTP will be sent to your registered mobile number.</p>
+            <button className="login-btn" onClick={handleSubmitLogin}>Request OTP</button></>
+            }
+            
 
-      </div>
+        </div>
   )
 }
 

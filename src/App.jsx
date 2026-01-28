@@ -24,6 +24,7 @@ import MobileAuth from './MobileVersion/Pages/MobileAuth.jsx';
 import Home from './MobileVersion/Pages/Home/Home.jsx';
 import DeliveryLocation from './MobileVersion/Pages/DilivaryLocation/DilivaryLocation.jsx';
 import MobileRide from './MobileVersion/Pages/MobileRide/MobileRide.jsx';
+import MobileRideOnWay from './MobileVersion/Pages/MobileRideOnWay/MobileRideOnWay.jsx';
 function App() {
 
   const location = useLocation();
@@ -94,6 +95,7 @@ function App() {
                 <Route  path='/fare-link' element={<Home/>}/>
                 <Route  path='/ride' element={<DeliveryLocation/>}/>
                 <Route  path='/search/ride' element={<MobileRide/>}/>
+                <Route path="/ride/confirmed" element={<MobileRideOnWay/>}/>
               </Routes>
           </div>
            }

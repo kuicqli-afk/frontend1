@@ -8,7 +8,7 @@
 
 /* MAP */
 .map-container2 {
-  height: 400px;
+  height: 70%;
   width: 100%;
   
 }
@@ -146,4 +146,100 @@
   align-items: center;
   justify-content: center;
   font-size: 16px;
+}
+.assigned {
+  padding-top: 14px;
+}
+
+/* Header */
+.assigned-header {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.status-icon {
+  width: 32px;
+  height: 32px;
+  background: #22c55e;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+/* Driver Info */
+.driver-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 12px;
+  background: #f8fafc;
+  margin-bottom: 12px;
+}
+
+.driver-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.driver-meta {
+  flex: 1;
+}
+
+.driver-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.rating {
+  font-size: 12px;
+  color: #f59e0b;
+  margin-left: 6px;
+}
+
+.vehicle-info {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.eta {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2563eb;
+}
+
+/* Actions */
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.call-btn,
+.chat-btn {
+  flex: 1;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.call-btn {
+  background: #2563eb;
+  color: #fff;
+}
+
+.chat-btn {
+  background: #e5e7eb;
+  color: #0f172a;
 }

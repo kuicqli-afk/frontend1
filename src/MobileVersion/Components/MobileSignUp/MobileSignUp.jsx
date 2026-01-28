@@ -100,15 +100,16 @@ function MobileSignUp({setPopUp}) {
         showOtp ? 
         <div>
             <input type="text" placeholder='OTP' style={{textAlign:'center'}} maxLength={4} minLength={4}  onChange={(e) => setData({ ...data,otp: e.target.value })}  value={data.otp}/>
+            <p style={{fontSize:'12px',padding:'10px',lineHeight:'20px'}}>Four Digit OTP is Send To Your Number</p>
             <button className="login-btn" on onClick={handleSubmit2}>Sign Up</button>
         </div> :
         <>
-          <input type="text" placeholder='Name'  onChange={(e) => setData({ ...data,name: e.target.value })}  value={data.name}/>
+          <input type="text" placeholder='User Name'  onChange={(e) => setData({ ...data,name: e.target.value })}  value={data.name}/>
           
-          <input type="text" placeholder="Phone Number"  onChange={(e) => setData({ ...data, phone: e.target.value })}value={data.phone}/>
+          <input type="text" placeholder="User Phone Number"  onChange={(e) => setData({ ...data, phone: e.target.value })}value={data.phone}/>
           <div style={error?{color:'white',textAlign:'start',fontSize:'14px',padding:'0',marginBottom:'10px',marginLeft:'10px'}:{display:'none'}}>{error}</div>
           <p style={{fontSize:'12px',padding:'10px',lineHeight:'20px'}}>By continuing, you agree to kuicqli’s Terms of use and Privacy Policy.</p>
-          <button className="login-btn"  onClick={handleSubmit}>Request Otp</button>
+          <button className="login-btn"  onClick={handleSubmit}>Request OTP</button>
         </>
     }
           

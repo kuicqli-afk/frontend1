@@ -5,22 +5,24 @@
 
 .login-wrapper {
   height: 100vh;
-  background: linear-gradient(135deg, #174dca, #031a83);
+  background:  #0000E6;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
 .login-card {
   width: 350px;
   padding: 28px 18px;
   border-radius: 16px;
-  background: rgba(123, 125, 158, 0.329);
+  background: #0000E6;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   color: #ffffff;
   text-align: center;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  box-shadow: -3px 10px 30px rgb(4, 4, 202);
+  border: 1px solid blue;
 }
 
 .logo {
@@ -31,7 +33,7 @@
 .tabs {
   display: flex;
   margin-bottom: 24px;
-  background: rgba(255, 255, 255, 0.12);
+  background:#2929FF;
   border-radius: 999px;
   padding: 4px;
 }
@@ -59,8 +61,8 @@
   padding: 14px;
   margin-bottom: 14px;
   border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid #2929FF;
+  background: #2929FF;
   color: #fff;
   font-size: 14px;
   outline: none;
@@ -80,7 +82,7 @@
   padding: 14px;
   border-radius: 10px;
   border: none;
-  background: linear-gradient(135deg, #4da3ff, #0066ff);
+  background: #2929FF;
   color: #fff;
   font-size: 14px;
   font-weight: 600;
@@ -91,7 +93,7 @@
 
 .login-btn:hover {
   transform: translateY(-1px);
-  box-shadow: 0 8px 20px rgba(77, 163, 255, 0.35);
+  box-shadow: 0 2px 5px rgba(31, 2, 194, 0.966);
 }
 
 .options {
@@ -134,10 +136,10 @@
   transition: background 0.2s ease, transform 0.2s ease;
 }
 
-.socials button:hover {
-  background: rgba(255, 255, 255, 0.15);
+/* .socials button:hover {
+  background: rgba(4, 6, 116, 0.76);
   transform: translateY(-2px);
-}
+} */
 
 h2{
     font-size: 20px;

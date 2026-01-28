@@ -39,8 +39,8 @@ const MobileAuth = () => {
         <img src={logo} alt="SwiftDrop" className="logo" />
 
         <div className="tabs">
-          <button className={`tab ${login?'active':''}`} onClick={()=>setLogin(true)}>LOGIN</button>
-          <button className={`tab ${login?'':'active'}`}  onClick={()=>setLogin(false)}>SIGN UP</button>
+          <button className={`tab ${login?'active':''}`} onClick={()=>setLogin(true)}>Login</button>
+          <button className={`tab ${login?'':'active'}`}  onClick={()=>setLogin(false)}>SignUp</button>
         </div>
 
          
@@ -50,6 +50,9 @@ const MobileAuth = () => {
 
           
         </div>
+        <span style={{marginBottom:'10px',color:'white',position:'fixed',bottom:'0',padding:'10px',fontSize:'12px'}}>
+          © 2026 Kuicqli.com, All Rights Reserved
+        </span>
       </div>
     
   );
