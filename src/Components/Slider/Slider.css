@@ -41,4 +41,8 @@
   .slider-container {
     height: 45vh;       /* avoids cropping + notch issues */
   }
+
+  .slider-img{
+    height: 50%;
+  }
 }

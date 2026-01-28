@@ -212,7 +212,8 @@
     }
 
     .sign-left {
-        display: none;
+        height: 400px;
+        margin-right: 20%;
     }
 
     .sign-right {

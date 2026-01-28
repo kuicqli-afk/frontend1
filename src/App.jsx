@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from './Components/Navbar/Navbar'
 import Slider from './Components/Slider/Slider'
 import VehicleLoader from './Components/VehicleLoader/VehicleLoader'
@@ -18,9 +18,22 @@ import Ride from './Components/Ride/Ride.jsx'
 import RideOnWay from './Components/RideOnWay/RideOnWay.jsx'
 import RideStarted from './Components/RideStarted/RideStarted.jsx';
 import DiverApplication from './Components/DriverApplication/DiverApplication.jsx';
+import logo from './assets/Logo.png'
+import './App.css'
+import MobileAuth from './MobileVersion/Pages/MobileAuth.jsx';
+import Home from './MobileVersion/Pages/Home/Home.jsx';
+import DeliveryLocation from './MobileVersion/Pages/DilivaryLocation/DilivaryLocation.jsx';
+import MobileRide from './MobileVersion/Pages/MobileRide/MobileRide.jsx';
 function App() {
 
   const location = useLocation();
+  const [showLogo,setShowLogo]=useState(true)
+
+  useEffect(()=>{
+    const timer=setTimeout(()=>{
+         setShowLogo(false)
+    },1500)
+  },[])
 
   const blankPageRoutes = [
     "/user-login",
@@ -32,11 +45,8 @@ function App() {
     "/ride/started"
   ];
 
-    const isDriver=localStorage.getItem("driver");
+  
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  },[isDriver])
 
   const isBlankPage = blankPageRoutes.includes(location.pathname.toLowerCase());
 
@@ -44,7 +54,8 @@ function App() {
   return (
     <>
       {/* Layout for homepage and default view */}
-      {!isBlankPage && (
+      <div className='not-responsive'>
+           {!isBlankPage && (
         <>
           <Navbar />
           <Slider />
@@ -56,15 +67,38 @@ function App() {
           <Footer />
         </>
       )}
+
+      
+
       <Routes>
         <Route path="/user-login" element={isUser?<Dashboard/>:<SignUp />} />
         <Route path="/fare-link" element={<FareLink />} />
         <Route path="/support" element={<Support />} />
-        <Route path="/ride-partner" element={isDriver?<DiverApplication/>:<RiderPartner />} />
+        <Route path="/ride-partner" element={<RiderPartner />} />
         <Route path="/search/ride" element={<Ride/>}/>
         <Route path="/ride/confirmed" element={<RideOnWay/>}/>
         <Route path="/ride/started" element={<RideStarted/>}/>
       </Routes>
+      </div>
+    
+
+      <div className={`responsive ${showLogo&&'bg-blue'}`} >
+          { showLogo?
+            <div>
+            <img src={logo} alt="" width={250}/>
+            </div>
+          :
+          <div style={{width:"100%"}}>
+              <Routes>
+                <Route  path='/' element={<MobileAuth/>}/>
+                <Route  path='/fare-link' element={<Home/>}/>
+                <Route  path='/ride' element={<DeliveryLocation/>}/>
+                <Route  path='/search/ride' element={<MobileRide/>}/>
+              </Routes>
+          </div>
+           }
+           
+      </div>
     </>
   )
 }
