@@ -6,7 +6,7 @@ import bike from "../../../assets/2wheeler.png";
 import dilivary from '../../../assets/dilivary.jpg'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import auto from '../../../assets/3wheeler.png';
-import truck from '../../../assets/MiniTruck.png'
+import truck from '../../../assets/Minitruck.png'
 import {
   faBell,
   faHouse,
