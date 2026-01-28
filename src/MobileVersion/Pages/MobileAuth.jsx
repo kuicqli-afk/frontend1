@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import logo from "../../assets/logo.png";
+import logo from "../../assets/Logo.png";
 import './MobileAuth.css'
 import MobileLogin from "../Components/MobileLogin/MobileLogin";
 import MobileSignUp from "../Components/MobileSignUp/MobileSignUp";
