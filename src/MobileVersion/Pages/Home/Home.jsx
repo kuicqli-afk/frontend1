@@ -13,7 +13,7 @@ import truck from '../../../assets/Mini Truck-dark.png'
 import ELoader from '../../../assets/E Loader-dark.png';
 import bell from '../../../assets/Bell.png'
 import coin from '../../../assets/coin.png'
-import coupon from '../../../assets/coupon.png'
+// import coupon from '../../../assets/Coupon.png'
 import blueArrow from '../../../assets/bluearrow.png'
 import couponText from '../../../assets/Coupon text.png'
 import chiken from '../../../assets/chicken.png'
