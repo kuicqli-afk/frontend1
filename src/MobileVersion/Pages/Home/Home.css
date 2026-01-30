@@ -125,11 +125,11 @@ body {
 
 .coupon-div{
 width: 100%;
-height: 150px;
+height: 120px;
 margin-top: 15px;
 /* background-color: rgb(228, 228, 228); */
-padding: 20px;
-padding-top: 7%;
+padding: 20px ;
+/* padding-top: 7%; */
 display: flex;
 flex-direction: row;
 background-image: url('../../../assets/Coupon.png');
@@ -201,21 +201,24 @@ position: center;
 /* Hero Section */
 .hero-section {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 0 15px;
-  margin-top: 30px;
+  margin-top: 18px;
   margin-bottom: 10px;
+  align-items: center;
 }
 .hero-main{
-  padding: 5px;
+  padding: 2px;
+  display: flex;
+  flex-direction: row;
+  margin-left: 20px;
 }
 .hero-main h2 {
   font-size: 35px;
   line-height: 1.1;
   color: white;
-  margin-right: 5px;
   padding: 0px;
 }
 
@@ -224,20 +227,25 @@ position: center;
   letter-spacing: 1px;
   color: white;
   margin: 2px 0;
-  font-size: 11.5px;
+  font-size: 16px;
+  width: 120px;
+  padding: 4px;
+  line-height: 14px;
+  
 }
 
 /* Navigation */
-.bottom-nav {
+.bottom-nav2 {
+  display: flex;
+  flex-direction: row;
   position: fixed;
   bottom: 0;
   width: 100%;
-  max-width: 400px;
-  background: white;
-  display: flex;
+  background: rgb(255, 255, 255);
   justify-content: space-around;
   padding: 10px 0;
   border-top: 1px solid #eee;
+  z-index: 2;
 }
 
 .nav-item {
@@ -269,9 +277,9 @@ position: center;
 }
 
 .design{
-  margin-top: 20px;
+  margin-top: 0px;
   width: 100%;
-  height: 180px;
+  height: 230px;
   background-image: url('../../../assets/shape.png');
   background-size: cover;
   position: center;
@@ -279,17 +287,19 @@ position: center;
   bottom: 0px;
   display: flex;
   flex-direction: row;
+  justify-content: space-around;
   gap: 12px;
   align-items: center;
-  padding: 16px
+  padding: 20px;
+  padding-bottom:10px
 
 }
 .product{
-  width: 115px;
-  height: 170px;
+  width: 110px;
+  height: 200px;
   background-color: red;
   border-radius: 10px;
-  margin-bottom: 6%;
+  margin-bottom: 10%;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -310,7 +320,35 @@ position: center;
   content:'';
   background-color:inherit;
   position: absolute;
-  left: 102%;
-  top:-10px;
+  left: 90%;
+  top:-15px;
   border-radius:44%;
+}
+
+@media (min-height:700px) {
+  .design{
+    position: relative;
+    top: 20px;
+  }
+  .product{
+    width: 110px;
+  }
+ 
+}
+.product-image-slider{
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+}
+
+.driver-registration{
+  width: 100%;
+  height: 300px;
+  padding: 5px;
+  padding-left: 18px;
+  padding-right: 18px;
+  margin-top: 5px;
+  background-color:white;
+
+ 
 }

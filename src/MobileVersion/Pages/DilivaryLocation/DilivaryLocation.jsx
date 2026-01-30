@@ -17,6 +17,11 @@ import MiniAuto from "../../../assets/MiniAuto.png";
 import Eloader from "../../../assets/Eloader.png";
 import ThreeWheeler from "../../../assets/3wheeler.png";
 import MiniTruck from "../../../assets/Minitruck.png";
+    import coin from '../../../assets/coin.png';
+import bell from '../../../assets/Bell.png'
+import { faClock } from "@fortawesome/free-solid-svg-icons";
+
+
 
 
 export default function DeliveryLocation(){
@@ -33,10 +38,12 @@ export default function DeliveryLocation(){
     const [pickupPredictions, setPickupPredictions] = useState([]);
     const [dropPredictions, setDropPredictions] = useState([]);
     const [getEstimate,setGetEstimate]=useState(false)
-    const [pickupLocation,setPickupLocation]=useState()
+    const [pickupLocation,setPickupLocation]=useState([])
     const [fare,setFare]=useState([])
     const [active,setActive]=useState()
     const {socket,sendMessage}=useContext(SocketContext)
+    const [previousRides,setPreviousRides]=useState();
+
 
   
   const name=localStorage.getItem('name')
@@ -53,7 +60,17 @@ export default function DeliveryLocation(){
   };
 
 
+//Fetching Previous Rides
 
+ useEffect(()=>{
+  axios.post('https://thetest-h9x3.onrender.com/ride/get-ride/userId/',{
+    phone:phone
+  }).then((response)=>{
+    console.log(response.data.data)
+    setPreviousRides(response.data.data)
+
+  }).catch((error)=>console.log(error))
+ },[])
   //Creating New Ride 
 
   const handleRide=async()=>{
@@ -148,7 +165,7 @@ useEffect(() => {
       .catch(console.error);
       
   }, [pickupQuery,dropQuery, activeInput]);
-
+    
  if (!isLoaded) {
           return <div>Loading Map...</div>;
         }
@@ -242,22 +259,30 @@ useEffect(() => {
 
         :
         <>
-             <header className="home-header">
-              <img src={logo} alt="Logo" className="header-logo" />
-              <div className="notification-icon">
-                <FontAwesomeIcon icon={faBell} />
-                <span className="notif-dot"></span>
-              </div>
-            </header>
+              <header className="header2" style={{background:'#0000E6'}}>
+                <Link to='/fare-link'>
+                 <img src={logo} alt="" width={120} style={{marginTop:'4px'}}/>
+                </Link>
+                    
+                     <div className="header-right">
+                       
+                       <div className="coin-badge">
+                        <div style={{marginLeft:'-10px'}}><img src={coin} alt="" width={22}/></div>
+                        <div style={{display:'flex',flexDirection:'column'}}>
+                             <span>12 Coins Available </span>
+                         <p style={{fontSize:'7px',fontWeight:'300',paddingTop:'1px'}}>Earn 11 More Coins To Use</p>
+                        </div>
+                        
+                       </div>
+                       <div><img src={bell} width={26}/></div>
+                     </div>
+                   </header>
             
-      <Link to="/fare-link">
-       <header className="header">
-        <FontAwesomeIcon icon={faArrowLeft} className="back-icon" />
-      </header></Link>
+     
      
 
       {/* Floating Input Card */}
-      <div className="input-card">
+      <div className="input-card" style={{marginTop:'-40px',borderRadius:'12px'}}>
         <div className="location-flow">
           <div className="dots-container">
             <div className="dot green"></div>
@@ -271,7 +296,7 @@ useEffect(() => {
                 {
                   pickup.name ? <div className="pickup-display"><div className="info"><strong>{pickup.name}</strong>
                   <p>{pickup.address}</p></div><FontAwesomeIcon icon={faChevronRight} onClick={()=>setPickup({name:'',address:''})} className="arrow-small"/>
-                  </div>:<input type="text" placeholder="Enter Your Pick Up Location" className="drop-input" onChange={(e)=>setPickupQuery(e.target.value)} value={pickupQuery} onFocus={()=>setActiveInput('pickup')}/>
+                  </div>:<input type="text" placeholder="Enter Your Pick Up Location" className="drop-input" onChange={(e)=>setPickupQuery(e.target.value)} value={pickupQuery} onFocus={()=>{setActiveInput('pickup');console.log(previousRides)}}/>
                   
                 }
                
@@ -292,7 +317,7 @@ useEffect(() => {
       </div>
 
       {/* Tabs */}
-      <div className="tabs2">
+      <div className="tabs2" style={{borderRadius:'10px'}}>
         <div className="tab active">
           <FontAwesomeIcon icon={faLocationCrosshairs} /> Select on map
         </div>
@@ -306,15 +331,15 @@ useEffect(() => {
       <div className="history-list">
 
         {
-          activeInput==='pickup'? (pickupPredictions?.map((item, index) => (
+          activeInput&&activeInput==='pickup'&&(pickupPredictions.length>0?pickupPredictions.map((item, index) => (
           <div key={index} className="history-item" onClick={()=>{setPickup({name:item.name,address:item.formatted_address});setPickupPredictions(null);setPickupLocation(item.geometry.location)}}>
             <FontAwesomeIcon icon={faLocationDot} className="time-icon" />
             <div className="item-details">
               <div className="item-header">
                 <span className="location-name">{item.name}</span>
-                {/* <span className="user-tag">
+                <span className="user-tag">
                   <FontAwesomeIcon icon={faUser} size="xs" /> {item.user}
-                </span> */}
+                </span>
               </div>
               <p className="location-address">{item.formatted_address}</p>
             </div>
@@ -324,28 +349,88 @@ useEffect(() => {
             </div>
           </div>
           
-        )).slice(0,7))
-        :
-        (dropPredictions?.map((item, index) => (
-          <div key={index} className="history-item" onClick={()=>{setDrop({name:item.name,address:item.formatted_address});setDropPredictions(null)}}>
-            <FontAwesomeIcon icon={faLocationDot} className="time-icon" />
-            <div className="item-details">
+        )).slice(0,7):previousRides.map((item,index)=>(
+          <div key={index} className="history-item" onClick={()=>{setPickup({name:item.name,address:item.formatted_address});setPickupPredictions(null);setPickupLocation(item.geometry.location)}}>
+           <FontAwesomeIcon icon={faClock} style={{color:'gray',padding:'8px'}} size='xl'/>
+          <div className="item-details">
               <div className="item-header">
-                <span className="location-name">{item.name}</span>
-                {/* <span className="user-tag">
-                  <FontAwesomeIcon icon={faUser} size="xs" /> {item.user}
-                </span> */}
+                <span className="location-name">{item.pickUp}</span>
+                <span className="user-tag">
+                  <FontAwesomeIcon icon={faUser} size="xs" /> {item.receiver_name}
+                </span>
               </div>
-              <p className="location-address">{item.formatted_address}</p>
+              <p className="location-address">{item.drop}</p>
             </div>
             <div className="save-action">
               <FontAwesomeIcon icon={faBookmark} className="heart-icon" />
               <span>SAVE</span>
             </div>
           </div>
-          
-        )).slice(0,7))
-        }
+        ))).slice(0,4)
+      }
+     {
+  activeInput === "drop" &&
+  (
+    dropPredictions.length > 0
+      ? dropPredictions
+          .slice(0, 7)
+          .map((item, index) => (
+            <div
+              key={index}
+              className="history-item"
+              onClick={() => {
+                setDrop({
+                  name: item.name,
+                  address: item.formatted_address
+                });
+                setDropPredictions([]); // ✅ NEVER null
+              }}
+              style={{alignItems:'center'}}
+            >
+              <FontAwesomeIcon icon={faLocationDot} className="time-icon" />
+              <div className="item-details">
+                <div className="item-header">
+                  <span className="location-name">{item.name}</span>
+                </div>
+                <p className="location-address">
+                  {item.formatted_address}
+                </p>
+              </div>
+              <div className="save-action">
+                <FontAwesomeIcon icon={faBookmark} className="heart-icon" />
+                <span>SAVE</span>
+              </div>
+            </div>
+          ))
+      : previousRides
+          .slice(0, 4)
+          .map((item, index) => (
+            <div
+              key={index}
+              className="history-item"
+              onClick={() => {
+                setDrop({
+                  name: item.drop,
+                  address: item.drop
+                });
+                setDropPredictions([]);
+              }}
+            >
+             <FontAwesomeIcon icon={faClock} style={{color:'gray',padding:'8px'}} size='xl'/>
+              <div className="item-details">
+                <div className="item-header">
+                  <span className="location-name">{item.drop}</span>
+                </div>
+              </div>
+              <div className="save-action">
+                <FontAwesomeIcon icon={faBookmark} className="heart-icon" />
+                <span>SAVE</span>
+              </div>
+            </div>
+          ))
+  )
+}
+
        
       </div>
 
@@ -356,7 +441,12 @@ useEffect(() => {
 }
                 </>
        }
-    
+     <nav className="bottom-nav2">
+        <div className="nav-item active">🏠<span>Home</span></div>
+        <div className="nav-item">📋<span>Orders</span></div>
+        <div className="nav-item">🪙<span>Coins</span></div>
+        <div className="nav-item">👤<span>Account</span></div>
+      </nav>
     </div>
   
   );

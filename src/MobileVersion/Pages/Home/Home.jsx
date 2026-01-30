@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Home.css";
 import logo from "../../../assets/Logo.png";
 import Location from '../../../assets/Location.png'
@@ -19,6 +19,15 @@ import couponText from '../../../assets/Coupon text.png'
 import chiken from '../../../assets/chicken.png'
 import groc from '../../../assets/grocwery.png'
 import furniture from '../../../assets/furniture.png'
+import sharwma from '../../../assets/sharwma.png'
+import pizza from '../../../assets/pizza.png'
+import bhatura from '../../../assets/Bhatura.png'
+import driverRegistration from '../../../assets/driverRegistration.png'
+import whitearrow from '../../../assets/whitearrow.png'
+import burger from '../../../assets/burger.png'
+import cookie from '../../../assets/cookies.png'
+import driverRegistration2 from '../../../assets/driverRegistration2.png'
+import sweet from '../../../assets/sweet.png'
 import {
   faBell,
   faHouse,
@@ -31,6 +40,17 @@ import {
 import { Link} from "react-router-dom";
 
 function Home() {
+  const img = [chiken, sharwma, pizza,bhatura,burger,cookie,sweet];
+const [current, setCurrent] = useState(0);
+
+useEffect(() => {
+  const interval = setInterval(() => {
+    setCurrent((prev) => (prev + 1) % img.length);
+  }, 800); // ⏱ 2 seconds
+
+  return () => clearInterval(interval); // cleanup
+}, []);
+
   return (
    <div className="app-container">
       {/* Header */}
@@ -54,10 +74,13 @@ function Home() {
       <div className="location-card">
         <div className="loc-left">
           <div className="loc-pin"><img src={Location} alt="" width={25} /></div>
+          <Link to='/ride'>
           <div className="loc-text">
             <label>Pick Up from</label>
             <p>wazirganj Lucknow, Uttar Pradesh 226018...</p>
           </div>
+          </Link>
+          
         </div>
        <FontAwesomeIcon icon={faChevronDown} />
       </div>
@@ -70,25 +93,27 @@ function Home() {
           { name: "Mini Truck", weight: "48kg", icon: "🚚",img:truck},
            { name: "E Loader", weight: "48kg", icon: "🚚",img:ELoader}
         ].map((v, i) => (
+          <Link to='/ride'>
           <div className="v-card" key={i}>
             <div className="v-badge"><div style={{fontSize:'8px',marginTop:'10px',marginBottom:'3px'}}>{v.weight}</div><img src={weight2} width={25} /></div>
             <div className="v-img"><img src={v.img} alt="" width={80} height={50}/></div>
             <h3>{v.name}</h3>
             <p style={{fontSize:'10px',color:'#0000E6',textDecoration:'none'}}>Click to Check Deliver Fare. »</p>
-          </div>
+          </div></Link>
+          
         ))}
       </div>
 
       {/* Coupon */}
          <div className="coupon-div">
-            <div style={{padding:'22px 10px 0px 0px',width:'40%'}}>
+            <div style={{padding:'12px 10px 0px 0px',width:'40%'}}>
               <img src={couponText} alt="" width={120}/>
             </div>
             <div style={{borderRight:'1px dashed #0000E6',height:'80%',marginRight:'10px',marginTop
               :'5px'
             }}></div>
             <div style={{width:'80%'}}>
-                <div style={{color:'#0000E6',fontSize:'17px',fontWeight:'700',paddingTop:'18px'}}>40 Coupons Available!</div>
+                <div style={{color:'#0000E6',fontSize:'17px',fontWeight:'700',paddingTop:'8px'}}>40 Coupons Available!</div>
                 <p style={{color:'gary'}}>This coupon can be applied to our other 
                   products to unlock attractive benefits</p>
             </div>
@@ -98,37 +123,67 @@ function Home() {
       <div className="hero-section">
         <div className="hero-main">
           <h2>DELIVER</h2>
-          <p className="hero-sub">KUCH BHI - KAHIN BHI</p>
+          <p className="hero-sub"><i>KUCH BHI KAHIN BHI.</i></p>
         </div>
-        <div style={{borderRight:'1px solid white',height:'110px'}}></div>
-        <div style={{color:'white'}}>
-          <div style={{minWidth:'150px',padding:'10px',fontSize:'19px',fontWeight:'600',paddingTop:'0px',paddingBottom:'5px'}}>
+        {/* <div style={{borderBottom:'1px solid white',height:'110px',width:'100%',height:'5px'}}></div> */}
+        <div style={{color:'white',display:'flex',flexDirection:'column',
+          justifyContent:'center',alignItems:'center'
+        }}>
+          <div style={{minWidth:'150px',padding:'10px',fontSize:'16px',fontWeight:'800',paddingTop:'0px',paddingBottom:'5px'}}>
              EXPLORE OUR MORE ONLINE PRODUCTS
           </div>
-           <div style={{fontSize:'14px',fontWeight:'300',letterSpacing:'1px',paddingLeft:'10px'}}>
-            Shopnow & Enjoy a better Experince
+           <div style={{fontSize:'14px',fontWeight:'300',letterSpacing:'1px',paddingLeft:'10px',marginRight:'15px'}}>
+            <span style={{fontWeight:'700'}}> <i>SHOP NOW </i> </span>& Enjoy a better Experince
            </div>
         </div>
       </div>
        <div className="design">
            <div className="product">
-                <img src={chiken} alt="" />
+            <div className="product-image-slider">
+                <img src={img[current]} alt=""  width={110} style={{paddingTop:'15px',paddingLeft:'4px'}} />
+                 
+            </div>
+               
                 <div style={{paddingLeft:'10px'}}>
                     <img src={logo} alt="" width={70}/>
                 </div>
-                 <p style={{color:'white',fontSize:'7px',paddingLeft:'10px'}}>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur, dicta?
+                 <p style={{color:'white',fontSize:'10px',paddingLeft:'10px',}}>
+                Built for restaurants & cloud kitchens.
                  </p>
+                 <img src={whitearrow} alt="" width={20} style={{margin:'10px '}}/>
            </div>
            <div className="product bg-green">
-                 <img src={groc} alt="" width={100} style={{marginLeft:'10px'}}/>
+                 <img src={img[current]} alt=""  width={110} style={{paddingTop:'15px',paddingLeft:'4px'}} />
+                 <div style={{paddingLeft:'10px'}}>
+                    <img src={logo} alt="" width={70}/>
+                </div>
+                 <p style={{color:'white',fontSize:'10px',paddingLeft:'10px',}}>
+                 Build for grocery & daily-needs
+                 </p>
+                 <img src={whitearrow} alt="" width={20} style={{margin:'10px '}}/>
            </div>
            <div className="product bg-yello">
-                  <img src={furniture} alt="" />
+                  <img src={img[current]} alt=""  width={110} style={{paddingTop:'15px',paddingLeft:'4px'}} />
+                  <div style={{paddingLeft:'10px'}}>
+                    <img src={logo} alt="" width={70}/>
+                </div>
+                 <p style={{color:'white',fontSize:'10px',paddingLeft:'10px',}}>
+                Built for restaurants & cloud kitchens.
+                 </p>
+                 <img src={whitearrow} alt="" width={20} style={{margin:'10px '}}/>
            </div>
        </div>
+
+
+       <div className="driver-registration">
+        
+               <img src={driverRegistration} alt="" style={{width:'100%',marginTop:'10px'}}/>
+             <img src={driverRegistration2} alt="" style={{width:'100%',marginTop:'10px'}}/>
+       
+           
+       </div>
       {/* Footer Nav */}
-      <nav className="bottom-nav">
+      <nav className="bottom-nav2">
         <div className="nav-item active">🏠<span>Home</span></div>
         <div className="nav-item">📋<span>Orders</span></div>
         <div className="nav-item">🪙<span>Coins</span></div>

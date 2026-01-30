@@ -2,7 +2,7 @@
     --primary-blue: #1a73e8;
     --text-main: #3c4043;
     --text-sub: #70757a;
-    --bg-light: #f8f9fa;
+    --bg-light: #0000E6;
     --border-color: #e8eaed;
     }
 
@@ -30,6 +30,7 @@
     background: white;
     margin: 0 15px;
     padding: 20px 15px;
+    padding-bottom:35px ;
     border-radius: 20px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.08);
     }
@@ -38,6 +39,7 @@
     display: flex;
     align-items: center;
     gap: 12px;
+    
     }
 
     .dots-container {
@@ -51,7 +53,7 @@
     height: 10px;
     border-radius: 50%;
     }
-    .dot.green { background: #34a853; }
+    .dot.green { background: #34a853;margin-top: 10px; }
     .dot.red { background: #ea4335; }
     .dashed-line {
     width: 1px;
@@ -69,7 +71,7 @@
     background: #f1f3f4;
     padding: 10px 15px;
     border-radius: 12px;
-    margin-bottom: 12px;
+    margin-top: 12px;
     }
 
     .pickup-display strong { font-size: 14px; }
@@ -94,7 +96,7 @@
     border-radius: 12px;
     font-size: 15px;
     outline: none;
-    margin-top: 5px;
+    margin-top: 15px;
     }
 
     .mic-icon {
@@ -119,7 +121,7 @@
     justify-content: space-around;
     align-items: center;
     background: white;
-    margin: 10px;
+    margin: 14px;
     padding: 5px 10px;
     border-bottom: 1px solid var(--border-color);
     }
@@ -145,6 +147,9 @@
     background: white;
     flex: 1;
     margin: 10px;
+    border-radius: 10px;
+    margin-left: 14px;
+    margin-right: 14px;
     }
 
     .history-item {
