@@ -9,7 +9,7 @@ import weight2 from '../../../assets/weight2.png'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import auto from '../../../assets/3 wheeler-dark.png';
-import truck from '../../../assets/Mini truck-dark.png'
+import truck from '../../../assets/Mini Truck-dark.png'
 import ELoader from '../../../assets/E Loader-dark.png';
 import bell from '../../../assets/bell.png'
 import coin from '../../../assets/coin.png'
