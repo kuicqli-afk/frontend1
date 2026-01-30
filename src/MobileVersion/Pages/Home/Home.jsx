@@ -11,7 +11,7 @@ import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import auto from '../../../assets/3 wheeler-dark.png';
 import truck from '../../../assets/Mini Truck-dark.png'
 import ELoader from '../../../assets/E Loader-dark.png';
-import bell from '../../../assets/bell.png'
+import bell from '../../../assets/Bell.png'
 import coin from '../../../assets/coin.png'
 import coupon from '../../../assets/coupon.png'
 import blueArrow from '../../../assets/bluearrow.png'
