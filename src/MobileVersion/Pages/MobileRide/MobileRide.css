@@ -1,0 +1,245 @@
+/* PAGE */
+.searching-page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f8fafc;
+}
+
+/* MAP */
+.map-container2 {
+  height: 70%;
+  width: 100%;
+  
+}
+
+/* CARD */
+.search-card {
+  background: #ffffff;
+ 
+  padding: 16px;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+ 
+}
+
+/* HEADER */
+.search-header h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #0f172a;
+  margin: 0;
+}
+
+.search-header p {
+  font-size: 13px;
+  color: #64748b;
+  margin-top: 4px;
+}
+
+/* PROGRESS BAR */
+.progress-bar {
+  width: 100%;
+  height: 4px;
+  background: #e5e7eb;
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 14px 0;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 40%;
+  background: #2563eb;
+  animation: progressMove 1.4s ease-in-out infinite;
+}
+
+@keyframes progressMove {
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(0); }
+  100% { transform: translateX(100%); }
+}
+
+/* RIDE DETAILS */
+.ride-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* LOCATION */
+.location-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: #334155;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.dot.pickup {
+  background: #22c55e;
+}
+
+.dot.drop {
+  background: #ef4444;
+}
+
+/* META */
+.ride-meta {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid #e5e7eb;
+  padding: 12px;
+  padding-bottom:0 ;
+  margin-top: 8px;
+}
+
+.meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.meta-item .label {
+  font-size: 11px;
+  color: #64748b;
+}
+
+.meta-item .value {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+/* CANCEL */
+.cancel-btn {
+  margin-top: 12px;
+  color: white;
+  border: none;
+  background-color: #2563eb;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  padding:12px;
+  border-radius: 5px;
+}
+
+/* INFO */
+.info-text {
+  font-size: 11px;
+  color: #64748b;
+  text-align: center;
+  margin-top: 6px;
+}
+
+/* STATES */
+.loading,
+.confirmed {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+.assigned {
+  padding-top: 14px;
+}
+
+/* Header */
+.assigned-header {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.status-icon {
+  width: 32px;
+  height: 32px;
+  background: #22c55e;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+/* Driver Info */
+.driver-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 12px;
+  background: #f8fafc;
+  margin-bottom: 12px;
+}
+
+.driver-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.driver-meta {
+  flex: 1;
+}
+
+.driver-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.rating {
+  font-size: 12px;
+  color: #f59e0b;
+  margin-left: 6px;
+}
+
+.vehicle-info {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.eta {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2563eb;
+}
+
+/* Actions */
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.call-btn,
+.chat-btn {
+  flex: 1;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.call-btn {
+  background: #2563eb;
+  color: #fff;
+}
+
+.chat-btn {
+  background: #e5e7eb;
+  color: #0f172a;
+}

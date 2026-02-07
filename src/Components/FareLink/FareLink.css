@@ -1,0 +1,974 @@
+.fare-container {
+    padding: 6% 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.fare-body {
+    display: flex;
+    align-items: flex-start;
+    gap: 60px;
+}
+
+.fare-card {
+    padding: 0 15px;
+    background: #ffffff;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    cursor: pointer;
+    margin-top: 50px;
+  
+   
+   
+}
+
+.fare-top {
+    width: 30vh;
+    height: 10vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fare-top img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.fare-card .fare-weight {
+    display: flex;
+    align-items: end;
+    background-color: #F6F6F6;
+    border-radius: 12px;
+    padding: 10px;
+    gap: 5px;
+    font-size: 30px;
+    font-weight: 500;
+    color: #A1A1A1;
+}
+
+.fare-weight img {
+    width: 5vh;
+    height: auto;
+}
+
+.fare-card .fare-detail {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    color: #A1A1A1;
+    padding: 0 0px;
+}
+
+.fare-detail h3 {
+    font-size: 35px;
+    font-weight: 600;
+}
+
+.fare-detail p {
+    font-size: 35px;
+}
+
+.fare-detail h4 {
+    font-size: 40px;
+    font-weight: 500;
+}
+
+.fare-divider {
+    width: 2px;
+    border-right: 3px dotted #ddd;
+    height: 450px;
+}
+
+/* TOP TABS */
+.fare-tabs {
+    display: flex;
+    gap: 15px;
+    font-size: 18px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.fare-tabs p {
+    color: #444;
+}
+
+.active-tab {
+    color: #0056ff !important;
+}
+
+/* RIGHT BOX */
+.fare-right {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-top: 50px;
+}
+
+
+/* ICON + INPUT ROW */
+.fare-input-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f5f7fa;
+    padding: 12px 14px;
+    border-radius: 10px;
+    position: relative;
+}
+
+.fare-input-row input::placeholder {
+    color: #777;
+    font-size: 14px;
+}
+
+
+.fare-input-row img {
+    width: 15px;
+    height: 15px;
+    object-fit: contain;
+}
+
+.fare-input-row input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    background: transparent;
+}
+
+.hide-icon img {
+    opacity: 0;
+    visibility: hidden;
+    width: 0;
+    margin-right: 0;
+    transition: 0.2s ease;
+}
+
+
+/* PERSONAL / BUSINESS BUTTONS (IF YOU USE THEM) */
+.personal,
+.business {
+    flex: 1;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #aaa;
+    background: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* SUBMIT BUTTON */
+.fare-submit {
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: 0.25s ease;
+}
+
+/* BUTTON WHEN DISABLED / FORM NOT FILLED */
+.fare-submit.inactive {
+    background: #ffd4b3;
+    color: #ffffff;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* BUTTON WHEN FILLED / ACTIVE */
+.fare-submit.active {
+    background: #ff6a00;
+    color: white;
+    cursor: pointer;
+    opacity: 1;
+}
+
+
+/* ONE COMPLETE INPUT BOX */
+.fare-input-extended {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f5f7fa;
+    padding: 12px 14px;
+    border-radius: 10px;
+    position: relative;
+}
+
+/* REMOVE DOUBLE BACKGROUND */
+.no-bg {
+    background: transparent !important;
+    padding: 0 !important;
+}
+
+/* RIGHT SIDE */
+.right-toggle {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-left: 1px solid #ddd;
+    padding-left: 12px;
+}
+
+/* RADIO */
+.radio {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #888;
+    cursor: pointer;
+}
+
+.radio .dot {
+    margin-bottom: 5px;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+}
+
+.radio.active {
+    color: #000;
+}
+
+.radio.active .dot {
+    background: #ED3237;
+    border-color: #ED3237;
+    border: 2px solid #ADB3B3;
+}
+
+.address-box {
+    margin-top: 5px;
+    position: relative;
+}
+
+.address-box p {
+    font-size: 15px;
+    font-weight: 600;
+    color: black;
+    margin-bottom: 5px;
+}
+
+/* ADDRESS ROW */
+.address-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    position: relative;
+}
+
+/* DOTS */
+.dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    margin-top: 4px;
+    flex-shrink: 0;
+}
+
+.dot.green {
+    background: #0f9d58;
+}
+
+.dot.red {
+    background: #d93025;
+}
+
+/* VERTICAL DOTTED LINE */
+.address-line {
+    width: 1px;
+    height: 35px;
+    border-left: 1px dashed #ccc;
+    margin-left: 3px;
+    margin-top: -15px;
+    margin-bottom: 5px;
+}
+
+/* TEXT */
+.address-content .label {
+    font-size: 14px;
+    color: #9e9e9e;
+    font-weight: 400;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.address-content .value {
+    font-size: 12px;
+    color: #141414;
+    font-weight: 400;
+    margin: 2px 0 0;
+    max-width: 260px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.label {
+    font-size: 12px;
+    color: #9e9e9e;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+.name {
+    font-size: 11px;
+    color: black;
+    font-weight: 500;
+}
+
+.mid-dot {
+    font-size: 22px;
+    line-height: 1;
+    color: black;
+}
+
+.phone {
+    font-size: 12px;
+    color: #7a7a7a;
+}
+
+
+#price-edit {
+    font-size: 12px;
+    color: #0000E6;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.fare-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    max-width: 550px;
+}
+
+.summary-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f5f7fa;
+    padding: 12px 14px;
+    border-radius: 10px;
+    position: relative;
+}
+
+.summary-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.summary-row img {
+    width: 15px;
+    height: 15px;
+    object-fit: contain;
+}
+
+.summary-row input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 15px;
+    color: #222;
+    pointer-events: none;
+}
+
+.summary-row.split {
+    justify-content: space-between;
+    padding: 14px 14px;
+    padding-right: 10%;
+}
+
+.tag {
+    font-size: 12px;
+    color: #888;
+    text-transform: capitalize;
+}
+
+.prediction-box {
+    position: absolute;
+    top: calc(100% + 6px);
+    /* directly below input */
+    left: 0;
+
+    width: 100%;
+    max-width: 520px;
+    max-height: 220px;
+
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+
+    overflow-y: auto;
+    z-index: 9999;
+
+    font-size: 13px;
+}
+
+/* Prediction row */
+.prediction {
+    padding: 12px 14px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+}
+
+.prediction:hover {
+    background: #eef4ff;
+}
+
+/* Place name */
+.place {
+    font-size: 13px;
+    font-weight: 600;
+    color: #111;
+    margin-bottom: 2px;
+}
+
+/* Address */
+.prediction .address {
+    font-size: 12px;
+    color: #666;
+}
+
+
+
+/* ================= SEARCHING DRIVER SCREEN ================= */
+
+.searching-driver-wrapper {
+    display: flex;
+    width: 100%;
+    min-height: 800px;
+    background: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.searching-left {
+    width: 30%;
+    padding: 30px;
+    border-right: 1px dashed #ddd;
+}
+
+.trip-id {
+    font-size: 14px;
+    color: #666;
+}
+
+.vehicle-icon {
+    width: 120px;
+    margin: 20px 0;
+}
+
+.address-block p {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.green-dot,
+.red-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.green-dot {
+    background: green;
+}
+
+.red-dot {
+    background: red;
+}
+
+.searching-left h2 {
+    font-size: 32px;
+    margin-top: 10px;
+}
+
+.action-links {
+    margin-top: 20px;
+    display: flex;
+    gap: 20px;
+    font-size: 14px;
+}
+
+.action-links .cancel {
+    color: red;
+    cursor: pointer;
+}
+
+/* ================= RIGHT ================= */
+
+.searching-right {
+    width: 70%;
+    padding: 30px;
+}
+
+.searching-right h1 {
+    font-size: 28px;
+    color: #1a2cff;
+}
+
+.map-container {
+    position: relative;
+    height: 300px;
+    margin-top: 20px;
+    background: #eaeaea;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.map-overlay {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ================= PROGRESS ================= */
+
+.search-progress {
+    width: 100%;
+    height: 10px;
+    background: #eee;
+    border-radius: 50px;
+    margin-top: 25px;
+}
+
+.progress-fill {
+    width: 35%;
+    height: 100%;
+    background: #1a2cff;
+    border-radius: 50px;
+    animation: loading 2s infinite;
+}
+
+@keyframes loading {
+    0% {
+        width: 10%;
+    }
+
+    50% {
+        width: 60%;
+    }
+
+    100% {
+        width: 10%;
+    }
+}
+
+/* ================= VIEW DETAIL MODAL ================= */
+
+/* ===== Overlay ===== */
+.view-detail-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+/* ===== Modal ===== */
+.view-detail-modal {
+    width: 960px;
+    max-width: 96%;
+    min-height: 420px;
+    /* flexible height */
+    background: #ffffff;
+    border-radius: 16px;
+    border: 1px solid #e6e6e6;
+    padding: 24px 28px;
+    position: relative;
+
+    /* Professional feel */
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+
+    /* Layout control */
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===== Close Button ===== */
+.view-detail-close {
+    position: absolute;
+    top: 16px;
+    right: 18px;
+    font-size: 20px;
+    cursor: pointer;
+    color: white;
+    background-color: #0000E6;
+    border-radius: 50%;
+    padding: 8px 10px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ===== Layout ===== */
+.view-detail-body {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+/* ===== LEFT ===== */
+.view-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 280px;
+    padding: 16px 14px;
+    color: #A1A1A1;
+}
+
+.view-left img {
+    display: block;
+    margin: 0 auto 12px;
+    width: auto;
+    height: 10vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.view-left h4 {
+    font-size: 35px;
+    font-weight: 600;
+    margin-top: 8px;
+}
+
+.view-left h2 {
+    font-size: 40px;
+    font-weight: 500;
+    margin-top: 10px;
+}
+
+/* ===== Divider (DOTTED) ===== */
+.view-divider {
+    width: 2px;
+    border-right: 3px dotted #ddd;
+    height: 350px;
+    margin-right: 50px;
+}
+
+/* ===== RIGHT ===== */
+.view-right {
+    flex: 1;
+    padding: 8px 6px;
+    padding-right: 10%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+/* ===== Title ===== */
+.view-right h3 {
+    font-size: 18px;
+    font-weight: 500;
+    color: #666;
+    margin-bottom: 5%;
+}
+
+/* Info Block */
+.info-block {
+    margin-bottom: 14px;
+}
+
+.info-block h5 {
+    font-size: 13px;
+    font-weight: 500;
+    color: #0000E6;
+    margin-bottom: 6px;
+}
+
+/* Row */
+.info-block p {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14px;
+    color: #444;
+    line-height: 1.45;
+    word-break: break-word;
+}
+
+/* Text */
+.info-block .text {
+    flex: 1;
+}
+
+/* Meta row (Sender / Receiver) */
+.meta-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Meta Label */
+.meta-label {
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.meta-label.receiver {
+    background: #eef2ff;
+    color: #0000E6;
+}
+
+
+.view-right img {
+    width: 15px;
+    height: 15px;
+    object-fit: contain;
+}
+
+/* ===== Dots ===== */
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-top: 5px;
+}
+
+.dot.green {
+    background: #2dbf64;
+}
+
+.dot.red {
+    background: #ff4b4b;
+}
+
+/* ===== Book Button ===== */
+.view-book-btn {
+    margin-top: auto;
+    height: 48px;
+    border-radius: 10px;
+    border: none;
+    background: #ff6a1a;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s ease;
+    margin-top: 5%;
+}
+
+.view-book-btn:hover {
+    background: #e85c12;
+}
+
+.login-popup{
+    position: absolute;
+    top: 20%;
+    left: 40%;
+    z-index: 1;
+    background-color: white;
+    box-shadow: 2px 2px 5px gray;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+
+@media (max-width: 1024px) {
+
+  .fare-body {
+    gap: 30px;
+  }
+
+  .fare-divider {
+    height: 380px;
+  }
+
+  .fare-card {
+    margin-top: 20px;
+  }
+
+  .fare-detail h3,
+  .fare-detail p {
+    font-size: 26px;
+  }
+
+  .fare-detail h4 {
+    font-size: 30px;
+  }
+
+  .fare-right {
+    margin-top: 20px;
+  }
+
+  .searching-driver-wrapper {
+    flex-direction: column;
+  }
+
+  .searching-left,
+  .searching-right {
+    width: 100%;
+    border: none;
+  }
+}
+
+
+
+@media (max-width: 768px) {
+
+  /* ===== Fare Section ===== */
+  .fare-container {
+    padding: 40px 12px;
+  }
+
+  .fare-body {
+    flex-direction: column;
+    gap: 25px;
+  }
+
+  .fare-divider {
+    display: none;
+  }
+
+  .fare-card {
+    width: 100%;
+    align-items: center;
+  }
+
+  .fare-top {
+    width: 100%;
+    height: auto;
+  }
+
+  .fare-detail h3,
+  .fare-detail p,
+  .fare-detail h4 {
+    font-size: 24px;
+    text-align: center;
+  }
+
+  /* ===== Form Right ===== */
+  .fare-right {
+    margin-top: 0;
+    width: 100%;
+  }
+
+  .fare-summary {
+    max-width: 100%;
+  }
+
+  .prediction-box {
+    max-width: 100%;
+  }
+
+  /* ===== Searching Screen ===== */
+  .searching-left h2 {
+    font-size: 24px;
+  }
+
+  .searching-right h1 {
+    font-size: 22px;
+  }
+
+  .map-container {
+    height: 240px;
+  }
+}
+
+
+@media (max-width: 480px) {
+
+  /* ===== Fare Cards ===== */
+  .fare-card {
+    display: none;
+  }
+
+  .fare-tabs{
+    padding: 5px;
+  }
+  .fare-tabs p{
+      font-size: 12px;
+  }
+
+  .fare-card .fare-weight {
+    font-size: 22px;
+  }
+
+  .fare-weight img {
+    width: 22px;
+  }
+
+  .fare-detail h3,
+  .fare-detail p {
+    font-size: 20px;
+  }
+
+  .fare-detail h4 {
+    font-size: 24px;
+  }
+
+  /* ===== Inputs ===== */
+  .fare-input-row input,
+  .summary-row input {
+    font-size: 14px;
+  }
+
+  /* ===== Modal ===== */
+  .view-detail-modal {
+    padding: 16px;
+  }
+
+  .view-detail-body {
+    flex-direction: column;
+  }
+
+  .view-divider {
+    display: none;
+  }
+
+  .view-left {
+    width: 100%;
+    align-items: center;
+    text-align: center;
+  }
+
+  .view-left h4 {
+    font-size: 24px;
+  }
+
+  .view-left h2 {
+    font-size: 28px;
+  }
+
+  .view-right {
+    padding-right: 0;
+  }
+
+  .view-book-btn {
+    width: 100%;
+  }
+
+  /* ===== Login Popup ===== */
+  .login-popup {
+    left: 5%;
+    right: 5%;
+    top: 15%;
+  }
+}

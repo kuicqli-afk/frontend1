@@ -1,0 +1,27 @@
+.rider-sec {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding: 50px 4%;
+}
+
+.rider-sec-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.rider-sec-text h2 {
+    font-size: 80px;
+    line-height: 1;
+    color: #0000E6;
+
+}
+
+.rider-sec-text p {
+    font-size: 23px;
+    margin-right: 5%;
+    color: #898989;
+}

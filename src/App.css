@@ -1,0 +1,21 @@
+.responsive{
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+   
+    width: 100%;
+    height: 100vh;
+}
+.bg-blue{
+background:#0000E6;
+
+}
+@media (max-width:750px) {
+    .responsive{
+        display: flex;
+    }
+    .not-responsive{
+        display: none;
+    }
+}

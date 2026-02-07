@@ -1,0 +1,164 @@
+.vehicle-container {
+    display: flex;
+    gap: 30px;
+    padding: 50px 4%;
+}
+
+.vehicle-left {
+    width: 340px;
+    height: auto;
+    padding: 60px 4%;
+    gap: 30%;
+    background: #0000E6;
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.vehicle-left h2 {
+    font-size: 50px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.vehicle-left img {
+    width: 20vh;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.vehicle-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.vehicle-card {
+    width: 95%;
+    height: 100%;
+    padding: 50px 15px;
+    background: #ffffff;
+    border-radius: 16px;
+    border: 1px solid #dedede;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    cursor: pointer;
+}
+
+.vehicle-card:hover {
+     box-shadow: 0 0px 8px rgba(0,0,0,0.08);
+}
+
+.vehicle-top {
+    width: 20vh;
+    height: 10vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.vehicle-top img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.vehicle-card .weight {
+    display: flex;
+    align-items: end;
+    background-color: #f6f6f680;
+    border: 1px solid #dedede;
+    border-radius: 12px;
+    padding: 10px;
+    gap: 5px;
+    font-size: 30px;
+    font-weight: 500;
+    color: #A1A1A1;
+}
+
+.weight img {
+    width: 5vh;
+    height: auto;
+}
+
+.vehicle-card .detail {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    color: #A1A1A1;
+    padding: 0 20px;
+}
+
+.detail h3 {
+    font-size: 35px;
+    font-weight: 600;
+}
+
+.detail p {
+    font-size: 35px;
+}
+
+.detail h4 {
+    font-size: 40px;
+    font-weight: 500;
+}
+
+.fare-link {
+    display: flex;
+    padding: 0 20px;
+    gap: 5px;
+    color: #0000E6;
+    padding: 15px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.fare-link h4 {
+    font-size: 20px;
+}
+
+.fare-link img {
+    transition: transform 0.3s ease;
+}
+
+.vehicle-card:hover .fare-link img {
+    animation: bounceRight 0.6s ease;
+}
+
+.vehicle-card:hover .fare-link {
+    background-color: #f6f6f680;
+}
+
+.vehicle-left img {
+    transition: transform 0.3s;
+    animation: bounceRight 0.4s linear infinite;
+}
+
+@keyframes bounceRight {
+    0% {
+        transform: translateX(0);
+    }
+
+    30% {
+        transform: translateX(8px);
+    }
+
+    60% {
+        transform: translateX(-4px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
