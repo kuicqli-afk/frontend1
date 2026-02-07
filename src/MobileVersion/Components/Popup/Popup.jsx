@@ -1,12 +1,12 @@
 import React from 'react'
 import './Popup.css'
-function Popup() {
+function Popup({heading,message}) {
   return (
     <div class="modal-overlay">
   <div class="modal-container">
     <span class="modal-icon">⚠️</span>
-    <h3>Cancel Ride?</h3>
-    <p>Are you sure you want to cancel? Drivers are currently heading to your area.</p>
+    <h3>{heading}</h3>
+    <p>{message}</p>
     
     <div class="modal-actions">
       <button class="btn-confirm-cancel">Yes, Cancel Ride</button>

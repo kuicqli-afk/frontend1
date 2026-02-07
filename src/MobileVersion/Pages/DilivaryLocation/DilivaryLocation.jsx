@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import "./DilivaryLocation.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import logo from "../../../assets/Logo.png";
@@ -12,15 +12,27 @@ import { faLocationDot ,faBookmark, } from "@fortawesome/free-solid-svg-icons";
 import { SocketContext } from "../../../context/Socketcontext.jsx";
 import { useGoogleMaps } from "../../../providers/GoogleMapsProvider.jsx";
 import { GoogleMap, Marker } from "@react-google-maps/api";
-import TwoWheeler from "../../../assets/2wheeler.png";
-import MiniAuto from "../../../assets/MiniAuto.png";
-import Eloader from "../../../assets/Eloader.png";
+
+import MiniAuto from "../../../assets/blue-miniAuto.png";
+import Eloader from "../../../assets/blue-eloader.png";
 import ThreeWheeler from "../../../assets/3wheeler.png";
-import MiniTruck from "../../../assets/Minitruck.png";
-    import coin from '../../../assets/coin.png';
+import MiniTruck from "../../../assets/blue-minitruck.png";
+import coin from '../../../assets/coin.png';
 import bell from '../../../assets/Bell.png'
 import { faClock } from "@fortawesome/free-solid-svg-icons";
-
+import { RideContext } from "../../../context/RideContext.jsx";
+import driverRegistration2 from '../../../assets/driverRegistration2.png'
+import driverRegistration from '../../../assets/driverRegistration.png'
+import drop2 from '../../../assets/drop2.png';
+import dropHome from '../../../assets/receiver-red.png'
+import redProfile from '../../../assets/red-profile.png'
+import dropPhone from '../../../assets/mobile-red.png'
+import location from '../../../assets/Location.png'
+import sender from '../../../assets/sender.png'
+import weight2 from '../../../assets/weight2.png'
+import TwoWheeler from '../../../assets/blue-scooter.png'
+import { DirectionsRenderer } from "@react-google-maps/api";
+import location2 from '../../../assets/location2.png'
 
 
 
@@ -29,7 +41,8 @@ export default function DeliveryLocation(){
     const [ride,setRide]=useState([])
     const [pickup, setPickup] = useState({
       name:'',
-      address:''
+      address:'',
+      coords:''
     });
     const [pickupQuery,setPickupQuery]=useState()
     const [drop, setDrop] = useState("");
@@ -42,7 +55,54 @@ export default function DeliveryLocation(){
     const [fare,setFare]=useState([])
     const [active,setActive]=useState()
     const {socket,sendMessage}=useContext(SocketContext)
-    const [previousRides,setPreviousRides]=useState();
+    const {previousRides}=useContext(RideContext);
+    const [finalDetail,setFinalDetail]=useState(false)
+    const [pickupCoords, setPickupCoords] = useState(null);
+    const [dropCoords, setDropCoords] = useState(null);
+    const [directions, setDirections] = useState(null);
+
+    
+    // const [show,setShow]=useState()
+    
+    const [dropDetail,setDropDetail]=useState({
+      landmark:'',
+      receiver_name:'',
+      receiver_phone:'',
+      productType:''
+    })
+  
+    
+const pickupInputRef = useRef(null);
+const dropInputRef = useRef(null);
+
+useEffect(() => {
+  if (!pickup?.address) return;
+
+  axios
+    .get("https://thetest-h9x3.onrender.com/maps/getLocation", {
+      params: { address: pickup.address }
+    })
+    .then((res) => {
+      setPickupCoords(res.data.message);
+    })
+    .catch(console.error);
+
+}, [pickup.address]);
+
+
+useEffect(() => {
+  if (!drop?.address) return;
+
+  axios
+    .get("https://thetest-h9x3.onrender.com/maps/getLocation", {
+      params: { address: drop.address }
+    })
+    .then((res) => {
+      setDropCoords(res.data.message);
+    })
+    .catch(console.error);
+
+}, [drop.address]);
 
 
   
@@ -62,16 +122,40 @@ export default function DeliveryLocation(){
 
 //Fetching Previous Rides
 
- useEffect(()=>{
-  axios.post('https://thetest-h9x3.onrender.com/ride/get-ride/userId/',{
-    phone:phone
-  }).then((response)=>{
-    console.log(response.data.data)
-    setPreviousRides(response.data.data)
+//  useEffect(()=>{
+//   axios.post('https://thetest-h9x3.onrender.com/ride/get-ride/userId/',{
+//     phone:phone
+//   }).then((response)=>{
+//     console.log(response.data.data)
+//     setPreviousRides(response.data.data)
 
-  }).catch((error)=>console.log(error))
- },[])
+//   }).catch((error)=>console.log(error))
+//  },[])
+
   //Creating New Ride 
+
+useEffect(() => {
+  if (!pickupCoords || !dropCoords) return;
+
+  const directionsService = new window.google.maps.DirectionsService();
+
+  directionsService.route(
+    {
+      origin: pickupCoords,
+      destination: dropCoords,
+      travelMode: window.google.maps.TravelMode.DRIVING,
+    },
+    (result, status) => {
+      if (status === "OK") {
+        setDirections(result);
+      } else {
+        console.error("Directions error:", status);
+      }
+    }
+  );
+}, [pickupCoords, dropCoords]);
+
+ 
 
   const handleRide=async()=>{
     
@@ -81,8 +165,12 @@ export default function DeliveryLocation(){
      formData.append('pickup',pickup.address)
      formData.append('drop',drop.address)
      formData.append('userPhone',phone)
-     formData.append('fare',fare[active].fare)
-     formData.append('vehcile',fare[active].vehicleType)
+     formData.append('receiver_name',dropDetail.receiver_name)
+     formData.append('receiver_phone',dropDetail.receiver_phone)
+     formData.append('landmark',dropDetail.landmark)
+     formData.append('productType',dropDetail.productType)
+     formData.append('fare',active.fare)
+     formData.append('vehcile',active.vehicleType)
 
      for (const [key, value] of formData.entries()) {
         console.log(key, value);
@@ -108,11 +196,45 @@ export default function DeliveryLocation(){
       }
       else {
         console.log(response.error);
-      }
+      } 
     
   }
 
+const handleChange = (state) => {
+  setGetEstimate(false);
+
+  if (state === 'pickup') {
+    setPickup(prev => ({ ...prev, name: '', address: '' }));
+    setActiveInput('pickup');   // ✅ focus pickup input
+  } else if (state === 'drop') {
+    setDrop(prev => ({ ...prev, name: '', address: '' }));
+    setActiveInput('drop'); 
+ 
+        // ✅ focus drop input
+  }
+
+  navigate('/ride');
+};
+
+    useEffect(() => {
+      if (activeInput === 'pickup') {
+        pickupInputRef.current?.focus();
+      }
+      if (activeInput === 'drop') {
+        dropInputRef.current?.focus();
+      }
+    }, [activeInput]);
     
+  const handleCheckfare=()=>{
+
+     if(!dropDetail.landmark||!dropDetail.receiver_name||!dropDetail.receiver_phone)
+     {
+         alert('All Field are Required');
+         return;
+     }
+     setGetEstimate(true)
+
+  }
 useEffect(() => {
   if (!getEstimate) return;
   if (!pickup?.address || !drop?.address) return;
@@ -176,89 +298,247 @@ useEffect(() => {
        {
             getEstimate       
         ?
-       
-       <div className="ride-selection-screen">
-    {/* Full Screen Map */}
-    <div className="map-container-fixed">
-      <GoogleMap
-        mapContainerStyle={{ width: "100%", height: "100%" }}
-        center={pickupLocation}
-        zoom={15}
-        options={{ disableDefaultUI: true }}
-      >
-        {pickupLocation && <Marker position={pickupLocation} />}
-      </GoogleMap>
-      <button className="back-btn-overlay" onClick={() => setGetEstimate(false)}>
-        <FontAwesomeIcon icon={faArrowLeft} />
-      </button>
-    </div>
+        <>
+         <header className="header2" style={{background:'#0000E6'}}>
+                <Link to='/fare-link'>
+                 <img src={logo} alt="" width={120} style={{marginTop:'4px'}}/>
+                 </Link>
+                    
+                                  <div className="header-right">
+                                    
+                                    <div className="coin-badge">
+                                      <div style={{marginLeft:'-10px'}}><img src={coin} alt="" width={22}/></div>
+                                      <div style={{display:'flex',flexDirection:'column'}}>
+                                          <span>12 Coins Available </span>
+                                      <p style={{fontSize:'7px',fontWeight:'300',paddingTop:'1px'}}>Earn 11 More Coins To Use</p>
+                                      </div>
+                                      
+                                    </div>
+                                    <div><img src={bell} width={26}/></div>
+                                  </div>
+                                </header>
 
-    {/* Bottom Sheet UI */}
-    <div className="booking-bottom-sheet">
-      <div className="location-summary-row">
-        <div className="dot-indicator">
-          <div className="dot blue-dot"></div>
-          <div className="dot red-dot"></div>
-        </div>
-        <div className="address-display-stack">
-          <div className="addr-text">{pickup.name || "Pickup Location"}</div>
-          <div className="addr-text secondary">
-            <span className="stop-badge">1 stop to</span> {drop.name || "Destination"}
-          </div>
-        </div>
-        <div className="time-now-box">
-          <FontAwesomeIcon icon={faClockRotateLeft} />
-          <span>Now</span>
-        </div>
-      </div>
+                                {
+                                  finalDetail?
+                                  <div style={{height:'44%',display:'flex',flexDirection:'column',alignItems:'end', justifyContent:'end'}}>
+                                    <div className="check-fare-btn" onClick={handleRide}>
+                                      Book Ride
+                                    </div>
+                                  </div>
+                                  :
+                                  <>
+                                     <div className="container">
 
-     
+                                <div className="map-container2" style={{height:'280px'}}>
 
-     <div className="ride-options-list">
-  {fare.map((item, index) => (
-    <div
-      key={index}
-      className={`ride-card ${active === index ? "selected" : ""}`}
-      onClick={() => setActive(index)}
-    >
-      <div className="ride-img-box">
-        <img
-          src={vehicleImages[item.vehicleType].img}
-          alt={item.vehicleType}
-          width={50}
-        />
-        <span className="eta-tag">3 min</span>
-      </div>
+                                <div className="map-container-fixed" style={{height:'100%'}}>
+                                        <GoogleMap
+                                          mapContainerStyle={{ width: "100%", height: "100%" }}
+                                          center={pickupCoords}
+                                          zoom={14}
+                                          options={{ disableDefaultUI: true }}
+                                        >
+                                          {pickupCoords && <Marker position={pickupCoords} icon={{
+                                            url: location2,
+                                            scaledSize: new window.google.maps.Size(30, 40),
+                                            
+                                          }}/>}
+                                                        {dropCoords && <Marker position={dropCoords} />}
 
-      <div className="ride-info">
-        <div className="ride-name-line">
-          <strong>{vehicleImages[item.vehicleType].name}</strong>
-        </div>
-        <p className="ride-sub">
-            
-        </p>
-      </div>
+                                          {directions && (
+                                            <DirectionsRenderer
+                                              directions={directions}
+                                              options={{
+                                                suppressMarkers: true, // we already add markers
+                                                polylineOptions: {
+                                                  strokeColor: "#0000E6",
+                                                  strokeWeight: 5,
+                                                },
+                                              }}
+                                            />
+                                          )}
+                                        </GoogleMap>
 
-      <div className="ride-price-col">₹{item.fare}</div>
-    </div>
-  ))}
-</div>
+                    </div>
+                        
+                  </div>
+
+                  <div className="info-container3">
+                     <div className="div-info-container">
+                          <div className="location-icon-container">
+                                <img src={location} alt="" width={16}/>
+                                <div style={{height:'32px',width:'0px',border:'none',marginLeft:'7px',borderRight:'1px dashed black'}}></div>
+                                <img src={drop2} alt="" width={15} height={20} style={{marginTop:'5px'}}/>
+                          </div>
+                          <div className="location-name-container">
+                                  <div className="pick-up-div">
+                                       <div style={{color:'green',fontSize:'14px',fontWeight:'600'}}>Pick Up Location</div>
+                                       <div style={{fontSize:'12px',fontWeight:'600'}}>{name}.{phone}</div>
+                                       <div style={{fontSize:'10px',color:'gray'}}> {pickup.address.length > 35 ? pickup.address.slice(0, 35) + "..." : pickup.address}</div>
+                                  </div>
+                                   <div className="pick-up-div">
+                                       <div style={{color:'red',fontSize:'14px',fontWeight:'600'}}>Drop Location</div>
+                                       <div style={{fontSize:'12px',fontWeight:'600'}}>{drop.address.length > 15 ? drop.address.slice(0, 15) + "..." : drop.address}</div>
+                                       <div style={{fontSize:'10px',color:'gray'}}> {drop.address.length > 35 ? drop.address.slice(0, 35) + "..." : drop.address}</div>
+                                  </div>
+                          </div>
+                     </div>
+                      <div className="btn-container3">
 
 
-      {/* Payment and Options Row */}
-      {/* <div className="payment-options-row">
-        <div className="opt-item"><FontAwesomeIcon icon={faLocationDot} /> Cash</div>
-        <div className="opt-item"><FontAwesomeIcon icon={faBookmark} /> Coupon</div>
-        <div className="opt-item"><FontAwesomeIcon icon={faUser} /> Myself</div>
-      </div> */}
+                            <div><button onClick={()=>handleChange('pickup')}>Change</button></div>
+                            <div>
+                                <button
+                                  onClick={() => handleChange('drop')}
+                                >
+                                  Change
+                                </button>
+                              </div>
+                           
+                           
+                      </div>
+                     
+                  </div>
 
-      <button className="confirm-booking-btn" onClick={handleRide}>Confirm Ride</button>
-    </div>
-  </div>
+                  <div className="fare-container2">
+                    {
+                      fare.map((item)=>(
+                        <div className="vehicle" onClick={()=>{setActive({vehicleType:item.vehicleType,fare:item.fare});console.log(active)}} style={item.vehicleType===active?.vehicleType?{border:'2px solid red'}:{}}>
+                        <div style={{display:'flex',flexDirection:'row',gap:'15px'}}>
+                              <div style={{background:'blue',borderRadius:'0px 0px 20px 20px',padding:'10px',marginTop:'-10px',height:'70px'}}>
+                                <p style={{color:'white',fontSize:'10px'}}>40KG</p>
+                                <img src={weight2} alt="" width={30}/>
+                              </div>
+                              <div>
+                                  <img src={vehicleImages[item.vehicleType].img} alt="" width={item.vehicleType==='miniTruck'?65:60}/> 
+                              </div>
+                              <div style={{display:'flex',flexDirection:'column',color:'gray',justifyContent:'center'}}>
+                                  <img src="" alt="" />
+                                  <div style={{fontWeight:'600',fontSize:'14px'}}>{vehicleImages[item.vehicleType].name}</div>
+                                  <div>1 mins</div>
+                              </div>
+                        </div>
+                        <div style={{display:'flex',flexDirection:'column',fontWeight:'600',color:'gray',justifyContent:'center',alignItems:'center',lineHeight:'22px'}}>
+                          <div style={{fontSize:'14px'}}>Book Fare</div>
+                          <div style={{fontSize:'30px'}}>₹{item.fare}</div>
+                        </div>
+                          
+                       </div>
 
+                      ))
+                    }
+                       
+                               
+                  </div>
+                  <div className="check-fare-btn" style={{fontWeight:'600'}} onClick={()=>setFinalDetail(true)}>
+                        
+                          Click to find the Kuicqli heroes
+                        
+                       </div>
+
+                  </div>
+                                  </>
+                                }
+                             
+              </>
 
         :
-        <>
+        ( pickup.name && drop.name ?
+          <>
+           <header className="header2" style={{background:'#0000E6'}}>
+                <Link to='/fare-link'>
+                 <img src={logo} alt="" width={120} style={{marginTop:'4px'}}/>
+                </Link>
+                    
+                     <div className="header-right">
+                       
+                       <div className="coin-badge">
+                        <div style={{marginLeft:'-10px'}}><img src={coin} alt="" width={22}/></div>
+                        <div style={{display:'flex',flexDirection:'column'}}>
+                             <span>12 Coins Available </span>
+                         <p style={{fontSize:'7px',fontWeight:'300',paddingTop:'1px'}}>Earn 11 More Coins To Use</p>
+                        </div>
+                        
+                       </div>
+                       <div><img src={bell} width={26}/></div>
+                     </div>
+              </header>
+          
+             <div className="container" >
+               <div className="map-container2" style={{height:'280px'}}>
+
+                  <div className="map-container-fixed" style={{height:'100%'}}>
+                            <GoogleMap
+                              mapContainerStyle={{ width: "100%", height: "100%" }}
+                              center={dropCoords}
+                              zoom={15}
+                              options={{ disableDefaultUI: true }}
+                            >
+                              {dropCoords && <Marker position={dropCoords} />}
+                            </GoogleMap>
+                            <button className="back-btn-overlay" onClick={() => setDrop('')}>
+                              <FontAwesomeIcon icon={faArrowLeft} />
+                            </button>
+                    </div>
+                        
+               </div>
+               <div className="info-container2">
+                    <div className="drop-div">
+                      <div style={{display:'flex',flexDirection:'row',gap:'8px',
+                      }}>
+                            <img src={drop2} alt="" width={32} height={42}/>
+                            <div className="drop-div-info">
+                                <div className="drop-div-info-1">Drop Location</div>
+                                <div style={{fontWeight:'700',fontSize:'13px'}}>
+                                 {drop.name.length > 10 ? drop.name.slice(0, 10) + "..." : drop.name}
+
+                                </div>
+                                <div style={{fontSize:'12px'}}>
+                                    {drop.address.length > 35 ? drop.address.slice(0, 35) + "..." : drop.address}
+                                </div>
+                            </div>
+                      </div>
+                      <div className="change-btn-conatiner">
+                        <button onClick={()=>setDrop('')}>
+                          Change
+                        </button>
+                      </div>
+                         
+                  </div>
+                  <div className="input-div">
+                        <img src={dropHome} alt="" width={18} style={{margin:'8px 15px'}}/>
+                        <input type="text" placeholder="Enter House / Appartment / Landmark" onChange={(e)=>setDropDetail({...dropDetail,landmark:e.target.value})} value={dropDetail.landmark}/>
+                  </div>
+                   <div className="input-div">
+                        <img src={redProfile} alt="" width={18} style={{margin:'8px 15px',}}/>
+                        <input type="text" placeholder="Enter Receiver's Name" onChange={(e)=>setDropDetail({...dropDetail,receiver_name:e.target.value})} value={dropDetail.receiver_name}/>
+                  </div>
+                   <div className="input-div">
+                        <img src={dropPhone} alt="" width={18} style={{margin:'8px 15px'}}/>
+                        <input type="text" placeholder="Enter Receiver's Mobile Number" onChange={(e)=>setDropDetail({...dropDetail,receiver_phone:e.target.value})} value={dropDetail.receiver_phone}/>
+                  </div>
+                   <div className="input-div">
+                        <img src={sender} alt="" width={18} style={{margin:'8px 15px'}}/>
+                        <input type="text" placeholder="Sender's Mobile Number " value={phone +" ( Sender's Phone Number )"} style={{color:'#cbcbcb'}} readOnly='true'/>
+                  </div>
+                  <div className="input-div">
+                     <select name="" id="" style={{width:'100%',padding:'10px'}} onChange={(e)=>setDropDetail({...prev,productType:e.target.value})}>
+                      <option value="" disabled="true">Enter Product Type</option>
+                      <option value="wood">Wood</option>
+                      <option value="metal">Metal</option>
+                      <option value="paper">Paper</option>
+                      <option value="plastic">Plastic</option>
+                     </select>
+                  </div>
+               </div>
+                <div className="check-fare-btn" onClick={handleCheckfare}>
+                   Check-Fare
+                </div>
+             </div>
+           
+          </>
+          :
+          <>
               <header className="header2" style={{background:'#0000E6'}}>
                 <Link to='/fare-link'>
                  <img src={logo} alt="" width={120} style={{marginTop:'4px'}}/>
@@ -294,8 +574,14 @@ useEffect(() => {
            
             
                 {
-                  pickup.name ? <div className="pickup-display"><div className="info"><strong>{pickup.name}</strong>
-                  <p>{pickup.address}</p></div><FontAwesomeIcon icon={faChevronRight} onClick={()=>setPickup({name:'',address:''})} className="arrow-small"/>
+                  pickup.name ? <div className="pickup-display"><div className="info"><strong> {pickup.name.length > 30
+                      ? pickup.name.slice(0, 30) + "..."
+                      : pickup.name}</strong>
+                     <p>
+                    {pickup.address.length > 50
+                      ? pickup.address.slice(0, 50) + "..."
+                      : pickup.address}
+                  </p></div><FontAwesomeIcon icon={faChevronRight} onClick={()=>setPickup({name:'',address:''})} className="arrow-small"/>
                   </div>:<input type="text" placeholder="Enter Your Pick Up Location" className="drop-input" onChange={(e)=>setPickupQuery(e.target.value)} value={pickupQuery} onFocus={()=>{setActiveInput('pickup');console.log(previousRides)}}/>
                   
                 }
@@ -303,8 +589,15 @@ useEffect(() => {
             
               
                 {
-                   drop.name ? <div className="pickup-display"><div className="info"><strong>{drop.name}</strong>
-                  <p>{drop.address}</p></div><FontAwesomeIcon icon={faChevronRight} onClick={()=>setDrop({name:'',address:''})} className="arrow-small"/>
+                   drop.name ? <div className="pickup-display"><div className="info"><strong>{drop.name.length > 30
+                      ? drop.name.slice(0, 30) + "..."
+                      : drop.name}</strong>
+                        <p>
+                    {drop.address.length > 50
+                      ? drop.address.slice(0, 50) + "..."
+                      : drop.address}
+                  </p>
+                   </div><FontAwesomeIcon icon={faChevronRight} onClick={()=>setDrop({name:'',address:''})} className="arrow-small"/>
                   </div>:<div className="drop-input-wrapper">
                   <input type="text" placeholder="Where is your Drop?" className="drop-input" onFocus={()=>setActiveInput('drop')} onChange={(e)=>setDropQuery(e.target.value)}/>
                   {/* <FontAwesomeIcon icon={faMicrophone} className="mic-icon" /> */}
@@ -318,28 +611,28 @@ useEffect(() => {
 
       {/* Tabs */}
       <div className="tabs2" style={{borderRadius:'10px'}}>
-        <div className="tab active">
+        {/* <div className="tab active">
           <FontAwesomeIcon icon={faLocationCrosshairs} /> Select on map
-        </div>
-        <div className="tab-divider"></div>
-        <div className="tab2">
+        </div> */}
+        {/* <div className="tab-divider"></div> */}
+        <div className="tab2" style={{padding:'10px'}}>
           <FontAwesomeIcon icon={faHeart} /> Saved Addresses
         </div>
-      </div>
+      </div>  
 
       {/* History List */}
-      <div className="history-list">
-
+      <div className="history-list" >
+       
         {
           activeInput&&activeInput==='pickup'&&(pickupPredictions.length>0?pickupPredictions.map((item, index) => (
-          <div key={index} className="history-item" onClick={()=>{setPickup({name:item.name,address:item.formatted_address});setPickupPredictions(null);setPickupLocation(item.geometry.location)}}>
+          <div key={index} className="history-item" style={{zIndex:'2'}} onClick={()=>{setPickup({name:item.name,address:item.formatted_address});setPickupLocation(item.geometry.location)}}>
             <FontAwesomeIcon icon={faLocationDot} className="time-icon" />
             <div className="item-details">
               <div className="item-header">
                 <span className="location-name">{item.name}</span>
-                <span className="user-tag">
-                  <FontAwesomeIcon icon={faUser} size="xs" /> {item.user}
-                </span>
+                <div className="user-tag" >
+                 <div><FontAwesomeIcon icon={faUser} size="xs" /></div> <div>{item.user}</div> 
+                </div>
               </div>
               <p className="location-address">{item.formatted_address}</p>
             </div>
@@ -350,7 +643,13 @@ useEffect(() => {
           </div>
           
         )).slice(0,7):previousRides.map((item,index)=>(
-          <div key={index} className="history-item" onClick={()=>{setPickup({name:item.name,address:item.formatted_address});setPickupPredictions(null);setPickupLocation(item.geometry.location)}}>
+          <div key={index} className="history-item"  onClick={() => {
+                setPickup({
+                  name:item.pickUp,
+                  address: item.pickUp
+                });
+                setDropPredictions([]);
+              }}>
            <FontAwesomeIcon icon={faClock} style={{color:'gray',padding:'8px'}} size='xl'/>
           <div className="item-details">
               <div className="item-header">
@@ -403,7 +702,7 @@ useEffect(() => {
             </div>
           ))
       : previousRides
-          .slice(0, 4)
+          .slice(0, 8)
           .map((item, index) => (
             <div
               key={index}
@@ -418,10 +717,14 @@ useEffect(() => {
             >
              <FontAwesomeIcon icon={faClock} style={{color:'gray',padding:'8px'}} size='xl'/>
               <div className="item-details">
-                <div className="item-header">
-                  <span className="location-name">{item.drop}</span>
-                </div>
+              <div className="item-header">
+                <span className="location-name">{item.pickUp}</span>
+                <span className="user-tag">
+                  <FontAwesomeIcon icon={faUser} size="xs" /> {item.receiver_name}
+                </span>
               </div>
+              <p className="location-address">{item.drop}</p>
+            </div>
               <div className="save-action">
                 <FontAwesomeIcon icon={faBookmark} className="heart-icon" />
                 <span>SAVE</span>
@@ -434,13 +737,21 @@ useEffect(() => {
        
       </div>
 
-              {pickup&&drop&&
-                <div style={{padding:'15px',color:'white',fontWeight:'500',textAlign:'center',borderRadius:'5px',margin:'10px',position:'fixed', bottom:0,width:'94%'}} className="btn" onClick={()=>setGetEstimate(true)}>
-                  Get Estimate   
-              </div>
-}
-                </>
+             
+</>
+        )
+       
        }
+      
+        <div className="design">
+        {!getEstimate&&<img src={driverRegistration} alt="" style={{width:'100%',marginTop:'100px' ,zIndex:'1'}}/>} 
+            
+       </div>
+       <div style={{background:'white',padding:'20px',position:'relative',top:'0',height:'110px'}}>
+           
+       </div>
+    
+      
      <nav className="bottom-nav2">
         <div className="nav-item active">🏠<span>Home</span></div>
         <div className="nav-item">📋<span>Orders</span></div>

@@ -25,6 +25,8 @@ import Home from './MobileVersion/Pages/Home/Home.jsx';
 import DeliveryLocation from './MobileVersion/Pages/DilivaryLocation/DilivaryLocation.jsx';
 import MobileRide from './MobileVersion/Pages/MobileRide/MobileRide.jsx';
 import MobileRideOnWay from './MobileVersion/Pages/MobileRideOnWay/MobileRideOnWay.jsx';
+import MobileRideStarted from './MobileVersion/Pages/MobileRideStarted/MobileRideStarted.jsx';
+import TempSlider from './Components/TempSlider/TempSlider.jsx';
 function App() {
 
   const location = useLocation();
@@ -59,7 +61,7 @@ function App() {
            {!isBlankPage && (
         <>
           <Navbar />
-          <Slider />
+          <TempSlider/>
           <VehicleLoader />
           <Section />
           <Service />
@@ -96,6 +98,7 @@ function App() {
                 <Route  path='/ride' element={<DeliveryLocation/>}/>
                 <Route  path='/search/ride' element={<MobileRide/>}/>
                 <Route path="/ride/confirmed" element={<MobileRideOnWay/>}/>
+                 <Route path="/ride/started" element={<MobileRideStarted/>}/>
               </Routes>
           </div>
            }

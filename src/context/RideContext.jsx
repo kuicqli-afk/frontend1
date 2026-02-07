@@ -1,8 +1,12 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState ,useEffect} from 'react';
+import axios from 'axios'
 
 export const RideContext = createContext();
 
 export const RideProvider = ({ children }) => {
+  const phone=localStorage.getItem('phone')
+  //Privous Rides
+  const [previousRides,setPreviousRides]=useState([])
   // Use a "Lazy Initializer" function inside useState. 
   // This runs ONLY once when the app starts.
   const [pendingRide, setPendingRideState] = useState(() => {
@@ -30,8 +34,19 @@ export const RideProvider = ({ children }) => {
     setPendingRideState(null);
   };
 
+
+     useEffect(()=>{
+      axios.post('https://thetest-h9x3.onrender.com/ride/get-ride/userId/',{
+        phone:phone
+      }).then((response)=>{
+        console.log(response.data.data)
+        setPreviousRides(response.data.data)
+
+      }).catch((error)=>console.log(error))
+    },[])
+  
   return (
-    <RideContext.Provider value={{ pendingRide, setPendingRide: updatePendingRide, clearPendingRide }}>
+    <RideContext.Provider value={{ pendingRide, setPendingRide: updatePendingRide, clearPendingRide ,previousRides}}>
       {children}
     </RideContext.Provider>
   );

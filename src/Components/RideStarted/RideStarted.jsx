@@ -67,9 +67,9 @@ function RideStarted() {
             destination: ride.pickUp,
             travelMode: window.google.maps.TravelMode.DRIVING,
           });
-         setDistance( result.routes[0].legs[0].distance.text )  // "12.4 km"
-         setTravelTime( result.routes[0].legs[0].duration.text)
-          setDirectionResponse(result);
+           setDistance( result.routes[0].legs[0].distance.text )  // "12.4 km"
+           setTravelTime( result.routes[0].legs[0].duration.text)
+           setDirectionResponse(result);
         } catch (err) {
           console.error("Route error:", err);
         }

@@ -129,10 +129,10 @@ body {
 
 .coupon-div {
   width: 100%;
-  height: 120px;
-  margin-top: 15px;
+  height: 109px;
+  margin-top: 20px;
   /* background-color: rgb(228, 228, 228); */
-  padding: 20px;
+  padding: 26px 20px;
   /* padding-top: 7%; */
   display: flex;
   flex-direction: row;
@@ -210,7 +210,7 @@ body {
   align-items: center;
   padding: 0 15px;
   margin-top: 18px;
-  margin-bottom: 10px;
+  margin-bottom: -2px;
   align-items: center;
 }
 
@@ -219,7 +219,9 @@ body {
   display: flex;
   flex-direction: row;
   margin-left: 20px;
+  margin-top: 10px;
 }
+
 
 .hero-main h2 {
   font-size: 35px;
@@ -251,7 +253,7 @@ body {
   justify-content: space-around;
   padding: 10px 0;
   border-top: 1px solid #eee;
-  z-index: 2;
+  z-index: 9;
 }
 
 .nav-item {
@@ -289,6 +291,7 @@ body {
   align-items: center;
   gap: 10px;
   padding: 30px 10px;
+  padding-bottom: 20px;
   overflow: hidden;
   background-color: var(--bg-blue);
 }
@@ -299,6 +302,9 @@ body {
   position: absolute;
   inset: 0;
   background: url(../../../assets/shape.png) no-repeat center top;
+  height: 30vh; 
+  margin-left: -1px;
+  margin-top: 30%;
   background-size: cover;
   z-index: 1;
   pointer-events: none;
@@ -314,8 +320,8 @@ body {
 .product {
   width: 120px;
   /* change size here */
-  height: 220px;
-  background-color: red;
+  height: 185px;
+  background-color: #FFC300;
   border-radius: 10px;
   padding: 8px;
   display: flex;
@@ -330,7 +336,7 @@ body {
 }
 
 .product.bg-yello {
-  background-color: #FFCB00;
+  background-color: red;
 }
 
 /* IMAGE ROW */
@@ -347,24 +353,17 @@ body {
   object-fit: contain;
 }
 
-/* CONTENT ROW (STRAIGHT LINE) */
-.product-content-row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
 /* LOGO */
 .product-logo {
-  width: 80px;
+  width: 70px;
   flex-shrink: 0;
 }
 
 /* TEXT */
 .product-text {
   color: white;
-  font-size: 13px;
-  line-height: 1.2;
+  font-size: 11px;
+  line-height: 1;
   flex: 1;
 }
 
@@ -390,7 +389,7 @@ body {
 @media (min-height: 700px) {
   .product {
     width: 140px;
-    height: 260px;
+    height: 180px;
   }
 }
 
@@ -399,10 +398,8 @@ body {
 .driver-registration {
   width: 100%;
   height: 300px;
-  padding: 5px;
-  padding-left: 18px;
-  padding-right: 18px;
-  margin-top: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
   background-color: white;
 
 

@@ -88,15 +88,16 @@ function Home() {
       {/* Vehicle List */}
       <div className="vehicle-scroll">
         {[
-          { name: "2 Wheeler", weight: "40kg", icon: "🏍️", img: bike },
+          { name: "2 Wheeler", weight: "20kg", icon: "🏍️", img: bike },
           { name: "Mini Auto", weight: "45kg", icon: "🛺", img: auto },
-          { name: "Mini Truck", weight: "48kg", icon: "🚚", img: truck },
-          { name: "E Loader", weight: "48kg", icon: "🚚", img: ELoader }
+          { name: "E Loader", weight: "400kg", icon: "🚚", img: ELoader },
+          { name: "3 Wheeler", weight: "550kg", icon: "🚚", img: ELoader },
+          { name: "Mini Truck", weight: "720kg", icon: "🚚", img: truck },
         ].map((v, i) => (
           <Link to='/ride'>
             <div className="v-card" key={i}>
               <div className="v-badge"><div style={{ fontSize: '8px', marginTop: '10px', marginBottom: '3px' }}>{v.weight}</div><img src={weight2} width={25} /></div>
-              <div className="v-img"><img src={v.img} alt="" width={80} height={50} /></div>
+              <div className="v-img"><img src={v.img} alt="" width={80} height={45} /></div>
               <h3>{v.name}</h3>
               <p style={{ fontSize: '10px', color: '#0000E6', textDecoration: 'none' }}>Click to Check Deliver Fare. »</p>
             </div></Link>
@@ -106,7 +107,7 @@ function Home() {
 
       {/* Coupon */}
       <div className="coupon-div">
-        <div style={{ padding: '12px 10px 0px 0px', width: '40%' }}>
+        <div style={{ padding: '7px 10px 0px 0px', width: '40%' }}>
           <img src={couponText} alt="" width={120} />
         </div>
         <div style={{
@@ -114,7 +115,7 @@ function Home() {
             : '5px'
         }}></div>
         <div style={{ width: '80%' }}>
-          <div style={{ color: '#0000E6', fontSize: '17px', fontWeight: '700', paddingTop: '8px' }}>40 Coupons Available!</div>
+          <div style={{ color: '#0000E6', fontSize: '17px', fontWeight: '700', }}>40 Coupons Available!</div>
           <p style={{ color: 'gary' }}>This coupon can be applied to our other
             products to unlock attractive benefits</p>
         </div>
@@ -131,10 +132,10 @@ function Home() {
           color: 'white', display: 'flex', flexDirection: 'column',
           justifyContent: 'center', alignItems: 'center'
         }}>
-          <div style={{ minWidth: '150px', padding: '10px', fontSize: '16px', fontWeight: '800', paddingTop: '0px', paddingBottom: '5px' }}>
+          <div style={{ minWidth: '150px', padding: '10px', fontSize: '15px', fontWeight: '800', marginTop: "-10px"}}>
             EXPLORE OUR MORE ONLINE PRODUCTS
           </div>
-          <div style={{ fontSize: '14px', fontWeight: '300', letterSpacing: '1px', paddingLeft: '10px', marginRight: '15px' }}>
+          <div style={{ fontSize: '13px', fontWeight: '300', letterSpacing: '1px', paddingLeft: '10px', marginRight: '15px', marginTop: "-10px" }}>
             <span style={{ fontWeight: '700' }}> <i>SHOP NOW </i> </span>& Enjoy a better Experince
           </div>
         </div>
@@ -151,7 +152,7 @@ function Home() {
           </div>
 
           <p className="product-text">
-            Built for restaurants & cloud kitchens.
+            for restaurants & cloud kitchens.
           </p>
 
           <img src={whitearrow} alt="" className="product-arrow" />
@@ -167,7 +168,7 @@ function Home() {
           </div>
 
           <p className="product-text">
-            Built for grocery & daily-needs
+            for grocery & daily-needs
           </p>
 
           <img src={whitearrow} alt="" className="product-arrow" />
@@ -183,16 +184,16 @@ function Home() {
           </div>
 
           <p className="product-text">
-            Built for restaurants & cloud kitchens.
+             for restaurants & cloud kitchens.
           </p>
 
           <img src={whitearrow} alt="" className="product-arrow" />
         </div>
       </div>
-      
+
       <div className="driver-registration">
 
-        <img src={driverRegistration} alt="" style={{ width: '100%', marginTop: '10px' }} />
+        <img src={driverRegistration} alt="" style={{ width: '100%', marginTop: '5px'}} />
         <img src={driverRegistration2} alt="" style={{ width: '100%', marginTop: '10px' }} />
 
 

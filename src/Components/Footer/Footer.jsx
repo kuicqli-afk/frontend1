@@ -10,7 +10,8 @@ const Footer = () => {
         <>
             <div className="footer-container">
                 <div className="footer-left">
-                    <img src={logo} alt="" />
+                    {/* <img src={logo} alt="" /> */}
+                    <div style={{fontSize:'52px',fontWeight:'700'}}>DELIVER</div>
                     <h3>LUCKNOW’S FIRST ONLINE DELIVERY SERVICE.</h3>
                     <h4>KUCH BHI -KAHIN BHI.</h4>
                     <p>OUR SERVICE JUST AVAILABLE AT LUCKNOW</p>
@@ -119,7 +120,7 @@ const Footer = () => {
                 <div className="bottom-top">
                     <p>
                         Registerd Office : <br />
-                        © 2025 Kuicqli <br />
+                        © 2025 Deliver <br />
                         Zafar Manzil, 185/20, Near Lucknow Christian College, Wazirganj, <br />
                         Golaganj, Lucknow, Uttar Pradesh, India - 226018
                     </p>
@@ -127,7 +128,7 @@ const Footer = () => {
                 <div className="bottom-bottom">
                     <p>
                         GST : U74999MH2014PTC306120 <br />
-                        Email : help@kuicqli.com <br />
+                        Email : help@deliver.com <br />
                         Phone : 9278000316</p>
                 </div>
             </div>

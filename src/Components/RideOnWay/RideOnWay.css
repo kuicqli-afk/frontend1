@@ -1,139 +1,48 @@
-.pickup-success-icon {
-    width: 20px;
-    height: 20px;
-    margin-left: 8px;
-    display: inline-block;
-    vertical-align: middle;
-    overflow: visible;
-    margin-top: -5px;
-    position: absolute;
-}
-
-.rideon-divider {
-    width: 2px;
-    border-right: 3px dotted #ddd;
-    height: 650px;
-}
-
-.ride-share {
+.search-conatiner{
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-    margin-bottom: 5%;
+    height: 100vh;
+    background-color: #0000E6;
+    overflow-y: auto;
 }
 
-/* DRIVER AVATAR  */
-.driver-card {
-    display: flex;
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    align-items: center;
+.map-container3{
     width: 100%;
-    max-width: 900px;
+    height: 300px;
+    background-color: white;
+    margin-top:-50px ;
+    border-radius: 10px;
 }
-
-.driver-left {
+.trip-container{
     display: flex;
-    align-items: center;
-    gap: 15px;
-    flex: 1;
+    flex-direction: row;
+    padding: 10px;
+    background-color: white;
+    justify-content: space-between;
+    border-radius: 10px;
 }
-
-.driver-avatar {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-.vehicle-number {
-    color: #0a1aff;
-    font-size: 28px;
-    margin: 0;
-}
-
-.call-driver {
-    font-size: 14px;
-    color: #555;
-}
-
-.driver-name {
-    margin-top: 10px;
-}
-
-.driver-name span {
-    color: #007bff;
-    margin-left: 6px;
-    cursor: pointer;
-}
-
-.driver-divider {
-    width: 1px;
-    height: 120px;
-    background: #ddd;
-    margin: 0 20px;
-}
-
-.driver-right {
-    flex: 1.2;
-}
-
-.ride-status-row {
+.time-container{
     display: flex;
+    flex-direction: row;
+    padding: 15px;
+    background-color: white;
+    border-radius: 10px;
     justify-content: space-between;
     align-items: center;
 }
 
-.ride-type {
-    font-size: 16px;
-    font-weight: 500;
+.searchbar-conatiner{
+    display:flex ;
+    flex-direction: row;
+    padding: 4px;
+    justify-content: space-between;
+    
 }
 
-.green {
-    color: #1fa64a;
-    font-weight: bold;
-}
-
-.share-icon {
-    width: 22px;
-    cursor: pointer;
-}
-
-.coming-text {
-    color: #666;
-    margin: 5px 0;
-}
-
-.progress-bar-wrapper {
-    width: 73%;
-    height: 5px;
-    background: #e0e0e0;
-    border-radius: 20px;
-    overflow: hidden;
-    margin: 30px 0 14px;
-}
-
-.progress-active {
-    width: 30%;
-    height: 100%;
-    background: red;
-}
-
-.otp-section {
-    text-align: center;
-}
-
-.otp-section .arrow {
-    font-size: 28px;
-    display: block;
-    margin-bottom: 5px;
-}
-
-.otp-code {
-    font-size: 28px;
-    letter-spacing: 4px;
-    margin-top: 5px;
+.searchbar-conatiner div{
+    padding: 4px;
+    border-radius: 10px;
+    background-color: white;
+    width: 14vb;
+    height: 2px;
 }

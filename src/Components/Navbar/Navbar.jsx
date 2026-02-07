@@ -34,7 +34,8 @@ const Navbar = () => {
         {/* LEFT LOGO */}
         <div className="navbar-left">
           <Link to="/">
-            <img src={Logo} alt="Logo" className="navbar-logo" />
+            {/* <img src={Logo} alt="Logo" className="navbar-logo" /> */}
+            <span style={{fontSize:'52px',color:'white',fontWeight:'700'}}>DELIVER</span>
           </Link>
           <ul>
             <li>

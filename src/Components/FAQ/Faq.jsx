@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import "./Faq.css";
 
 const faqData = [
-  { question: "What is Kuicqli APP?", answer: "Kuicqli is an app designed for logistics and delivery services." },
-  { question: "How do I use Kuicqli App?", answer: "You can download the app, register, and start booking deliveries." },
+  { question: "What is Deliver APP?", answer: "Deliver is an app designed for logistics and delivery services." },
+  { question: "How do I use Deliver App?", answer: "You can download the app, register, and start booking deliveries." },
   { question: "Does Porter transport between cities?", answer: "Yes, intercity transport is available depending on vehicle type." },
   { question: "What are the items that are prohibited by Porter?", answer: "Explosives, illegal goods, and restricted items are not allowed." },
-  { question: "What is Kuicqli APP?", answer: "Kuicqli is an app designed for logistics and delivery services." },
-  { question: "How do I use Kuicqli App?", answer: "You can download the app, register, and start booking deliveries." },
+  { question: "What is Deliver APP?", answer: "Deliver is an app designed for logistics and delivery services." },
+  { question: "How do I use Deliver App?", answer: "You can download the app, register, and start booking deliveries." },
   { question: "Does Porter transport between cities?", answer: "Yes, intercity transport is available depending on vehicle type." },
   { question: "What are the items that are prohibited by Porter?", answer: "Explosives, illegal goods, and restricted items are not allowed." },
 ];
