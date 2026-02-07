@@ -10,6 +10,7 @@ import {
   DirectionsRenderer,
 } from "@react-google-maps/api";
 import { useNavigate } from 'react-router-dom';
+import notification from '../../assets/notification2.wav'
 function RideStarted() {
     const [directionResponse, setDirectionResponse] = useState(null);
     const [distance,setDistance]=useState('')
@@ -18,6 +19,8 @@ function RideStarted() {
     const [data,setData]=useState('')
     const ride =JSON.parse(localStorage.getItem("ride"))
      const { isLoaded } = useGoogleMaps();
+    //  const notificationSound = new Audio(notification);
+     
      const navigate=useNavigate()
 // 🔌 Socket listener
   useEffect(() => {
@@ -27,26 +30,28 @@ function RideStarted() {
       alert('Ride Completed')
       socket.leave(`order_${orderId}`);
       console.log(newRide)
-      navigate('/')
+      navigate('/fare-link')
+    }
+
+    const handleConfirmOtp=(data)=>{
+      const audio = new Audio(notification);
+      audio.play().catch(err => console.log("Audio play blocked:", err));
+      alert('Ride Confirm Otp')
+      console.log('hello')
+      console.log(data)
+      setData(data)
+    
     }
 
     socket.on('ride-completed', handleRideCompleted)
+    socket.on('confirm-otp',handleConfirmOtp)
 
     // 🧹 Cleanup
     return () => {
       socket.off('ride-completed', handleRideCompleted)
     }
   }, [socket])
-    useEffect(()=>{
-      axios.post('https://thetest-h9x3.onrender.com/ride/get-ride-detail',{
-        rideId:ride._id,
-      }).then((response)=>{
-         console.log(response);
-         setData(response.data.data)
-      }).catch((error)=>{
-        console.log(error)
-      })
-    },[])
+   
 
 
       /* ================= GOOGLE MAP ================= */
@@ -135,7 +140,7 @@ function RideStarted() {
             <p><strong>Driver Phone :</strong>{ride.driverId.phone}</p>
           </div>
           <div style={{padding:"10px"}}>
-            <h3>Ride Confimation Otp- <span style={{color:"blue"}}>{data.rideConfirmOtp}</span></h3>
+            <h3>Ride Confimation Otp- <span style={{color:"blue"}}>{data?data.rideConfirmOtp:'You Receive Otp Once the Rider Completed the Ride'}</span></h3>
             <h5>Driver Patner Will There in -</h5>
           </div>
         </div>

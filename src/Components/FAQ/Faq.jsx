@@ -8,8 +8,8 @@ const faqData = [
   { question: "What are the items that are prohibited by Porter?", answer: "Explosives, illegal goods, and restricted items are not allowed." },
   { question: "What is Deliver APP?", answer: "Deliver is an app designed for logistics and delivery services." },
   { question: "How do I use Deliver App?", answer: "You can download the app, register, and start booking deliveries." },
-  { question: "Does Porter transport between cities?", answer: "Yes, intercity transport is available depending on vehicle type." },
-  { question: "What are the items that are prohibited by Porter?", answer: "Explosives, illegal goods, and restricted items are not allowed." },
+  { question: "Does Deliver transport between cities?", answer: "Yes, intercity transport is available depending on vehicle type." },
+  { question: "What are the items that are prohibited by Deliver?", answer: "Explosives, illegal goods, and restricted items are not allowed." },
 ];
 
 const Faq = () => {
