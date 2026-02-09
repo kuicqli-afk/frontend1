@@ -28,7 +28,7 @@ function MobileRide() {
       if (!socket) return;
   
       const handleRideConfirmed = (ride) => {
-        alert(`Status: ${ride.status}\nDriver: ${ride.driverId.name}`);
+        // alert(`Status: ${ride.status}\nDriver: ${ride.driverId.name}`);
         localStorage.setItem("ride", JSON.stringify(ride));
         
         

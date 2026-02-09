@@ -18,7 +18,7 @@ function RideStarted() {
     const {socket}=useContext(SocketContext);
     const [data,setData]=useState('')
     const ride =JSON.parse(localStorage.getItem("ride"))
-     const { isLoaded } = useGoogleMaps();
+    const { isLoaded } = useGoogleMaps();
     //  const notificationSound = new Audio(notification);
      
      const navigate=useNavigate()
@@ -28,15 +28,16 @@ function RideStarted() {
 
     const handleRideCompleted = (newRide) => {
       alert('Ride Completed')
-      socket.leave(`order_${orderId}`);
+      // socket.leave(`order_${ride._id}`);
       console.log(newRide)
       navigate('/fare-link')
     }
 
-    const handleConfirmOtp=(data)=>{
+    const handleConfirmOtp=(data)=>
+    {
       const audio = new Audio(notification);
       audio.play().catch(err => console.log("Audio play blocked:", err));
-      alert('Ride Confirm Otp')
+      // alert('Ride Confirm Otp')
       console.log('hello')
       console.log(data)
       setData(data)

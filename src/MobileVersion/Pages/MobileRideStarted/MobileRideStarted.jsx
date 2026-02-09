@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import './MobileRideStarted.css'
-import { data, Link } from 'react-router-dom'
+import { data, Link, useNavigate } from 'react-router-dom'
 import logo from "../../../assets/Logo.png";
 import coin from '../../../assets/coin.png'
 import bell from '../../../assets/Bell.png'
@@ -19,17 +19,20 @@ import drop2 from '../../../assets/drop2.png';
 import profile from '../../../assets/driver2.jpg'
 import { faPhone } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import notification from '../../../assets/notification2.wav'
 function MobileRideStarted() {
          const [driverLocation,setDriverLocation]=useState()
          const { isLoaded } = useGoogleMaps();
          const [directionResponse, setDirectionResponse] = useState(null);
-         const [data,setData]=useState()
+         const [data,setData]=useState(null)
          const phone=localStorage.getItem('phone')
          const name=localStorage.getItem('name')
-         const {socket}=useContext(SocketContext);  const mapRef = useRef(null);
+         const {socket}=useContext(SocketContext);  
+         const navigate=useNavigate();
+         const mapRef = useRef(null);
            const markerRef = useRef(null);
            const animationRef = useRef(null);
-           const targetLocationRef = useRef(driverLocation);
+           const targetLocationRef = useRef(driverLocation);       
          
            
 
@@ -38,12 +41,24 @@ function MobileRideStarted() {
            
                const handleRideCompleted = (newRide) => {
                  alert('Ride Completed')
-                 socket.leave(`order_${orderId}`);
+                //  socket.leave(`order_${ride._id}`);
                  console.log(newRide)
                  navigate('/fare-link')
                }
+
+                const handleConfirmOtp=(data)=>
+                   {
+                     const audio = new Audio(notification);
+                     audio.play().catch(err => console.log("Audio play blocked:", err));
+                    //  alert('Ride Confirm Otp')
+                     console.log('hello')
+                     console.log(data)
+                     setData(data)
+                   
+                   }
            
                socket.on('ride-completed', handleRideCompleted)
+                socket.on('confirm-otp',handleConfirmOtp)
            
                // 🧹 Cleanup
                return () => {
@@ -212,25 +227,12 @@ function MobileRideStarted() {
 
                                     </div>
 
-                                    <div style={{background:'white',padding:'15px 25px',display:'flex',flexDirection:'row',alignItems:'center',borderRadius:'10px',fontSize:'16px',fontWeight:'600'}}>
-                                       Ride Confirmation Otp - {data?data.rideConfirmOtp:'234234'.split('').map((char,index)=>(
-                                        <div key={index}  style={{
-                                                width: '32px',
-                                                height: '40px',
-                                                border: '1px solid #ccc',
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
-                                                fontSize: '16px',
-                                                borderRadius: '6px',
-                                                }}>
-                                            {char===' '?'\u00A0':char}
-                                        </div>
-                                       ))}
+                                    <div style={{zIndex:'7',background:'white',padding:'15px 25px',display:'flex',flexDirection:'row',alignItems:'center',borderRadius:'10px',fontSize:'16px',fontWeight:'600'}}>
+                                        <div>Ride Confimation Otp- <span style={{color:"blue"}}>{data?data.rideConfirmOtp:'You Receive Otp Once the Rider Completed the Ride'}</span></div>
                                     </div>
 
-                                     <div className="info-container3">
-                                                                                <div className="div-info-container">
+                                     <div className="info-container3" style={{zIndex:'7',boxShadow:'2px 2px 5px gray'}}>
+                                                                                <div className="div-info-container" >
                                                                                      <div className="location-icon-container">
                                                                                            <img src={location} alt="" width={16}/>
                                                                                            <div style={{height:'42px',width:'0px',border:'none',marginLeft:'7px',borderRight:'1px dashed black'}}></div>
