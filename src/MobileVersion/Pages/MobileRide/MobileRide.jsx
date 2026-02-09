@@ -66,7 +66,28 @@ function MobileRide() {
 
                               <div className="container" style={{zIndex:'5'}}>
                                   <div className="map-container3">
-
+                                             <GoogleMap
+                                                                mapContainerStyle={{ width: "100%", height: "100%" }}
+                                                                center={ride.pickupCoordinates}
+                                                                zoom={10}
+                                                                options={{ disableDefaultUI: true, zoomControl: true }}
+                                                              >
+                                                                <Marker position={ride.pickupCoordinates} />
+                                                                {nearByDrivers.map((element, index) => (
+                                                                  <Marker
+                                                                    key={index}
+                                                                    position={{
+                                                                      lat: element[1],
+                                                                      lng: element[0],
+                                                                    }}
+                                                                    icon={{
+                                                                      url: bikeIcon,
+                                                                      scaledSize: new window.google.maps.Size(60, 60),
+                                                                      anchor: new window.google.maps.Point(15, 15),
+                                                                    }}
+                                                                  />
+                                                                ))}
+                                                                </GoogleMap>
                                   </div>
 
                                   <div className="trip-container">
