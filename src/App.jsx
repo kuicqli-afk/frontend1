@@ -96,6 +96,8 @@ function App() {
               <Routes>
                 <Route  path='/auth' element={<MobileAuth/>}/>
                   <Route path='/' element={<ProtectedRoute/>}>
+                        
+                         <Route index element={<Home/>} />
                         <Route  path='fare-link' element={<Home/>}/>
                         <Route  path='ride' element={<DeliveryLocation/>}/>
                         <Route  path='search/ride' element={<MobileRide/>}/>
