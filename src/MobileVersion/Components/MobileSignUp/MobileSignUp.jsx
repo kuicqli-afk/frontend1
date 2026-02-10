@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { toast, ToastContainer } from 'react-toastify';
 import axios from "axios";
 
@@ -7,8 +7,31 @@ function MobileSignUp({setPopUp}) {
     const [showOtp,setShowOtp]=useState(false)
       const [data, setData] = useState({name:'', phone: '', otp: '' });
       const [error,setError]=useState()
+       const [seconds, setSeconds] = useState();
+       const [canResend, setCanResend] = useState(false);
      
    
+                 useEffect(() => {
+                           let timer;
+                           if (seconds > 0) {
+                           timer = setInterval(() => {
+                               setSeconds((prev) => prev - 1);
+                           }, 1000);
+                           } else {
+                           setCanResend(true);
+                           clearInterval(timer);
+                           }
+               
+                           // Cleanup the timer on component unmount
+                           return () => clearInterval(timer);
+                       }, [seconds]);
+               
+                       const handleResend = () => {
+                       // Logic to trigger the actual OTP resend event
+                           console.log("OTP Resent!");
+                           setSeconds(60);
+                           setCanResend(false);
+                       };
      const handleSubmit = async (e) => {
   
         const newPhone=data.phone.replace(/\D/g, "");
@@ -29,6 +52,8 @@ function MobileSignUp({setPopUp}) {
             });
 
             if (response.data.success) {
+                setSeconds(60)
+                setCanResend(false);
                 setShowOtp(true);
                 console.log(response)
                 toast.success(response.data.message, {
@@ -101,6 +126,11 @@ function MobileSignUp({setPopUp}) {
         <div>
             <input type="text" placeholder='OTP' style={{textAlign:'center'}} maxLength={4} minLength={4}  onChange={(e) => setData({ ...data,otp: e.target.value })}  value={data.otp}/>
             <p style={{fontSize:'12px',padding:'10px',lineHeight:'20px'}}>Four Digit OTP is Send To Your Number</p>
+             {canResend ? (
+              <button onClick={handleResend}>Resend OTP</button>
+                    ) : (
+                    <span>Resend OTP in {seconds}s</span>
+                    )}
             <button className="login-btn" on onClick={handleSubmit2}>Sign Up</button>
         </div> :
         <>

@@ -743,13 +743,7 @@ useEffect(() => {
        
        }
       
-        <div className="design">
-        {!getEstimate&&<img src={driverRegistration} alt="" style={{width:'100%',marginTop:'100px' ,zIndex:'1'}}/>} 
-            
-       </div>
-       <div style={{background:'white',padding:'20px',position:'relative',top:'0',height:'110px'}}>
-           
-       </div>
+     
     
       
      <nav className="bottom-nav2">
