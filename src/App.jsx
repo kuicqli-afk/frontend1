@@ -27,6 +27,7 @@ import MobileRide from './MobileVersion/Pages/MobileRide/MobileRide.jsx';
 import MobileRideOnWay from './MobileVersion/Pages/MobileRideOnWay/MobileRideOnWay.jsx';
 import MobileRideStarted from './MobileVersion/Pages/MobileRideStarted/MobileRideStarted.jsx';
 import TempSlider from './Components/TempSlider/TempSlider.jsx';
+import ProtectedRoute from './MobileVersion/Components/ProtectedRoute/ProtectedRoute.jsx';
 function App() {
 
   const location = useLocation();
@@ -93,12 +94,17 @@ function App() {
           :
           <div style={{width:"100%"}}>
               <Routes>
-                <Route  path='/' element={<MobileAuth/>}/>
-                <Route  path='/fare-link' element={<Home/>}/>
-                <Route  path='/ride' element={<DeliveryLocation/>}/>
-                <Route  path='/search/ride' element={<MobileRide/>}/>
-                <Route path="/ride/confirmed" element={<MobileRideOnWay/>}/>
-                 <Route path="/ride/started" element={<MobileRideStarted/>}/>
+                <Route  path='/auth' element={<MobileAuth/>}/>
+                  <Route path='/' element={<ProtectedRoute/>}>
+                        <Route  path='fare-link' element={<Home/>}/>
+                        <Route  path='ride' element={<DeliveryLocation/>}/>
+                        <Route  path='search/ride' element={<MobileRide/>}/>
+                        <Route path="ride/confirmed" element={<MobileRideOnWay/>}/>
+                        <Route path="ride/started" element={<MobileRideStarted/>}/>
+                  </Route>
+                      
+   
+           
               </Routes>
           </div>
            }
