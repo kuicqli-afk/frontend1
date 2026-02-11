@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./Home.css";
 import logo from "../../../assets/Logo.png";
 import Location from '../../../assets/Location.png'
@@ -8,8 +8,9 @@ import dilivary from '../../../assets/dilivary.jpg'
 import weight2 from '../../../assets/weight2.png'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
-import auto from '../../../assets/3 wheeler-dark.png';
+import auto from '../../../assets/mini-auto2.png';
 import truck from '../../../assets/Mini Truck-dark.png'
+import eloader from '../../../assets/3 wheeler-dark.png';
 import ELoader from '../../../assets/E Loader-dark.png';
 import bell from '../../../assets/Bell.png'
 import coin from '../../../assets/coin.png'
@@ -27,6 +28,18 @@ import whitearrow from '../../../assets/whitearrow.png'
 import burger from '../../../assets/burger.png'
 import cookie from '../../../assets/cookies.png'
 import driverRegistration2 from '../../../assets/driverRegistration2.png'
+import grocery1 from '../../../assets/Grocery 1.png'
+import grocery2 from '../../../assets/Grocery 2.png'
+import grocery3 from '../../../assets/Grocery 3.png'
+import grocery4 from '../../../assets/Grocery 4.png'
+import grocery5 from '../../../assets/Grocery 5.png'
+import Es1 from '../../../assets/E1.png'
+import Es2 from '../../../assets/E2.png'
+import Es3 from '../../../assets/E3.png'
+import Es4 from '../../../assets/E4.png'
+import Es5 from '../../../assets/E5.png'
+import Es6 from '../../../assets/E6.png'
+import Es7 from '../../../assets/E7.png'
 import sweet from '../../../assets/sweet.png'
 import {
   faBell,
@@ -38,18 +51,47 @@ import {
   faTaxi,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import { RideContext } from "../../../context/RideContext";
 
 function Home() {
   const img = [chiken, sharwma, pizza, bhatura, burger, cookie, sweet];
+  const grock =[ grocery1,grocery2,grocery3,grocery4,grocery5,grocery1,grocery2]
+  const E =[Es1,Es2,Es3,Es4,Es7,Es2,Es3];
   const [current, setCurrent] = useState(0);
+  const [current2, setCurrent2] = useState(0);
+  const [current3, setCurrent3] = useState(0);
 
+  const {previousRides}=useContext(RideContext)
+  const [lastRide,setLastRide]=useState()
+
+  //Getting Details About Last Ride
+ useEffect(() => {
+  if (!previousRides || previousRides.length === 0) return;
+  // console.log(previousRide);
+  const lr = previousRides.at(-1);
+  setLastRide(lr)
+}, [previousRides]);
+  
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrent((prev) => (prev + 1) % img.length);
-    }, 800); // ⏱ 2 seconds
+    }, 1000); // ⏱ 2 seconds
+     const interval2 = setInterval(() => {
+      setCurrent2((prev) => (prev + 1) % img.length);
+    }, 1200); // ⏱ 2 seconds
+     const interval3 = setInterval(() => {
+      setCurrent3((prev) => (prev + 1) % img.length);
+    }, 1500);
 
-    return () => clearInterval(interval); // cleanup
+
+    return () => clearInterval(interval,interval2,interval3); // cleanup
   }, []);
+
+
+  //  useEffect(() => {
+   
+  //   return () => clearInterval(interval); // cleanup
+  // }, []);
 
   return (
     <div className="app-container">
@@ -77,7 +119,7 @@ function Home() {
           <Link to='/ride'>
             <div className="loc-text">
               <label>Pick Up from</label>
-              <p>wazirganj Lucknow, Uttar Pradesh 226018...</p>
+              <p>{lastRide?lastRide.pickUp.slice(0,80):'Enter Pick Up Location'}</p>
             </div>
           </Link>
 
@@ -91,13 +133,13 @@ function Home() {
           { name: "2 Wheeler", weight: "20kg", icon: "🏍️", img: bike },
           { name: "Mini Auto", weight: "45kg", icon: "🛺", img: auto },
           { name: "E Loader", weight: "400kg", icon: "🚚", img: ELoader },
-          { name: "3 Wheeler", weight: "550kg", icon: "🚚", img: ELoader },
+          { name: "3 Wheeler", weight: "550kg", icon: "🚚", img: eloader },
           { name: "Mini Truck", weight: "720kg", icon: "🚚", img: truck },
         ].map((v, i) => (
           <Link to='/ride'>
             <div className="v-card" key={i}>
               <div className="v-badge"><div style={{ fontSize: '8px', marginTop: '10px', marginBottom: '3px' }}>{v.weight}</div><img src={weight2} width={25} /></div>
-              <div className="v-img"><img src={v.img} alt="" width={80} height={45} /></div>
+              <div className="v-img"><img src={v.img} alt="" width={95} height={50} /></div>
               <h3>{v.name}</h3>
               <p style={{ fontSize: '10px', color: '#0000E6', textDecoration: 'none' }}>Click to Check Deliver Fare. »</p>
             </div></Link>
@@ -160,7 +202,7 @@ function Home() {
 
         <div className="product bg-green">
           <div className="product-image-slider">
-            <img src={img[current]} alt="" className="product-img" />
+            <img src={grock[current2]} alt="" className="product-img" />
           </div>
 
           <div className="product-logo-wrapper">
@@ -176,7 +218,7 @@ function Home() {
 
         <div className="product bg-yello">
           <div className="product-image-slider">
-            <img src={img[current]} alt="" className="product-img" />
+            <img src={E[current3]} alt="" className="product-img" />
           </div>
 
           <div className="product-logo-wrapper">
