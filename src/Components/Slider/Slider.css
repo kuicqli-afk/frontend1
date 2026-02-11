@@ -1,0 +1,48 @@
+/* ===============================
+   SLIDER MAIN WRAPPER
+=============================== */
+.slider-container {
+  width: 100%;
+  height: 84vh;
+}
+
+/* ===============================
+   SLIDER IMAGE
+=============================== */
+.slider-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+
+
+/* ===============================
+   RESPONSIVE BREAKPOINTS
+=============================== */
+
+/* 💻 Tablets */
+@media (max-width: 1024px) {
+  .slider-container {
+    height: 70vh;
+  }
+}
+
+/* 📱 Mobile Devices */
+@media (max-width: 768px) {
+  .slider-container {
+    height: 55vh;       /* better for mobiles */
+  }
+}
+
+/* 📱 Small Phones */
+@media (max-width: 480px) {
+  .slider-container {
+    height: 45vh;       /* avoids cropping + notch issues */
+  }
+
+  .slider-img{
+    height: 50%;
+  }
+}

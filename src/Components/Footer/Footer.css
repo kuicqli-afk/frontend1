@@ -1,0 +1,218 @@
+/* ===============================
+   FOOTER MAIN WRAPPER
+=============================== */
+.footer-container {
+  background-color: #0000E6;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  padding: 50px 4%;
+  gap: 60px;
+}
+
+.footer-container li {
+  list-style-type: none;
+  cursor: pointer;
+  font-weight: 300;
+}
+
+.footer-container li:hover {
+  text-decoration: underline;
+}
+
+.footer-container a {
+  color: #ffffff;         
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.check-fare-links a {
+  color: #ffffff;
+}
+
+
+
+/* ===============================
+   LEFT COLUMN
+=============================== */
+.footer-left {
+  display: flex;
+  flex-direction: column;
+  color: white;
+  gap: 10px;
+  flex: 1 1 350px;
+  max-width: 450px;
+}
+
+.footer-left img {
+  width: 220px;
+  height: auto;
+  object-fit: contain;
+}
+
+.footer-left h3 {
+  font-size: 32px;
+  line-height: 1.2;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.footer-left h4 {
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.footer-left p {
+  font-weight: 300;
+  opacity: 0.9;
+}
+
+/* ===============================
+   FOOTER COLUMNS (Middle, Center, Right)
+=============================== */
+.footer-middle,
+.footer-center,
+.footer-right {
+  display: flex;
+  flex-direction: column;
+  color: white;
+  gap: 25px;
+  flex: 1 1 180px;
+  min-width: 180px;
+}
+
+.middle-top,
+.middle-bottom,
+.right-top,
+.right-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.middle-top h2,
+.middle-bottom h2,
+.footer-center h2,
+.right-top h2,
+.right-bottom h2 {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.middle-top li,
+.middle-bottom li,
+.footer-center li,
+.right-top li {
+  font-size: 15px;
+  opacity: 0.9;
+}
+
+.social-icons {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.social-icons a {
+  font-size: 20px;
+  color: white;
+  text-decoration: none;
+}
+
+/* ===============================
+   DIVIDER
+=============================== */
+.footer-divider {
+  border: 1px solid white;
+  opacity: 0.3;
+}
+
+/* ===============================
+   BOTTOM FOOTER
+=============================== */
+.footer-bottom {
+  background-color: #0000E6;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 25px 4%;
+  color: white;
+}
+
+.footer-bottom p {
+  font-size: 18px;
+  font-weight: 300;
+  opacity: 0.9;
+}
+
+.rider{
+   padding: 5px;
+   border-radius: 10px;
+}
+.rider:hover{
+  background-color:rgb(33, 33, 255);
+  padding: 5px;
+}
+
+/* ===============================
+   RESPONSIVE BREAKPOINTS
+=============================== */
+
+/* 💻 Tablet */
+@media (max-width: 992px) {
+  .footer-container {
+    padding: 40px 40px;
+    gap: 40px;
+  }
+
+  .footer-left img {
+    width: 180px;
+  }
+
+  .footer-left h3 {
+    font-size: 28px;
+  }
+}
+
+/* 📱 Mobile */
+@media (max-width: 768px) {
+  .footer-container {
+    padding: 35px 20px;
+    gap: 50px;
+  }
+
+  .footer-left {
+    max-width: 100%;
+  }
+
+  .footer-left h3 {
+    width: 100%;
+    font-size: 26px;
+  }
+
+  .footer-left img {
+    width: 160px;
+  }
+
+  .footer-middle,
+  .footer-center,
+  .footer-right {
+    margin-top: 0;
+  }
+}
+
+/* 📱 Small Mobile */
+@media (max-width: 480px) {
+  .footer-bottom {
+    padding: 20px 20px;
+  }
+
+  .footer-bottom p {
+    font-size: 16px;
+  }
+
+  .footer-left h3 {
+    font-size: 24px;
+  }
+}

@@ -1,0 +1,406 @@
+:root {
+  --primary-blue: #0000E6;
+  --bg-blue: #0000E6;
+  --text-white: #ffffff;
+}
+
+body {
+  margin: 0;
+  /* background-color: #f0f0f0; */
+  font-family: 'Segoe UI', sans-serif;
+  box-sizing: border-box;
+}
+
+.app-container {
+  max-width: 100%;
+  /* Mobile width */
+  margin: 0 auto;
+  background-color: var(--bg-blue);
+  height: 100vh;
+  position: relative;
+  /* padding-bottom: 80px; */
+}
+
+/* Header Styles */
+.header2 {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  padding: 22px 18px;
+  box-shadow: 2px 20px 50px rgb(3, 3, 70);
+  padding-bottom: 60px;
+  /* background: #0046e4; */
+}
+
+.header-right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  font-style: italic;
+  font-weight: 900;
+  margin: 0;
+  letter-spacing: -1px;
+}
+
+.coin-badge {
+  background: #2929FF;
+  padding: 8px 10px;
+  border-radius: 5px;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: white;
+  font-weight: 400;
+  font-size: 12px;
+  padding-left: 0px;
+
+  /* border: 1px solid rgba(255, 255, 255, 0.2); */
+}
+
+.coin-icon {
+  width: 12px;
+  height: 12px;
+  background: gold;
+  border-radius: 50%;
+}
+
+/* Location Card */
+.location-card {
+  background: white;
+  margin: 0 15px 20px;
+  padding: 15px 20px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  color: #333;
+  margin-top: -40px;
+
+}
+
+.loc-left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}
+
+.loc-text label {
+  font-size: 14px;
+
+  font-weight: bold;
+
+  display: block;
+}
+
+.loc-text p {
+  font-size: 12px;
+  margin: 0;
+  color: #999;
+  /* font-weight: 600; */
+}
+
+/* Vehicle Cards */
+.vehicle-scroll {
+  display: flex;
+  gap: 5px;
+  overflow-x: auto;
+  padding: 16px;
+}
+
+.v-card {
+  background: white;
+  min-width: 110px;
+  border-radius: 5px;
+  padding: 20px 10px 10px;
+  text-align: center;
+  color: #333;
+  position: relative;
+  padding-top: 60px;
+
+}
+
+.coupon-div {
+  width: 100%;
+  height: 109px;
+  margin-top: 20px;
+  /* background-color: rgb(228, 228, 228); */
+  padding: 26px 20px;
+  /* padding-top: 7%; */
+  display: flex;
+  flex-direction: row;
+  background-image: url('../../../assets/Coupon.png');
+  background-size: cover;
+  position: center;
+  /* align-items: center; */
+}
+
+.v-badge {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  height: 60px;
+  width: 50px;
+  transform: translateX(-50%);
+  background: #2929FF;
+  color: white;
+  font-size: 9px;
+  padding: 2px 8px;
+  border-radius: 4px 4px 40px 40px;
+}
+
+.v-card h3 {
+  font-size: 12px;
+  margin: 8px 0 4px;
+}
+
+.v-card p {
+  font-size: 8px;
+  color: var(--primary-blue);
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+/* Coupon Section */
+
+
+.coupon-left {
+  width: 35%;
+  /* background: #eef2ff; */
+  font-size: 12px;
+  font-weight: 900;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+
+  border-right: 2px dashed #ccc;
+  width: 100%;
+  text-align: start;
+  color: #0000E6;
+}
+
+.coupon-right {
+  padding: 10px;
+  width: 100%;
+}
+
+.coupon-right h2 {
+  font-size: 16px;
+  margin: 0;
+}
+
+.coupon-right p {
+  font-size: 9px;
+  color: #666;
+  margin: 4px 0 0;
+}
+
+/* Hero Section */
+.hero-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 15px;
+  margin-top: 18px;
+  margin-bottom: -2px;
+  align-items: center;
+}
+
+.hero-main {
+  padding: 2px;
+  display: flex;
+  flex-direction: row;
+  margin-left: 20px;
+  margin-top: 10px;
+}
+
+
+.hero-main h2 {
+  font-size: 35px;
+  line-height: 1.1;
+  color: white;
+  padding: 0px;
+}
+
+.hero-sub {
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: white;
+  margin: 2px 0;
+  font-size: 16px;
+  width: 120px;
+  padding: 4px;
+  line-height: 14px;
+
+}
+
+/* Navigation */
+.bottom-nav2 {
+  display: flex;
+  flex-direction: row;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: rgb(255, 255, 255);
+  justify-content: space-around;
+  padding: 10px 0;
+  border-top: 1px solid #eee;
+  z-index: 9;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 10px;
+  color: #999;
+}
+
+.nav-item.active {
+  color: var(--primary-blue);
+}
+
+
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: none;
+}
+
+/* IE / old Edge */
+* {
+  -ms-overflow-style: none;
+}
+
+.design {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 30px 10px;
+  padding-bottom: 20px;
+  overflow: hidden;
+  background-color: var(--bg-blue);
+}
+
+/* TOP BACKGROUND LAYER */
+.design::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url(../../../assets/shape.png) no-repeat center top;
+  height: 30vh; 
+  margin-left: -1px;
+  margin-top: 30%;
+  background-size: cover;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* CONTENT ABOVE BACKGROUND */
+.design>* {
+  position: relative;
+  z-index: 3;
+}
+
+
+.product {
+  width: 120px;
+  /* change size here */
+  height: 185px;
+  background-color: #FFC300;
+  border-radius: 10px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+/* COLOR VARIANTS */
+.product.bg-green {
+  background-color: green;
+}
+
+.product.bg-yello {
+  background-color: red;
+}
+
+/* IMAGE ROW */
+.product-image-row {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.product-img {
+  width: 100%;
+  max-height: 90px;
+  object-fit: contain;
+}
+
+/* LOGO */
+.product-logo {
+  width: 70px;
+  flex-shrink: 0;
+}
+
+/* TEXT */
+.product-text {
+  color: white;
+  font-size: 11px;
+  line-height: 1;
+  flex: 1;
+}
+
+/* ARROW */
+.product-arrow {
+  width: 30px;
+  flex-shrink: 0;
+}
+
+/* POINTER */
+.product::after {
+  content: "";
+  width: 12px;
+  height: 12px;
+  background-color: inherit;
+  position: absolute;
+  top: -15px;
+  left: 90%;
+  border-radius: 44%;
+}
+
+/* RESPONSIVE */
+@media (min-height: 700px) {
+  .product {
+    width: 140px;
+    height: 180px;
+  }
+}
+
+
+
+.driver-registration {
+  width: 100%;
+  height: 300px;
+  padding-left: 10px;
+  padding-right: 10px;
+  background-color: white;
+
+
+}

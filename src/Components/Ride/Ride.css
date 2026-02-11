@@ -1,0 +1,246 @@
+.fare-trip {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+#fare-card {
+  gap: 30px;
+}
+
+.fare-trip p {
+  font-size: 20px;
+  color: #0000E6;
+  font-weight: 500;
+}
+
+.ride-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+}
+
+.ride-divider {
+  width: 2px;
+  border-right: 3px dotted #ddd;
+  height: 600px;
+}
+
+.right-text {
+  margin-bottom: 20px;
+}
+
+.right-text h2 {
+  font-size: 2.5rem;
+  color: #0000E6;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.right-text p {
+  font-size: .9rem;
+  color: #A1A1A1;
+  margin-top: 8px;
+}
+
+.ride-map {
+  width: 700px;
+  height: auto;
+}
+
+.ride-map img {
+  width: 100%;
+  border-radius: 20px;
+  position: relative;
+}
+
+/* Container for the progress bar */
+.progress-container {
+  width: 100%;
+  height: 20px;
+  background-color: #e6e6e6;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 2px solid #bfbfbf;
+  margin-top: 30px;
+}
+
+/* Filled part of the bar */
+.progress-bar {
+  height: 100%;
+  background-color: #0000E6;
+  border-radius: 10px 0 0 10px;
+  transition: width 0.3s ease;
+  width: 20%;
+}
+
+
+/* ================= ROUTE DOTS ================= */
+
+.route-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-left: 6px;
+  border-radius: 50%;
+  opacity: 0.3;
+  animation: addressBlink 1.6s infinite;
+}
+
+/* color control */
+.route-dot.green {
+  background-color: #1dbf73;
+}
+
+.route-dot.red {
+  background-color: #ff4d4f;
+}
+
+.route-dot.blue {
+  background-color: #0000E6;
+  width: 10px;
+  height: 10px;
+}
+
+/* staggered animation */
+.route-dot:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.route-dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.route-dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+.route-dot:nth-child(4) {
+  animation-delay: 0.6s;
+}
+
+.route-dot:nth-child(5) {
+  animation-delay: 0.8s;
+}
+
+.route-dot:nth-child(6) {
+  animation-delay: 1s;
+}
+
+.route-dot:nth-child(7) {
+  animation-delay: 1.2s;
+}
+
+.route-dot:nth-child(8) {
+  animation-delay: 1.4s;
+}
+
+@keyframes addressBlink {
+  0% {
+    opacity: 0.3;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.3;
+  }
+}
+
+.cancel-popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.726);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.cancel-popup {
+  background: #0000E6;
+  color: #fff;
+  width: 90%;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.37);
+  max-width: 600px;
+  padding: 50px 3%;
+  border-radius: 22px;
+  position: relative;
+}
+
+.popup-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: #fff;
+  color: #0b0fd8;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup-actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 35px;
+}
+
+.cancel-popup p {
+  font-size: 13px;
+}
+
+.cancel-popup h2 {
+  font-size: 30px;
+}
+
+.popup-btn {
+  flex: 1;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.popup-btn.cancel,
+.popup-btn.save {
+  background: #ff6a1f;
+  color: #fff;
+}
+
+.animation-box,
+.animation-box-2 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.animation-box {
+  background: radial-gradient(circle, rgba(255,255,255) 0%, rgba(255,255,255) 70%);
+  animation: ripple 2s infinite;
+}
+
+.animation-box-2 {
+  background: radial-gradient(circle, rgba(255,255,255) 0%, rgba(255,255,255) 70%);
+  animation: ripple 2.5s  infinite;
+}
+
+@keyframes ripple {
+  0% { transform: translate(-50%, -50%) scale(2); opacity: 0.5; }
+ 
+  100% { transform: translate(-50%, -50%) scale(6); opacity: 0; }
+}
+
+

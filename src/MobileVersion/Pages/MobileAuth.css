@@ -1,0 +1,149 @@
+* {
+  box-sizing: border-box;
+  font-family: "Inter", "Segoe UI", sans-serif;
+}
+
+.login-wrapper {
+  height: 100vh;
+  background:  #0000E6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.login-card {
+  width: 350px;
+  padding: 28px 18px;
+  border-radius: 16px;
+  background: #0000E6;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  color: #ffffff;
+  text-align: center;
+  box-shadow: -3px 10px 30px rgb(4, 4, 202);
+  border: 1px solid blue;
+}
+
+.logo {
+  width: 200px;
+  margin-bottom: 24px;
+}
+
+.tabs {
+  display: flex;
+  margin-bottom: 24px;
+  background:#2929FF;
+  border-radius: 999px;
+  padding: 4px;
+}
+
+.tab {
+  flex: 1;
+  padding: 10px 0;
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tab.active {
+  background: #ffffff;
+  color: #0b1f4d;
+  border-radius: 999px;
+}
+
+.form input {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 14px;
+  border-radius: 10px;
+  border: 1px solid #2929FF;
+  background: #2929FF;
+  color: #fff;
+  font-size: 14px;
+  outline: none;
+  transition: border 0.2s ease;
+}
+
+.form input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.form input:focus {
+  border-color: #4da3ff;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 10px;
+  border: none;
+  background: #2929FF;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.login-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(31, 2, 194, 0.966);
+}
+
+.options {
+  font-size: 12px;
+  margin: 14px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.options label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.divider {
+  margin: 24px 0 14px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.socials {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+      padding: 20px;
+}
+
+.socials button {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: transparent;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+/* .socials button:hover {
+  background: rgba(4, 6, 116, 0.76);
+  transform: translateY(-2px);
+} */
+
+h2{
+    font-size: 20px;
+}
+p{
+    font-size: 12px;
+}

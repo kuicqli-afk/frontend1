@@ -1,0 +1,53 @@
+import React, { createContext, useState ,useEffect} from 'react';
+import axios from 'axios'
+
+export const RideContext = createContext();
+
+export const RideProvider = ({ children }) => {
+  const phone=localStorage.getItem('phone')
+  //Privous Rides
+  const [previousRides,setPreviousRides]=useState([])
+  // Use a "Lazy Initializer" function inside useState. 
+  // This runs ONLY once when the app starts.
+  const [pendingRide, setPendingRideState] = useState(() => {
+    try {
+      const saved = localStorage.getItem('pendingRideData');
+      return saved ? JSON.parse(saved) : null;
+    } catch (error) {
+      console.error("Failed to parse pendingRideData", error);
+      return null;
+    }
+  });
+
+  // We wrap the setter to handle localStorage automatically
+  const updatePendingRide = (data) => {
+    if (data) {
+      localStorage.setItem('pendingRideData', JSON.stringify(data));
+    } else {
+      localStorage.removeItem('pendingRideData');
+    }
+    setPendingRideState(data);
+  };
+
+  const clearPendingRide = () => {
+    localStorage.removeItem('pendingRideData');
+    setPendingRideState(null);
+  };
+
+
+     useEffect(()=>{
+      axios.post('https://thetest-h9x3.onrender.com/ride/get-ride/userId/',{
+        phone:phone
+      }).then((response)=>{
+        console.log(response.data.data)
+        setPreviousRides(response.data.data)
+
+      }).catch((error)=>console.log(error))
+    },[])
+  
+  return (
+    <RideContext.Provider value={{ pendingRide, setPendingRide: updatePendingRide, clearPendingRide ,previousRides}}>
+      {children}
+    </RideContext.Provider>
+  );
+};

@@ -1,0 +1,154 @@
+/* ================= SEARCHING DRIVER CONTAINER ================= */
+
+.fare-container {
+  padding: 6% 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* MAIN WRAPPER */
+.searching-driver-wrapper {
+  width: 100%;
+  max-width: 1200px;
+  min-height: 520px;
+  background: #ffffff;
+  border-radius: 20px;
+  display: flex;
+  overflow: hidden;
+}
+
+/* ================= LEFT SIDE ================= */
+
+.searching-left {
+  width: 32%;
+  padding: 30px 28px;
+  border-right: 2px dashed #e5e5e5;
+  display: flex;
+  flex-direction: column;
+}
+
+.trip-id {
+  font-size: 13px;
+  color: #777;
+}
+
+.vehicle-icon {
+  width: 130px;
+  margin: 18px 0;
+}
+
+.address-block {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.address-block p {
+  font-size: 14px;
+  color: #333;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  line-height: 1.4;
+}
+
+.address-block img {
+  width: 10px;
+  height: 10px;
+  margin-top: 4px;
+}
+
+.searching-left h2 {
+  font-size: 30px;
+  font-weight: 600;
+  margin-top: 15px;
+}
+
+/* ACTION LINKS */
+.action-links {
+  margin-top: auto;
+  display: flex;
+  gap: 24px;
+  font-size: 14px;
+}
+
+.action-links .view {
+  color: #0000e6;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.action-links .cancel {
+  color: #ff2e2e;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+/* ================= RIGHT SIDE ================= */
+
+.searching-right {
+  width: 68%;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.searching-right h1 {
+  font-size: 26px;
+  font-weight: 600;
+  color: #0000e6;
+}
+
+.searching-right p {
+  font-size: 14px;
+  color: #666;
+  margin-top: 4px;
+}
+
+/* MAP */
+.map-container {
+  position: relative;
+  height: 300px;
+  margin-top: 20px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #eaeaea;
+}
+
+.map-overlay {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ================= PROGRESS BAR ================= */
+
+.search-progress {
+  margin-top: 24px;
+  width: 100%;
+  height: 10px;
+  background: #ededed;
+  border-radius: 50px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 20%;
+  background: #0000e6;
+  border-radius: 50px;
+  animation: searching 2s infinite ease-in-out;
+}
+
+@keyframes searching {
+  0% {
+    width: 10%;
+  }
+  50% {
+    width: 65%;
+  }
+  100% {
+    width: 10%;
+  }
+}
