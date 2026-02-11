@@ -60,7 +60,7 @@ function Home() {
   const [current, setCurrent] = useState(0);
   const [current2, setCurrent2] = useState(0);
   const [current3, setCurrent3] = useState(0);
-
+  const {setVehicle}=useContext(RideContext);
   const {previousRides}=useContext(RideContext)
   const [lastRide,setLastRide]=useState()
 
@@ -130,14 +130,16 @@ function Home() {
       {/* Vehicle List */}
       <div className="vehicle-scroll">
         {[
-          { name: "2 Wheeler", weight: "20kg", icon: "🏍️", img: bike },
-          { name: "Mini Auto", weight: "45kg", icon: "🛺", img: auto },
-          { name: "E Loader", weight: "400kg", icon: "🚚", img: ELoader },
-          { name: "3 Wheeler", weight: "550kg", icon: "🚚", img: eloader },
-          { name: "Mini Truck", weight: "720kg", icon: "🚚", img: truck },
+          { name: "2 Wheeler", weight: "20kg", icon: "🏍️", img: bike ,name2:'bike'},
+          { name: "Mini Auto", weight: "45kg", icon: "🛺", img: auto ,name2:'miniAuto'},
+          { name: "E Loader", weight: "400kg", icon: "🚚", img: ELoader,name2:'Eloader' },
+          { name: "3 Wheeler", weight: "550kg", icon: "🚚", img: eloader, name2:'Eloader'},
+          { name: "Mini Truck", weight: "720kg", icon: "🚚", img: truck ,name2:'miniTruck'},
         ].map((v, i) => (
-          <Link to='/ride'>
-            <div className="v-card" key={i}>
+          <Link to='/ride' onClick={()=>{
+            setVehicle(v.name2)
+          }} key={i}>
+            <div className="v-card">
               <div className="v-badge"><div style={{ fontSize: '8px', marginTop: '10px', marginBottom: '3px' }}>{v.weight}</div><img src={weight2} width={25} /></div>
               <div className="v-img"><img src={v.img} alt="" width={95} height={50} /></div>
               <h3>{v.name}</h3>
@@ -194,7 +196,7 @@ function Home() {
           </div>
 
           <p className="product-text">
-            for restaurants & cloud kitchens.
+             restaurants & cloud kitchens.
           </p>
 
           <img src={whitearrow} alt="" className="product-arrow" />
@@ -210,7 +212,7 @@ function Home() {
           </div>
 
           <p className="product-text">
-            for grocery & daily-needs
+             grocery & daily-needs
           </p>
 
           <img src={whitearrow} alt="" className="product-arrow" />
@@ -226,7 +228,7 @@ function Home() {
           </div>
 
           <p className="product-text">
-             for restaurants & cloud kitchens.
+              restaurants & cloud kitchens.
           </p>
 
           <img src={whitearrow} alt="" className="product-arrow" />

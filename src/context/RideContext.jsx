@@ -4,6 +4,8 @@ import axios from 'axios'
 export const RideContext = createContext();
 
 export const RideProvider = ({ children }) => {
+  //Selected Vehicle
+  const [vehicle,setVehicle]=useState('');
   const phone=localStorage.getItem('phone')
   //Privous Rides
   const [previousRides,setPreviousRides]=useState([])
@@ -46,7 +48,7 @@ export const RideProvider = ({ children }) => {
     },[])
   
   return (
-    <RideContext.Provider value={{ pendingRide, setPendingRide: updatePendingRide, clearPendingRide ,previousRides}}>
+    <RideContext.Provider value={{ pendingRide, setPendingRide: updatePendingRide, clearPendingRide ,previousRides,vehicle,setVehicle}}>
       {children}
     </RideContext.Provider>
   );

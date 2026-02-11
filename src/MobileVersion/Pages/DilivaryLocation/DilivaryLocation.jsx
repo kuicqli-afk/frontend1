@@ -55,12 +55,13 @@ export default function DeliveryLocation(){
     const [fare,setFare]=useState([])
     const [active,setActive]=useState()
     const {socket,sendMessage}=useContext(SocketContext)
-    const {previousRides}=useContext(RideContext);
+    const {previousRides,vehicle}=useContext(RideContext);
     const [finalDetail,setFinalDetail]=useState(false)
     const [pickupCoords, setPickupCoords] = useState(null);
     const [dropCoords, setDropCoords] = useState(null);
     const [directions, setDirections] = useState(null);
-
+    const [distance,setDistance]=useState('')
+    const [checkfare,setChaeckFare]=useState()
     
     // const [show,setShow]=useState()
     
@@ -144,10 +145,17 @@ useEffect(() => {
       origin: pickupCoords,
       destination: dropCoords,
       travelMode: window.google.maps.TravelMode.DRIVING,
+      
     },
     (result, status) => {
       if (status === "OK") {
-        setDirections(result);
+          const shortestRoute = result.routes.reduce((prev, curr) =>
+          curr.legs[0].distance.value < prev.legs[0].distance.value ? curr : prev
+        );
+        setDirections({...result,routes:[shortestRoute]});
+        // console.log(result)
+        setDistance(shortestRoute.legs[0].distance.text)
+        console.log(shortestRoute.legs[0].distance.text); // distance
       } else {
         console.error("Directions error:", status);
       }
@@ -214,6 +222,7 @@ const handleChange = (state) => {
   }
 
   navigate('/ride');
+  
 };
 
     useEffect(() => {
@@ -233,6 +242,8 @@ const handleChange = (state) => {
          return;
      }
      setGetEstimate(true)
+    //  setActive(vehicle)
+    console.log(vehicle)
 
   }
 useEffect(() => {
@@ -287,7 +298,19 @@ useEffect(() => {
       .catch(console.error);
       
   }, [pickupQuery,dropQuery, activeInput]);
+
+
+  useEffect(()=>{
+    console.log('chek cehek')
+    if(!dropDetail.landmark || !dropDetail.receiver_name || !dropDetail.receiver_phone || !dropDetail.productType)
+    {
+      setChaeckFare(false)
+    }else{
+      setChaeckFare(true)
+    }
+  },[dropDetail.landmark,dropDetail.receiver_name,dropDetail.receiver_phone,dropDetail.productType])
     
+
  if (!isLoaded) {
           return <div>Loading Map...</div>;
         }
@@ -327,9 +350,9 @@ useEffect(() => {
                                   </div>
                                   :
                                   <>
-                                     <div className="container">
+                                     <div className="container" style={{gap:'5px'}}>
 
-                                <div className="map-container2" style={{height:'280px'}}>
+                                <div className="map-container2" style={{height:'200px'}}>
 
                                 <div className="map-container-fixed" style={{height:'100%'}}>
                                         <GoogleMap
@@ -361,6 +384,37 @@ useEffect(() => {
 
                     </div>
                         
+                  </div>
+
+                  <div className="fare-container2">
+                     {
+                      fare.map((item)=>(
+                        vehicle==item.vehicleType&&
+                        <div className="vehicle" style={item.vehicleType===active?.vehicleType?{border:'2px solid red'}:{}}>
+                        <div style={{display:'flex',flexDirection:'row',gap:'15px',padding:'5px 20px'}}>
+                              <div style={{background:'blue',borderRadius:'0px 0px 20px 20px',padding:'10px',marginTop:'-10px',height:'70px'}}>
+                                <p style={{color:'white',fontSize:'10px'}}>40KG</p>
+                                <img src={weight2} alt="" width={30}/>
+                              </div>
+                              <div>
+                                  <img src={vehicleImages[item.vehicleType].img} alt="" width={item.vehicleType==='miniTruck'?65:60}/> 
+                              </div>
+                              <div style={{display:'flex',flexDirection:'column',color:'gray',justifyContent:'center'}}>
+                                  <img src="" alt="" />
+                                  <div style={{fontWeight:'600',fontSize:'14px'}}>{vehicleImages[item.vehicleType].name}</div>
+                                  <div>1 mins</div>
+                              </div>
+                        </div>
+                        <div style={{display:'flex',flexDirection:'column',borderRadius:'0px 8px 8px 0px',background:'#18bd18',color:'white',fontWeight:'700',padding:'16px',justifyContent:'center',alignItems:'start',lineHeight:'22px',marginTop:'-2px'}}>
+                          <div style={{fontSize:'14px'}}>Fare</div>
+                          <div style={{fontSize:'30px'}}>₹{item.fare}</div>
+                        </div>
+                          
+                       </div>
+                       
+                      ))
+                    }
+
                   </div>
 
                   <div className="info-container3">
@@ -402,11 +456,13 @@ useEffect(() => {
 
                   <div className="fare-container2">
                     {
-                      fare.map((item)=>(
-                        <div className="vehicle" onClick={()=>{setActive({vehicleType:item.vehicleType,fare:item.fare});console.log(active)}} style={item.vehicleType===active?.vehicleType?{border:'2px solid red'}:{}}>
+                      fare.map((item)=>{
+                        if(vehicle==item.vehicleType) return null;
+                        return(
+                        <div className="vehicle"  onClick={()=>{setActive(item.vehicleType);console.log(active)}} style={item.vehicleType===active?.vehicleType?{border:'2px solid red'}:{padding:'5px 25px'}}>
                         <div style={{display:'flex',flexDirection:'row',gap:'15px'}}>
-                              <div style={{background:'blue',borderRadius:'0px 0px 20px 20px',padding:'10px',marginTop:'-10px',height:'70px'}}>
-                                <p style={{color:'white',fontSize:'10px'}}>40KG</p>
+                              <div style={{background:'blue',borderRadius:'0px 0px 20px 20px',padding:'10px',marginTop:'-5px',height:'70px'}}>
+                                <p style={{color:'white',fontSize:'10px',marginBottom:'2px'}}>40KG</p>
                                 <img src={weight2} alt="" width={30}/>
                               </div>
                               <div>
@@ -423,16 +479,16 @@ useEffect(() => {
                           <div style={{fontSize:'30px'}}>₹{item.fare}</div>
                         </div>
                           
-                       </div>
+                       </div>)
 
-                      ))
+                     })
                     }
                        
                                
                   </div>
                   <div className="check-fare-btn" style={{fontWeight:'600'}} onClick={()=>setFinalDetail(true)}>
                         
-                          Click to find the Kuicqli heroes
+                        Continue with 2-Wheeler 
                         
                        </div>
 
@@ -465,7 +521,7 @@ useEffect(() => {
               </header>
           
              <div className="container" >
-               <div className="map-container2" style={{height:'280px'}}>
+               <div className="map-container2" style={{height:'200px'}}>
 
                   <div className="map-container-fixed" style={{height:'100%'}}>
                             <GoogleMap
@@ -484,21 +540,22 @@ useEffect(() => {
                </div>
                <div className="info-container2">
                     <div className="drop-div">
-                      <div style={{display:'flex',flexDirection:'row',gap:'8px',
+                      <div style={{display:'flex',flexDirection:'row', justifyContent: "flex-start",  alignItems: "", gap:'10px',
                       }}>
-                            <img src={drop2} alt="" width={32} height={42}/>
+                            <img src={drop2} alt=""className="drop-image" />
                             <div className="drop-div-info">
                                 <div className="drop-div-info-1">Drop Location</div>
                                 <div style={{fontWeight:'700',fontSize:'13px'}}>
-                                 {drop.name.length > 10 ? drop.name.slice(0, 10) + "..." : drop.name}
+                                 {drop.name}
 
                                 </div>
-                                <div style={{fontSize:'12px'}}>
-                                    {drop.address.length > 35 ? drop.address.slice(0, 35) + "..." : drop.address}
+                                <div style={{fontSize:'12px', paddingRight: "20px" }}>
+                                    {drop.address.length > 50 ? drop.address.slice(0, 50) + "..." : drop.address}
                                 </div>
                             </div>
                       </div>
                       <div className="change-btn-conatiner">
+                        <p style={{fontSize:'15px',fontWeight:'600',color:'blue',textAlign:'center',marginTop:'10px'}}>{distance}</p>
                         <button onClick={()=>setDrop('')}>
                           Change
                         </button>
@@ -522,8 +579,15 @@ useEffect(() => {
                         <input type="text" placeholder="Sender's Mobile Number " value={phone +" ( Sender's Phone Number )"} style={{color:'#cbcbcb'}} readOnly='true'/>
                   </div>
                   <div className="input-div">
-                     <select name="" id="" style={{width:'100%',padding:'10px'}} onChange={(e)=>setDropDetail({...prev,productType:e.target.value})}>
-                      <option value="" disabled="true">Enter Product Type</option>
+                     <select name="" id="" style={{
+                                  width: '100%',
+                                  padding: '10px',
+                                  color: "#939393",
+                                  display: 'block',    // Ensures it takes up the full width of the container
+                                  margin: '0 auto',    // Centers the element if the parent is wider
+                                  boxSizing: 'border-box' // Prevents padding from pushing the box outside its bounds
+                                }} onChange={(e)=>setDropDetail({...dropDetail,productType:e.target.value})}>
+                      <option value="">Select Product Type</option>
                       <option value="wood">Wood</option>
                       <option value="metal">Metal</option>
                       <option value="paper">Paper</option>
@@ -531,8 +595,8 @@ useEffect(() => {
                      </select>
                   </div>
                </div>
-                <div className="check-fare-btn" onClick={handleCheckfare}>
-                   Check-Fare
+                <div className="check-fare-btn" style={checkfare?{opacity:'100%'}:{opacity:'50%'}} onClick={handleCheckfare} >
+                   Check Fare
                 </div>
              </div>
            
@@ -742,9 +806,6 @@ useEffect(() => {
         )
        
        }
-      
-     
-    
       
      <nav className="bottom-nav2">
         <div className="nav-item active">🏠<span>Home</span></div>
