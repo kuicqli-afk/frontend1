@@ -5,7 +5,7 @@ export const RideContext = createContext();
 
 export const RideProvider = ({ children }) => {
   //Selected Vehicle
-  const [vehicle,setVehicle]=useState('');
+  const [vehicle,setVehicle]=useState('bike');
   const phone=localStorage.getItem('phone')
   //Privous Rides
   const [previousRides,setPreviousRides]=useState([])

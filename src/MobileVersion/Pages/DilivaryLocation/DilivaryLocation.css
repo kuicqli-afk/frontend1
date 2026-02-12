@@ -463,6 +463,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  background-color: #0000E6;
   
 }
 .map-container2{
@@ -507,8 +508,12 @@
   display: flex;
   flex-direction: row;
   background-color: white;
-  padding: 5px;
+  padding: 5px 10px;
   border-radius: 10px;
+  align-items: center;
+
+  justify-content: space-between;
+
 }
 
 .input-div input{
@@ -526,6 +531,7 @@
   font-size: 14px;
   border-radius: 10px;
   z-index: 5;
+  border: 1px solid #1857ff;
 
 }
 .change-btn-conatiner button{
@@ -564,7 +570,7 @@
 .location-name-container{
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 7px;
 
 }
 .pick-up-div{
@@ -576,15 +582,17 @@
 .btn-container3{
   display: flex;
   flex-direction: column;
-  gap: 25px;
+ 
 }
 
 .btn-container3 button{
-  padding: 8px 15px;
+  padding: 6px 10px;
   border: none;
   border-radius: 5px;
  background-color: rgb(235, 235, 235);
   color: #0000E6;
+  font-size: 11px;
+  margin-top: 40px;
 }
 
 .fare-container2
@@ -597,17 +605,20 @@
   max-height: 235px;
   overflow-y: scroll;
 }
+
 .vehicle{
   display: flex;
   flex-direction: row;
   background-color: white;
-
+  overflow: hidden;
   position: relative;
   width: 100%;
   border-radius: 10px;
   justify-content: space-between;
-  box-shadow: 2px 2px 5px gray;
+    /* box-shadow: 2px 2px 5px gray; */
 }
+
+
 select{
   border: none;
 }
@@ -623,4 +634,32 @@ select:focus {
 
 select{
   width: 90%;
+}
+.vehicle {
+  transition: all 0.5s ease; /* smooth all changes */
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.vehicle.fade-out {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+.vehicle.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeIn 0.5s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.select-container-div{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }

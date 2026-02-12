@@ -42,10 +42,14 @@ export default function DeliveryLocation(){
     const [pickup, setPickup] = useState({
       name:'',
       address:'',
-      coords:''
+      coords:{lat:'',lng:''}
     });
     const [pickupQuery,setPickupQuery]=useState()
-    const [drop, setDrop] = useState("");
+    const [drop, setDrop] = useState({
+      name:'',
+      address:'',
+      coords:{lat:'',lng:''}
+    });
     const [dropQuery,setDropQuery]=useState()
     const [activeInput, setActiveInput] = useState(null);
     const [pickupPredictions, setPickupPredictions] = useState([]);
@@ -53,9 +57,9 @@ export default function DeliveryLocation(){
     const [getEstimate,setGetEstimate]=useState(false)
     const [pickupLocation,setPickupLocation]=useState([])
     const [fare,setFare]=useState([])
-    const [active,setActive]=useState()
+    const [active, setActive] = useState(); 
     const {socket,sendMessage}=useContext(SocketContext)
-    const {previousRides,vehicle}=useContext(RideContext);
+    const {previousRides,vehicle,setVehicle}=useContext(RideContext);
     const [finalDetail,setFinalDetail]=useState(false)
     const [pickupCoords, setPickupCoords] = useState(null);
     const [dropCoords, setDropCoords] = useState(null);
@@ -75,6 +79,10 @@ export default function DeliveryLocation(){
     
 const pickupInputRef = useRef(null);
 const dropInputRef = useRef(null);
+
+useEffect(()=>{
+  setActive(vehicle)
+},[vehicle])
 
 useEffect(() => {
   if (!pickup?.address) return;
@@ -114,7 +122,7 @@ useEffect(() => {
 
   // ✅ DEFINE IT HERE (IMPORTANT)
   const vehicleImages = {
-    bike: {img:TwoWheeler,name:'Bike'},
+    bike: {img:TwoWheeler,name:'2 Wheeler'},
     miniAuto: {img:MiniAuto,name:'Mini Auto'},
     ELoader: {img:Eloader,name:'E Loader'},
     miniTruck: {img :MiniTruck,name:'Mini Truck'},
@@ -170,15 +178,17 @@ useEffect(() => {
      const formData= new FormData()
      formData.append('name',name);
      formData.append('phone',phone);
-     formData.append('pickup',pickup.address)
-     formData.append('drop',drop.address)
+     formData.append('pickupName',pickup.name)
+     formData.append('pickupAddress',pickup.address)
+     formData.append('dropName',drop.name)
+     formData.append('dropAddress',drop.address)
      formData.append('userPhone',phone)
      formData.append('receiver_name',dropDetail.receiver_name)
      formData.append('receiver_phone',dropDetail.receiver_phone)
      formData.append('landmark',dropDetail.landmark)
      formData.append('productType',dropDetail.productType)
-     formData.append('fare',active.fare)
-     formData.append('vehcile',active.vehicleType)
+     formData.append('fare',activeVehicle.fare)
+     formData.append('vehcile',activeVehicle.vehicleType)
 
      for (const [key, value] of formData.entries()) {
         console.log(key, value);
@@ -217,8 +227,7 @@ const handleChange = (state) => {
   } else if (state === 'drop') {
     setDrop(prev => ({ ...prev, name: '', address: '' }));
     setActiveInput('drop'); 
- 
-        // ✅ focus drop input
+    // ✅ focus drop input
   }
 
   navigate('/ride');
@@ -235,7 +244,7 @@ const handleChange = (state) => {
     }, [activeInput]);
     
   const handleCheckfare=()=>{
-
+     if(!checkfare) return;   
      if(!dropDetail.landmark||!dropDetail.receiver_name||!dropDetail.receiver_phone)
      {
          alert('All Field are Required');
@@ -314,6 +323,8 @@ useEffect(() => {
  if (!isLoaded) {
           return <div>Loading Map...</div>;
         }
+
+        const activeVehicle = fare.find(item => item.vehicleType === vehicle);
   return (
     <div className="delivery-screen">
       {/* Header with Back Button */}
@@ -350,7 +361,7 @@ useEffect(() => {
                                   </div>
                                   :
                                   <>
-                                     <div className="container" style={{gap:'5px'}}>
+                                <div className="container" style={{gap:'5px'}}>
 
                                 <div className="map-container2" style={{height:'200px'}}>
 
@@ -380,39 +391,44 @@ useEffect(() => {
                                               }}
                                             />
                                           )}
-                                        </GoogleMap>
+                          </GoogleMap>
+                          <button className="back-btn-overlay" onClick={()=>{setGetEstimate(false)}}>
+                              <FontAwesomeIcon icon={faArrowLeft} />
+                            </button>
 
                     </div>
                         
                   </div>
 
                   <div className="fare-container2">
-                     {
-                      fare.map((item)=>(
-                        vehicle==item.vehicleType&&
-                        <div className="vehicle" style={item.vehicleType===active?.vehicleType?{border:'2px solid red'}:{}}>
-                        <div style={{display:'flex',flexDirection:'row',gap:'15px',padding:'5px 20px'}}>
-                              <div style={{background:'blue',borderRadius:'0px 0px 20px 20px',padding:'10px',marginTop:'-10px',height:'70px'}}>
-                                <p style={{color:'white',fontSize:'10px'}}>40KG</p>
-                                <img src={weight2} alt="" width={30}/>
-                              </div>
-                              <div>
-                                  <img src={vehicleImages[item.vehicleType].img} alt="" width={item.vehicleType==='miniTruck'?65:60}/> 
-                              </div>
-                              <div style={{display:'flex',flexDirection:'column',color:'gray',justifyContent:'center'}}>
-                                  <img src="" alt="" />
-                                  <div style={{fontWeight:'600',fontSize:'14px'}}>{vehicleImages[item.vehicleType].name}</div>
-                                  <div>1 mins</div>
-                              </div>
+                  {
+                    (activeVehicle && (
+                <div
+                          className="vehicle"
+                          key={activeVehicle.vehicleType} // unique key
+
+                                >
+                        <div style={{ display: 'flex', flexDirection: 'row', gap: '15px', padding: '5px 20px' }}>
+                          <div style={{ background: 'blue', borderRadius: '0px 0px 20px 20px', padding: '10px', marginTop: '-10px', height: '70px' }}>
+                            <p style={{ color: 'white', fontSize: '10px' }}>40KG</p>
+                            <img src={weight2} alt="" width={30} />
+                          </div>
+                          <div>
+                            <img src={vehicleImages[activeVehicle.vehicleType].img} alt="" width={activeVehicle.vehicleType === 'miniTruck' ? 65 : 60} />
+                          </div>
+                          <div style={{ display: 'flex', flexDirection: 'column', color: 'gray', justifyContent: 'center' }}>
+                            <div style={{ fontWeight: '600', fontSize: '14px' }}>{vehicleImages[activeVehicle.vehicleType].name}</div>
+                            <div style={{fontSize:'12px',fontWeight:'500'}}>{activeVehicle.distance}Km in <div>({activeVehicle.time} mins)</div></div>
+                          </div>
                         </div>
-                        <div style={{display:'flex',flexDirection:'column',borderRadius:'0px 8px 8px 0px',background:'#18bd18',color:'white',fontWeight:'700',padding:'16px',justifyContent:'center',alignItems:'start',lineHeight:'22px',marginTop:'-2px'}}>
-                          <div style={{fontSize:'14px'}}>Fare</div>
-                          <div style={{fontSize:'30px'}}>₹{item.fare}</div>
+                        <div style={{ display: 'flex', flexDirection: 'column', background: '#18bd18', color: 'white', fontWeight: '700', padding: '16px', justifyContent: 'center', alignItems: 'start', lineHeight: '22px', marginTop: '-2px',width:'100px' }} id="green-div">
+                          <div style={{ fontSize: '14px' }}>Fare</div>
+                          <div style={{ fontSize: '30px' }}>₹{activeVehicle.fare}</div>
                         </div>
-                          
-                       </div>
-                       
-                      ))
+                  </div>
+                ))
+
+                      
                     }
 
                   </div>
@@ -421,21 +437,26 @@ useEffect(() => {
                      <div className="div-info-container">
                           <div className="location-icon-container">
                                 <img src={location} alt="" width={16}/>
-                                <div style={{height:'32px',width:'0px',border:'none',marginLeft:'7px',borderRight:'1px dashed black'}}></div>
+                                <div style={{height:'40px',width:'0px',border:'none',marginLeft:'7px',borderRight:'1px dashed black'}}></div>
                                 <img src={drop2} alt="" width={15} height={20} style={{marginTop:'5px'}}/>
                           </div>
                           <div className="location-name-container">
                                   <div className="pick-up-div">
                                        <div style={{color:'green',fontSize:'14px',fontWeight:'600'}}>Pick Up Location</div>
-                                       <div style={{fontSize:'12px',fontWeight:'600'}}>{name}.{phone}</div>
-                                       <div style={{fontSize:'10px',color:'gray'}}> {pickup.address.length > 35 ? pickup.address.slice(0, 35) + "..." : pickup.address}</div>
+                                  <div style={{fontSize:'12px',fontWeight:'600'}}><span style={{color:'gray'}}>Sender's Name - </span>{name}</div>
+                                  <div style={{fontSize:'12px',fontWeight:'600'}}>{pickup.name}</div>
+                                       <div style={{fontSize:'12px',color:'gray'}}> {pickup.address.length > 35 ? pickup.address.slice(0, 35) + "..." : pickup.address}</div>
                                   </div>
                                    <div className="pick-up-div">
                                        <div style={{color:'red',fontSize:'14px',fontWeight:'600'}}>Drop Location</div>
-                                       <div style={{fontSize:'12px',fontWeight:'600'}}>{drop.address.length > 15 ? drop.address.slice(0, 15) + "..." : drop.address}</div>
-                                       <div style={{fontSize:'10px',color:'gray'}}> {drop.address.length > 35 ? drop.address.slice(0, 35) + "..." : drop.address}</div>
+                                        <div style={{fontSize:'12px',fontWeight:'600'}}> <span style={{color:'gray'}}>Receiver's Name - </span>{dropDetail.receiver_name}</div>
+                                      <div style={{fontSize:'12px',fontWeight:'600'}}>{drop.name}</div>
+                                       <div style={{fontSize:'12px',color:'gray'}}> {drop.address.length > 70 ? drop.address.slice(0, 70) + "..." : drop.address}</div>
                                   </div>
                           </div>
+                     </div>
+                     <div>
+                     
                      </div>
                       <div className="btn-container3">
 
@@ -453,31 +474,61 @@ useEffect(() => {
                       </div>
                      
                   </div>
+                    <div className="input-div">
+                      <div className="select-container-div">
+                           <div style={{fontSize:'15px',fontWeight:'700'}}>Product Type -</div>
+                          <div>
+                            <select name="" id="select" style={{
+                                        width: '100%',
+                                        padding: '10px',
+                                        fontWeight:"700",
+                                        color: "#000000",
+                                        display: 'block',    // Ensures it takes up the full width of the container
+                                        margin: '0 auto',    // Centers the element if the parent is wider
+                                        boxSizing: 'border-box' // Prevents padding from pushing the box outside its bounds
+                                      }} value={dropDetail.productType}onChange={(e)=>setDropDetail({...dropDetail,productType:e.target.value})}>
+                                  {/* <option value="">Select Product Type</option> */}
+                                  <option value="wood">Wood</option>
+                                  <option value="metal">Metal</option>
+                                  <option value="paper">Paper</option>
+                                  <option value="plastic">Plastic</option>
+                          </select>
+                          </div>
+                      </div>
+                    
+                      <div className="btn-container3" style={{marginTop:'0px'}} >
+                        <button style={{marginTop:'0px'}} onClick={()=>setGetEstimate(false)}>
+                          Change
+                        </button>
+                      </div>
+                    
+                     
+                  </div>
 
                   <div className="fare-container2">
                     {
                       fare.map((item)=>{
                         if(vehicle==item.vehicleType) return null;
                         return(
-                        <div className="vehicle"  onClick={()=>{setActive(item.vehicleType);console.log(active)}} style={item.vehicleType===active?.vehicleType?{border:'2px solid red'}:{padding:'5px 25px'}}>
-                        <div style={{display:'flex',flexDirection:'row',gap:'15px'}}>
-                              <div style={{background:'blue',borderRadius:'0px 0px 20px 20px',padding:'10px',marginTop:'-5px',height:'70px'}}>
-                                <p style={{color:'white',fontSize:'10px',marginBottom:'2px'}}>40KG</p>
-                                <img src={weight2} alt="" width={30}/>
-                              </div>
-                              <div>
-                                  <img src={vehicleImages[item.vehicleType].img} alt="" width={item.vehicleType==='miniTruck'?65:60}/> 
-                              </div>
-                              <div style={{display:'flex',flexDirection:'column',color:'gray',justifyContent:'center'}}>
-                                  <img src="" alt="" />
-                                  <div style={{fontWeight:'600',fontSize:'14px'}}>{vehicleImages[item.vehicleType].name}</div>
-                                  <div>1 mins</div>
-                              </div>
-                        </div>
-                        <div style={{display:'flex',flexDirection:'column',fontWeight:'600',color:'gray',justifyContent:'center',alignItems:'center',lineHeight:'22px'}}>
-                          <div style={{fontSize:'14px'}}>Book Fare</div>
-                          <div style={{fontSize:'30px'}}>₹{item.fare}</div>
-                        </div>
+                        <div className="vehicle"  onClick={()=>{setActive(item);console.log(active);setVehicle(item.vehicleType)}} style={{padding:'5px'}}>
+                        <div style={{ display: 'flex', flexDirection: 'row', gap: '15px', padding: '5px 20px' }}>
+                            <div style={{ background: 'blue', borderRadius: '0px 0px 20px 20px', padding: '10px', marginTop: '-10px', height: '70px' }}>
+                              <p style={{ color: 'white', fontSize: '10px' }}>40KG</p>
+                              <img src={weight2} alt="" width={30} />
+                            </div>
+                            <div>
+                              <img src={vehicleImages[item.vehicleType].img} alt="" style={{width:'60px',height:'60px'}} />
+                              {/* <div style={{width:'60px',height:'60px'}}></div> */}
+                            </div>
+                            <div style={{ display: 'flex', flexDirection: 'column', color: 'gray', justifyContent: 'center' }}>
+                              <div style={{ fontWeight: '600', fontSize: '14px' }}>{vehicleImages[item.vehicleType].name}</div>
+                              <div style={{fontSize:'12px',fontWeight:'500'}}>{item.distance}Km in <div>({item.time} mins)</div></div>
+                            </div>
+                          </div>
+                          <div style={{ display: 'flex', flexDirection: 'column', color: 'gray', fontWeight: '700', padding: '16px', justifyContent: 'center', alignItems: 'start', lineHeight: '22px', marginTop: '-2px',width:'100px' }} id="green-div">
+                            <div style={{ fontSize: '14px' }}>Fare</div>
+                            <div style={{ fontSize: '30px' }}>₹{item.fare}</div>
+                          </div>
                           
                        </div>)
 
@@ -488,13 +539,13 @@ useEffect(() => {
                   </div>
                   <div className="check-fare-btn" style={{fontWeight:'600'}} onClick={()=>setFinalDetail(true)}>
                         
-                        Continue with 2-Wheeler 
+                        Continue with {vehicleImages[vehicle].name} 
                         
                        </div>
 
                   </div>
-                                  </>
-                                }
+                </>
+                }
                              
               </>
 
@@ -520,7 +571,7 @@ useEffect(() => {
                      </div>
               </header>
           
-             <div className="container" >
+             <div className="container">
                <div className="map-container2" style={{height:'200px'}}>
 
                   <div className="map-container-fixed" style={{height:'100%'}}>
@@ -582,16 +633,16 @@ useEffect(() => {
                      <select name="" id="" style={{
                                   width: '100%',
                                   padding: '10px',
-                                  color: "#939393",
+                                  color: "#000000",
                                   display: 'block',    // Ensures it takes up the full width of the container
                                   margin: '0 auto',    // Centers the element if the parent is wider
                                   boxSizing: 'border-box' // Prevents padding from pushing the box outside its bounds
                                 }} onChange={(e)=>setDropDetail({...dropDetail,productType:e.target.value})}>
-                      <option value="">Select Product Type</option>
-                      <option value="wood">Wood</option>
-                      <option value="metal">Metal</option>
-                      <option value="paper">Paper</option>
-                      <option value="plastic">Plastic</option>
+                            <option value="">Select Product Type</option>
+                            <option value="wood">Wood</option>
+                            <option value="metal">Metal</option>
+                            <option value="paper">Paper</option>
+                            <option value="plastic">Plastic</option>
                      </select>
                   </div>
                </div>
@@ -599,7 +650,6 @@ useEffect(() => {
                    Check Fare
                 </div>
              </div>
-           
           </>
           :
           <>
@@ -709,20 +759,20 @@ useEffect(() => {
         )).slice(0,7):previousRides.map((item,index)=>(
           <div key={index} className="history-item"  onClick={() => {
                 setPickup({
-                  name:item.pickUp,
-                  address: item.pickUp
+                  name:item.pickUp.name,
+                  address: item.pickUp.address,
                 });
                 setDropPredictions([]);
               }}>
            <FontAwesomeIcon icon={faClock} style={{color:'gray',padding:'8px'}} size='xl'/>
           <div className="item-details">
               <div className="item-header">
-                <span className="location-name">{item.pickUp}</span>
+                <span className="location-name">{item.pickUp.name}</span>
                 <span className="user-tag">
                   <FontAwesomeIcon icon={faUser} size="xs" /> {item.receiver_name}
                 </span>
               </div>
-              <p className="location-address">{item.drop}</p>
+              <p className="location-address">{item.pickUp.address}</p>
             </div>
             <div className="save-action">
               <FontAwesomeIcon icon={faBookmark} className="heart-icon" />
@@ -773,27 +823,28 @@ useEffect(() => {
               className="history-item"
               onClick={() => {
                 setDrop({
-                  name: item.drop,
-                  address: item.drop
+                  name: item.drop.name,
+                  address: item.drop.address
                 });
                 setDropPredictions([]);
               }}
             >
              <FontAwesomeIcon icon={faClock} style={{color:'gray',padding:'8px'}} size='xl'/>
-              <div className="item-details">
+             <div className="item-details">
               <div className="item-header">
-                <span className="location-name">{item.pickUp}</span>
+                <span className="location-name">{item.drop.name}</span>
                 <span className="user-tag">
                   <FontAwesomeIcon icon={faUser} size="xs" /> {item.receiver_name}
                 </span>
               </div>
-              <p className="location-address">{item.drop}</p>
+               <p className="location-address">{item.drop.address}</p>
             </div>
               <div className="save-action">
                 <FontAwesomeIcon icon={faBookmark} className="heart-icon" />
                 <span>SAVE</span>
               </div>
             </div>
+            
           ))
   )
 }
@@ -806,8 +857,12 @@ useEffect(() => {
         )
        
        }
+
+       <div style={{width:'100%',height:'100px',background:'#0000E6',border:'2px solid #0000E6'}}>
+
+       </div>
       
-     <nav className="bottom-nav2">
+     <nav className="bottom-nav2" style={{marginTop:'40px'}}>
         <div className="nav-item active">🏠<span>Home</span></div>
         <div className="nav-item">📋<span>Orders</span></div>
         <div className="nav-item">🪙<span>Coins</span></div>

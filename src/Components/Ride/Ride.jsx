@@ -86,7 +86,7 @@ function Ride() {
                   <span className="dot green"></span>
                   <div className="address-content">
                     <p className="label">Pickup Location</p>
-                    <p className="value">{ride.pickUp}</p>
+                    <p className="value">{ride.pickUp.address}</p>
                   </div>
                 </div>
 
@@ -96,7 +96,7 @@ function Ride() {
                   <span className="dot red"></span>
                   <div className="address-content">
                     <p className="label">Drop Location • {name}</p>
-                    <p className="value">{ride.drop}</p>
+                    <p className="value">{ride.drop.address}</p>
                   </div>
                 </div>
               </div>
