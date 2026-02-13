@@ -243,3 +243,41 @@
   background: #e5e7eb;
   color: #0f172a;
 }
+.trip-container{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 8px 15px;
+}
+.icon-div-3{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 10px;
+  color: #2563eb;
+}
+.searchbar-container{
+  display: flex;
+  flex-direction: row;
+  padding: 2px;
+}
+
+.searchbar-container {
+  width: 100%;
+  height: 10px;
+  background-color: #eee;   /* light grey background */
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-bar2{
+  height: 100%;
+  background-color: #28a745;
+  animation: fillProgress 10s linear infinite;
+  border-radius: 10px 0px 0px 10px;
+}
+
+@keyframes fillProgress {
+  from { width: 0%; }
+  to { width: 100%; }
+}
