@@ -189,78 +189,8 @@ function MobileRide() {
             </div>
           </div>
         </div>
-        {/* Product Type Div Start */}
-        <div
-          className="time-container"
-          style={{ color: "#0000E6", fontSize: "14px", fontWeight: "500" ,padding:'9px 10px'}}
-        >
-          Searching for Kuicqli Heroes near by{dots}
-        </div>
-         <div className="input-div" style={{ padding: "9px 10px" }}>
-                  <div className="select-container-div">
-                    <div
-                      style={{
-                        fontSize: "14px",
-                        fontWeight: "500",
-                        marginLeft: "5px",
-                      }}
-                    >
-                      Product type selected -&nbsp;{" "}
-                    </div>
-                    <div style={{ fontWeight: "500", fontSize: "13px" }}>
-                      {ride.productType}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Prohibited Items Div Start */}
-             <div className="input-div" style={{ padding: "5px 10px" }}>
-                  <div className="select-container-div">
-                    <div
-                      style={{
-                        fontSize: "14px",
-                        fontWeight: "500",
-                        marginLeft: "5px",
-                        color: "  #0000E6",
-                      }}
-                    >
-                      List of Prohibited Items
-                    </div>
-                  </div>
-
-                  <div className="btn-container3">
-                    <button
-                      style={{
-                        marginTop: "0px",
-                        background: "none",
-                        padding: "5px",
-                        fontSize: "12px",
-                      }}
-                      onClick={() => setProhibitedItems((prev) => !prev)}
-                    >
-                      {prohibitedItems ? "Hide" : "Show"}
-                    </button>
-                  </div>
-                </div>
-                
-               {
-                prohibitedItems ? 
-                  <div className="prohibited-items">
-                    {prohibitedItemsData.map((items) => (
-                      <div className="prohibited-item-name">• {items}</div>
-                    ))}
-                  </div>:<></>
-               }
-
-                {/* End Of Phibited Item Div */}
-                
-        <div className="searchbar-container">
-          <div className="progress-bar2"></div>
-        </div>
-
-        {/* End Of Progress Bar */}
-
-        <div className="fare-container2" >
+        {/* Vehicle div Starts*/}
+         <div className="fare-container2" >
           {vehicle && (
             <div
               className="vehicle"
@@ -333,6 +263,68 @@ function MobileRide() {
             </div>
           )}
         </div>
+        {/* Product Type Div Start */}
+      
+         <div className="input-div" style={{ padding: "9px 10px" }}>
+                  <div className="select-container-div">
+                    <div
+                      style={{
+                        fontSize: "14px",
+                        fontWeight: "500",
+                        marginLeft: "5px",
+                      }}
+                    >
+                      Product type selected -&nbsp;{" "}
+                    </div>
+                    <div style={{ fontWeight: "500", fontSize: "13px" }}>
+                      {ride.productType}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Prohibited Items Div Start */}
+             <div className="input-div" style={{ padding: "5px 10px" }}>
+                  <div className="select-container-div">
+                    <div
+                      style={{
+                        fontSize: "14px",
+                        fontWeight: "500",
+                        marginLeft: "5px",
+                        color: "  #0000E6",
+                      }}
+                    >
+                      List of Prohibited Items
+                    </div>
+                  </div>
+
+                  <div className="btn-container3">
+                    <button
+                      style={{
+                        marginTop: "0px",
+                        background: "none",
+                        padding: "5px",
+                        fontSize: "12px",
+                      }}
+                      onClick={() => setProhibitedItems((prev) => !prev)}
+                    >
+                      {prohibitedItems ? "Hide" : "Show"}
+                    </button>
+                  </div>
+                </div>
+                
+               {
+                prohibitedItems ? 
+                  <div className="prohibited-items">
+                    {prohibitedItemsData.map((items) => (
+                      <div className="prohibited-item-name">• {items}</div>
+                    ))}
+                  </div>:<></>
+               }
+
+                {/* End Of Phibited Item Div */}
+                
+
+       
 
         
               <div className="info-container3">
@@ -432,6 +424,19 @@ function MobileRide() {
                                       
                                  </div> */}
                                </div>
+                               {/* Start of Searching text */}
+                  <div
+          className="time-container"
+          style={{ color: "#0000E6", fontSize: "14px", fontWeight: "500" ,padding:'9px 12px'}}
+        >
+          Searching for Kuicqli Heroes near by{dots}
+        </div>
+        {/* End Of Searching Text */}
+        <div className="searchbar-container">
+          <div className="progress-bar2"></div>
+        </div>
+
+        {/* End Of Progress Bar */}
 
                                <div
                       style={{

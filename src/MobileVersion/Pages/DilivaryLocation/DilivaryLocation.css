@@ -512,7 +512,7 @@
   padding: 5px 10px;
   border-radius: 10px;
   align-items: center;
-
+  font-size: 12px;
   justify-content: space-between;
 
 }
@@ -521,7 +521,7 @@
   width: 100%;
   border: none;
   z-index: 5;
-
+  font-size: 14px;
 }
 .check-fare-btn{
   width: 100%;

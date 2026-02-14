@@ -119,7 +119,7 @@ function Home() {
           <Link to='/ride'>
             <div className="loc-text">
               <label>Pick Up from</label>
-              <p>{'Enter Pick Up Location'}</p>
+              <p>{lastRide?lastRide.pickUp.address:'Enter Pick Up Location'}</p>
             </div>
           </Link>
 

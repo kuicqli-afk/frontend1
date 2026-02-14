@@ -70,7 +70,7 @@ function RideStarted() {
                 lat:ride.driverId.location.coordinates[1],
                 lng:ride.driverId.location.coordinates[0],
             },
-            destination: ride.pickUp,
+            destination: ride.pickUp.address,
             travelMode: window.google.maps.TravelMode.DRIVING,
           });
            setDistance( result.routes[0].legs[0].distance.text )  // "12.4 km"

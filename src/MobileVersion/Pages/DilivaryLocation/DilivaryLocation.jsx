@@ -814,18 +814,18 @@ export default function DeliveryLocation() {
                     </div>
                   )}
                 </div>
-                <div className="input-div" style={{ padding: "10px 20px" }}>
+                <div className="input-div" style={{ padding: "10px 15px" }}>
                   <div className="select-container-div">
                     <div
                       style={{
-                        fontSize: "15px",
+                        fontSize: "14px",
                         fontWeight: "500",
                         marginLeft: "5px",
                       }}
                     >
                       Product Type -
                     </div>
-                    <div style={{ fontWeight: "700" }}>
+                    <div style={{ fontWeight: "700" ,fontSize:'14px'}}>
                       {dropDetail.productType}
                     </div>
                   </div>
@@ -839,6 +839,49 @@ export default function DeliveryLocation() {
                     </button>
                   </div>
                 </div>
+                 <div className="input-div" style={{ padding: "10px 15px" }}>
+                  <div className="select-container-div">
+                    <div
+                      style={{
+                        fontSize: "14px",
+                        fontWeight: "500",
+                        marginLeft: "5px",
+                        color: "  #0000E6",
+                      }}
+                    >
+                      List of Prohibited Items
+                    </div>
+                  </div>
+
+                  <div className="btn-container3">
+                    <button
+                      style={{
+                        marginTop: "0px",
+                        background: "none",
+                        padding: "5px",
+                        fontSize: "12px",
+                      }}
+                      onClick={() => setProhibitedItems((prev) => !prev)}
+                    >
+                      {prohibitedItems ? "Hide" : "Show"}
+                    </button>
+                  </div>
+                </div>
+
+
+
+               {
+                prohibitedItems?(
+                      <div className="prohibited-items">
+                    {prohibitedItemsData.map((items) => (
+                      <div className="prohibited-item-name">• {items}</div>
+                    ))}
+                  </div>
+                ):
+                  <></>
+                
+               }
+                
 
                 <div className="info-container3">
                   <div className="div-info-container">
@@ -1152,6 +1195,7 @@ export default function DeliveryLocation() {
                   value={dropDetail.receiver_name}
                 />
               </div>
+              {/* Drop Div Started LandMark Screen */}
               <div className="input-div">
                 <img
                   src={dropPhone}
@@ -1186,7 +1230,8 @@ export default function DeliveryLocation() {
                   readOnly="true"
                 />
               </div>
-              <div className="input-div">
+       
+              <div className="input-div" style={{ padding: "5px 15px" }}>
                 <select
                   name=""
                   id=""
@@ -1197,6 +1242,7 @@ export default function DeliveryLocation() {
                     display: "block", // Ensures it takes up the full width of the container
                     margin: "0 auto", // Centers the element if the parent is wider
                     boxSizing: "border-box", // Prevents padding from pushing the box outside its bounds
+                    
                   }}
                   value={dropDetail.productType}
                   onChange={(e) =>
@@ -1213,14 +1259,50 @@ export default function DeliveryLocation() {
                   <option value="plastic">Plastic</option>
                 </select>
               </div>
+                     {/* Prohibited Div Landmark Screen */}
+               <div className="input-div" style={{ padding: "10px 20px" }}>
+                  <div className="select-container-div">
+                    <div
+                      style={{
+                        fontSize: "14px",
+                        fontWeight: "500",
+                        marginLeft: "5px",
+                        color: "  #0000E6",
+                      }}
+                    >
+                      List of Prohibited Items
+                    </div>
+                  </div>
+
+                  <div className="btn-container3">
+                    <button
+                      style={{
+                        marginTop: "0px",
+                        background: "none",
+                        padding: "5px",
+                        fontSize: "12px",
+                      }}
+                      onClick={() => setProhibitedItems((prev) => !prev)}
+                    >
+                      {prohibitedItems ? "Hide" : "Show"}
+                    </button>
+                  </div>
+                </div>
             </div>
-            <div
+               {prohibitedItems ? (
+                  <div className="prohibited-items">
+                    {prohibitedItemsData.map((items) => (
+                      <div className="prohibited-item-name">• {items}</div>
+                    ))}
+                  </div>
+                ) :  (<div
               className="check-fare-btn"
               style={checkfare ? { opacity: "100%" } : { opacity: "50%" }}
               onClick={handleCheckfare}
             >
               Check Fare
-            </div>
+            </div>)   }      
+            
           </div>
         </>
       ) : (

@@ -143,7 +143,7 @@ const RideOnWay = () => {
     service.route(
       {
         origin: driverLocation,
-        destination: ride.pickUp,
+        destination: ride.pickUp.address,
         travelMode: window.google.maps.TravelMode.DRIVING,
       },
       (result, status) => {
@@ -194,7 +194,7 @@ const RideOnWay = () => {
                   <div className="address-content">
                     <p className="label">Pickup Location</p>
                     <p className="value">
-                      {ride.pickUp}
+                      {ride.pickUp.address}
                       <img
                         src={success}
                         alt="success"
@@ -212,7 +212,7 @@ const RideOnWay = () => {
                     <p className="label">
                       Drop Location • {ride.userId.name} • {ride.userId.phone}
                     </p>
-                    <p className="value">{ride.drop}</p>
+                    <p className="value">{ride.drop.address}</p>
                   </div>
                 </div>
               </div>
