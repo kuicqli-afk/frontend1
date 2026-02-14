@@ -160,8 +160,9 @@ const RideOnWay = () => {
 
   useEffect(()=>{
     socket.on('start-ride',(ride)=>{
+     
       navigate('/ride/started')
-      alert('Ride Started')
+      // alert('Ride Started')
     })
   },[])
 

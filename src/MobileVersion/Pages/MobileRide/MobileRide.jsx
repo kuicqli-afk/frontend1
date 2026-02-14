@@ -23,6 +23,7 @@ import ThreeWheeler from "../../../assets/3wheeler.png";
 import MiniTruck from "../../../assets/blue-minitruck.png";
 import weight2 from "../../../assets/weight2.png";
 import TwoWheeler from "../../../assets/blue-scooter.png";
+import notification from "../../../assets/notification3.wav";
 
 function MobileRide() {
   const [search, setSearch] = useState(true);
@@ -75,6 +76,8 @@ function MobileRide() {
 
     const handleRideConfirmed = (ride) => {
       // alert(`Status: ${ride.status}\nDriver: ${ride.driverId.name}`);
+            const audio = new Audio(notification);
+            audio.play().catch((err) => console.log("Audio play blocked:", err));
       localStorage.setItem("ride", JSON.stringify(ride));
     };
 

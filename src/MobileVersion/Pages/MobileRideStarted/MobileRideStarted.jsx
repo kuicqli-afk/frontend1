@@ -30,9 +30,11 @@ import ThreeWheeler from "../../../assets/3wheeler.png";
 import MiniTruck from "../../../assets/blue-minitruck.png";
 import TwoWheeler from "../../../assets/blue-scooter.png";
 import { MdWatchLater } from "react-icons/md";
+import cash from "../../../assets/cash.jpg";
 
 function MobileRideStarted() {
   const [driverLocation, setDriverLocation] = useState();
+    const [breakup, setBreakup] = useState(false);
   const { isLoaded } = useGoogleMaps();
   const [directionResponse, setDirectionResponse] = useState(null);
   const [data, setData] = useState(null);
@@ -675,6 +677,112 @@ const formatTime = (totalSeconds) => {
             <FontAwesomeIcon icon={faPhone} style={{ color: "#0000E6" }} />
           </div>
         </div>
+
+
+        {/* Cash Container */}
+
+             <div className="cash-container">
+                  <div className="cash-container-1">
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                      }}
+                    >
+                      <div
+                        style={{
+                          margin: "5px",
+                          border: "1px solid gary",
+                          borderRadius: "10px",
+                        }}
+                      >
+                        <img
+                          src={cash}
+                          alt=""
+                          width={40}
+                          style={{ borderRadius: "10px" }}
+                        />
+                      </div>
+                      <div style={{ display: "flex", flexDirection: "column" }}>
+                        <div style={{ fontWeight: "600" }}>Cash</div>
+                        <div style={{ fontSize: "10px", color: "gray" }}>
+                          Payment Method
+                        </div>
+                      </div>
+                    </div>
+        
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "start",
+                      }}
+                    >
+                      <div style={{ fontWeight: "600", textAlign: "right" }}>₹160</div>
+                      <div
+                        style={{ color: "blue", fontSize: "12px", padding: "1px 0px" }}
+                        onClick={() => setBreakup((prev) => !prev)}
+                      >
+                        {breakup ? "Hide" : "View"} Breakup
+                      </div>
+                    </div>
+                  </div>
+                  {breakup && (
+                    <div className="bill-detail-container">
+                      <h4>Bill Details</h4>
+                      <div
+                        style={{
+                          borderBottom: "1px solid gray",
+                          display: "flex",
+                          padding: "10px 0px",
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                          fontSize: "14px",
+                        }}
+                      >
+                        <div>
+                          Trip Fare{" "}
+                          <span style={{ color: "gray", fontSize: "12px" }}>
+                            (incl. Toll & Taxes)
+                          </span>
+                        </div>
+                        <div style={{ fontWeight: "600" }}>₹{ride.fare}</div>
+                      </div>
+                      <div
+                        style={{
+                          borderBottom: "1px solid gray",
+                          display: "flex",
+                          padding: "10px 0px",
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                          fontSize: "14px",
+                        }}
+                      >
+                        <div>Net Fare</div>
+                        <div style={{ fontWeight: "600" }}>₹{ride.fare}</div>
+                      </div>
+                      <div
+                        style={{
+                          display: "flex",
+                          padding: "10px 0px",
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                          fontSize: "14px",
+                        }}
+                      >
+                        <div style={{ fontWeight: "600" }}>
+                          Amount Payable (rounded)
+                        </div>
+                        <div style={{ fontWeight: "600" }}>₹{ride.fare}</div>
+                      </div>
+                    </div>
+                  )}
+        
+                  {/* <div style={{display:'flex',marginTop:'10px',flexDirection:'row',background:'rgb(255, 220, 220)',padding:'10px',borderRadius:'5px',fontSize:'12px'}}>
+                                                           You will receive 2 coins on this order
+                                                       </div> */}
+                </div>
       </div>
     </div>
   );
