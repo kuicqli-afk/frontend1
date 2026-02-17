@@ -24,6 +24,7 @@ import MiniTruck from "../../../assets/blue-minitruck.png";
 import weight2 from "../../../assets/weight2.png";
 import TwoWheeler from "../../../assets/blue-scooter.png";
 import notification from "../../../assets/notification3.wav";
+import Footer from "../../Components/Footer/Footer.jsx";
 
 function MobileRide() {
   const [search, setSearch] = useState(true);
@@ -457,7 +458,7 @@ function MobileRide() {
       </div>
       {/* <div className="design" style={{position:'absolute',bottom:'0px',height:'180px',width:'100%'}}></div> */}
        
-
+      <Footer/>
     </div>
   );
 }

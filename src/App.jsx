@@ -28,6 +28,7 @@ import MobileRideOnWay from './MobileVersion/Pages/MobileRideOnWay/MobileRideOnW
 import MobileRideStarted from './MobileVersion/Pages/MobileRideStarted/MobileRideStarted.jsx';
 import TempSlider from './Components/TempSlider/TempSlider.jsx';
 import ProtectedRoute from './MobileVersion/Components/ProtectedRoute/ProtectedRoute.jsx';
+import Orders from './MobileVersion/Pages/Orders/Orders.jsx';
 function App() {
 
   const location = useLocation();
@@ -103,6 +104,7 @@ function App() {
                         <Route  path='search/ride' element={<MobileRide/>}/>
                         <Route path="ride/confirmed" element={<MobileRideOnWay/>}/>
                         <Route path="ride/started" element={<MobileRideStarted/>}/>
+                        <Route path="/orders" element={<Orders/>}/>
                   </Route>
                       
    

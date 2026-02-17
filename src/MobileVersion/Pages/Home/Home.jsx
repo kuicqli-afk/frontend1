@@ -52,6 +52,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { RideContext } from "../../../context/RideContext";
+import Footer from "../../Components/Footer/Footer";
 
 function Home() {
   const img = [chiken, sharwma, pizza, bhatura, burger, cookie, sweet];
@@ -243,12 +244,7 @@ function Home() {
 
       </div>
       {/* Footer Nav */}
-      <nav className="bottom-nav2">
-        <div className="nav-item active">🏠<span>Home</span></div>
-        <div className="nav-item">📋<span>Orders</span></div>
-        <div className="nav-item">🪙<span>Coins</span></div>
-        <div className="nav-item">👤<span>Account</span></div>
-      </nav>
+     <Footer/>
     </div>
   );
 }

@@ -667,15 +667,18 @@ const formatTime = (totalSeconds) => {
 
             <div>
               <div style={{ fontSize: "16px", fontWeight: "700" }}>
-                Driver Name
+                {ride.driverId.name}
               </div>
-              <div style={{ fontSize: "12px", color: "gray" }}>3244323423</div>
+              <div style={{ fontSize: "12px", color: "gray" }}>{ride.driverId.phone}</div>
             </div>
           </div>
 
+            
           <div>
             <FontAwesomeIcon icon={faPhone} style={{ color: "#0000E6" }} />
           </div>
+          
+          
         </div>
 
 

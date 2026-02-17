@@ -326,6 +326,76 @@ function MobileRideOnWay() {
 
         {/* Trip ID Container End Here */}
 
+         <div className="time-container" style={{ padding: "10px 15px" }}>
+          <div
+            className="time-container"
+            style={{
+              color: "#0000E6",
+              fontSize: "14px",
+              fontWeight: "500",
+              padding: "2px",
+            }}
+          >
+            Kuicqli heroes on the way {dots}
+          </div>
+          <div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
+            <MdWatchLater size={30} style={{ color: "green" }} />
+            <div style={{ display: "flex", flexDirection: "row", gap: "5px" }}>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: "0px",
+                }}
+              >
+                <div style={{ fontSize: "14px", fontWeight: "600" }}>
+                  {String(hr).padStart(2, "0")}
+                </div>
+                <p style={{ color: "gray", fontSize: "10px" }}>HR</p>
+              </div>
+              <div>:</div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: "0px",
+                }}
+              >
+                <div style={{ fontSize: "14px", fontWeight: "600" }}>
+                  {String(min).padStart(2, "0")}
+                </div>
+                <p style={{ color: "gray", fontSize: "10px" }}>MIN</p>
+              </div>
+              <div>:</div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: "0px",
+                }}
+              >
+                <div style={{ fontSize: "14px", fontWeight: "600" }}>
+                  {String(sec).padStart(2, "0")}
+                </div>
+                <p style={{ color: "gray", fontSize: "10px" }}>SEC</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* <div className="searchbar-conatiner">
+                                     <div></div>
+                                     <div></div>
+                                     <div></div>
+                                  </div> */}
+        {/* Progress Bar Start */}
+        <div className="searchbar-container">
+          <div className="progress-bar2"></div>
+        </div>
+        {/* Progress Bar End */}
+
         {/* Vehicle div Starts*/}
         <div className="fare-container2">
           {vehicle && (
@@ -534,75 +604,7 @@ function MobileRideOnWay() {
                                   </div> */}
         {/* End Of Searching Text */}
 
-        <div className="time-container" style={{ padding: "10px 15px" }}>
-          <div
-            className="time-container"
-            style={{
-              color: "#0000E6",
-              fontSize: "14px",
-              fontWeight: "500",
-              padding: "2px",
-            }}
-          >
-            Kuicqli heroes on the way {dots}
-          </div>
-          <div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
-            <MdWatchLater size={30} style={{ color: "green" }} />
-            <div style={{ display: "flex", flexDirection: "row", gap: "5px" }}>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  gap: "0px",
-                }}
-              >
-                <div style={{ fontSize: "14px", fontWeight: "600" }}>
-                  {String(hr).padStart(2, "0")}
-                </div>
-                <p style={{ color: "gray", fontSize: "10px" }}>HR</p>
-              </div>
-              <div>:</div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  gap: "0px",
-                }}
-              >
-                <div style={{ fontSize: "14px", fontWeight: "600" }}>
-                  {String(min).padStart(2, "0")}
-                </div>
-                <p style={{ color: "gray", fontSize: "10px" }}>MIN</p>
-              </div>
-              <div>:</div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  gap: "0px",
-                }}
-              >
-                <div style={{ fontSize: "14px", fontWeight: "600" }}>
-                  {String(sec).padStart(2, "0")}
-                </div>
-                <p style={{ color: "gray", fontSize: "10px" }}>SEC</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* <div className="searchbar-conatiner">
-                                     <div></div>
-                                     <div></div>
-                                     <div></div>
-                                  </div> */}
-        {/* Progress Bar Start */}
-        <div className="searchbar-container">
-          <div className="progress-bar2"></div>
-        </div>
-        {/* Progress Bar End */}
+       
         <div className="driver-info-div">
           <div
             style={{
@@ -616,9 +618,9 @@ function MobileRideOnWay() {
             <img src={TwoWheeler} alt="" width={50} />
             <div className="driver-info-2">
               <div style={{ fontSize: "14px", fontWeight: "700" }}>
-                UP32 AK 2343
+                {ride.driverId.numberPlate}
               </div>
-              <div style={{ fontSize: "12px", color: "gray" }}>Driver Name</div>
+              <div style={{ fontSize: "12px", color: "gray" }}>{ride.driverId.name}</div>
               <div style={{ fontSize: "10px" }}>
                 <StarRating rating={3} />
               </div>

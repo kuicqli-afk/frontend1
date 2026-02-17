@@ -40,9 +40,15 @@ import weight2 from "../../../assets/weight2.png";
 import TwoWheeler from "../../../assets/blue-scooter.png";
 import { DirectionsRenderer } from "@react-google-maps/api";
 import location2 from "../../../assets/location2.png";
+import Footer from "../../Components/Footer/Footer.jsx";
+import { useLocation } from 'react-router-dom'
+
+
 
 export default function DeliveryLocation() {
   const { isLoaded } = useGoogleMaps();
+  const location = useLocation();
+
   const [ride, setRide] = useState([]);
   const [pickup, setPickup] = useState({
     name: "",
@@ -1605,21 +1611,8 @@ export default function DeliveryLocation() {
           border: "2px solid #0000E6",
         }}
       ></div>
-
-      <nav className="bottom-nav2" style={{ marginTop: "40px", zIndex: "10" }}>
-        <div className="nav-item active">
-          🏠<span>Home</span>
-        </div>
-        <div className="nav-item">
-          📋<span>Orders</span>
-        </div>
-        <div className="nav-item">
-          🪙<span>Coins</span>
-        </div>
-        <div className="nav-item">
-          👤<span>Account</span>
-        </div>
-      </nav>
+    <Footer/>
+    
     </div>
   );
 }
