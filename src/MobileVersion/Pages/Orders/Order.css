@@ -4,13 +4,15 @@
     background-color: white;
     padding: 10px;
     border-radius: 5px;
+    height: 100vh;
+
   
   
 }
 .past-ride-container{
     display: flex;
     flex-direction: column;
-    margin-top: 10px;
+    /* margin-top: 10px; */
     height: 100vh;
     overflow-y: scroll;
 
@@ -25,11 +27,15 @@
     border: 0.5px solid rgba(221,221,221);
     border-radius: 10px;
    
-    margin-top: 10px;
+    margin-bottom: 10px;
     
     
 }
 .past-ride-info-div{
     padding: 10px;
     background-color: rgb(235, 235, 235);
+}
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }

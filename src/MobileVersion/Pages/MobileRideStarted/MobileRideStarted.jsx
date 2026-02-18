@@ -32,6 +32,7 @@ import TwoWheeler from "../../../assets/blue-scooter.png";
 import { MdWatchLater } from "react-icons/md";
 import cash from "../../../assets/cash.jpg";
 
+
 function MobileRideStarted() {
   const [driverLocation, setDriverLocation] = useState();
     const [breakup, setBreakup] = useState(false);

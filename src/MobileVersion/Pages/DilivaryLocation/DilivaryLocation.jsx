@@ -45,9 +45,10 @@ import { useLocation } from 'react-router-dom'
 
 
 
+
 export default function DeliveryLocation() {
   const { isLoaded } = useGoogleMaps();
-  const location = useLocation();
+  const again = useLocation();
 
   const [ride, setRide] = useState([]);
   const [pickup, setPickup] = useState({
@@ -109,6 +110,17 @@ export default function DeliveryLocation() {
 
   const pickupInputRef = useRef(null);
   const dropInputRef = useRef(null);
+
+  useEffect(() => {
+  if (again.state) {
+    setPickup(again.state.pickUp || '');
+    setDrop(again.state.drop || '');
+    setDropDetail({...dropDetail,receiver_name:again.state.receiver_name,receiver_phone:again.state.receiver_phone,productType:again.state.productType,landmark:again.state.landmark})
+    setVehicle(again.state.vehcile)
+    setGetEstimate(true);
+    console.log(again);
+  }
+}, [location.state]);
 
   useEffect(() => {
     setActive(vehicle);
@@ -213,7 +225,6 @@ export default function DeliveryLocation() {
     formData.append("productType", dropDetail.productType);
     formData.append("fare", activeVehicle.fare);
     formData.append("vehcile", activeVehicle.vehicleType);
-
     for (const [key, value] of formData.entries()) {
       console.log(key, value);
     }
