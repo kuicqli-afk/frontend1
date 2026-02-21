@@ -79,6 +79,24 @@ export default function DeliveryLocation() {
   const [distance, setDistance] = useState("");
   const [checkfare, setChaeckFare] = useState();
   const [prohibitedItems, setProhibitedItems] = useState(false);
+  const distinctPickups = [
+  ...new Map(
+    previousRides.map(ride => [
+      ride.pickUp.name + ride.pickUp.address, // unique key
+      ride.pickUp
+    ])
+  ).values()
+];
+const distinctDrops = [
+  ...new Map(
+    previousRides.map(ride => [
+      ride.drop.name + ride.drop.address, // unique key
+      ride.drop
+    ])
+  ).values()
+];
+console.log(distinctPickups)
+
   const prohibitedItemsData = [
     "Weapons and Firearms",
     "Explosive Substances and Devices",
@@ -161,6 +179,7 @@ export default function DeliveryLocation() {
     bike: { img: TwoWheeler, name: "2 Wheeler" },
     miniAuto: { img: MiniAuto, name: "Mini Auto" },
     ELoader: { img: Eloader, name: "E Loader" },
+    Wheeler: { img: Eloader, name: "3 Wheeler" },
     miniTruck: { img: MiniTruck, name: "Mini Truck" },
   };
  
@@ -225,6 +244,8 @@ export default function DeliveryLocation() {
     formData.append("productType", dropDetail.productType);
     formData.append("fare", activeVehicle.fare);
     formData.append("vehcile", activeVehicle.vehicleType);
+    formData.append("distance",distance)
+    
     for (const [key, value] of formData.entries()) {
       console.log(key, value);
     }
@@ -801,7 +822,7 @@ export default function DeliveryLocation() {
                           <div style={{ fontWeight: "600", fontSize: "14px" }}>
                             {vehicleImages[activeVehicle.vehicleType].name}
                           </div>
-                          <div style={{ fontSize: "10px", fontWeight: "500" }}>
+                          <div style={{ fontSize: "12px", fontWeight: "500" }}>
                             {activeVehicle.distance}Km in{" "}
                             <div>({activeVehicle.time} mins)</div>
                           </div>
@@ -842,8 +863,8 @@ export default function DeliveryLocation() {
                     >
                       Product Type -
                     </div>
-                    <div style={{ fontWeight: "700" ,fontSize:'14px'}}>
-                      {dropDetail.productType}
+                    <div style={{ fontWeight: "500" ,fontSize:'14px'}}>
+                       &nbsp;{dropDetail.productType}
                     </div>
                   </div>
 
@@ -992,7 +1013,7 @@ export default function DeliveryLocation() {
                   </div>
                 </div>
 
-                <div className="fare-container2">
+                <div className="fare-container2" style={{maxHeight:'300px'}}>
                   {fare.map((item) => {
                     if (vehicle == item.vehicleType) return null;
                     return (
@@ -1020,10 +1041,11 @@ export default function DeliveryLocation() {
                               padding: "10px",
                               marginTop: "-10px",
                               height: "70px",
+                              maxWidth:'50px'
                             }}
                           >
-                            <p style={{ color: "white", fontSize: "10px" }}>
-                              40KG
+                            <p style={{ color: "white", fontSize: "10px" ,textAlign:'center',padding:'2px'}}>
+                              {item.weight}kg
                             </p>
                             <img src={weight2} alt="" width={30} />
                           </div>
@@ -1049,7 +1071,7 @@ export default function DeliveryLocation() {
                               {vehicleImages[item.vehicleType].name}
                             </div>
                             <div
-                              style={{ fontSize: "10px", fontWeight: "500" }}
+                              style={{ fontSize: "12px", fontWeight: "500" }}
                             >
                               {item.distance}Km in <div>({item.time} mins)</div>
                             </div>
@@ -1067,11 +1089,12 @@ export default function DeliveryLocation() {
                             lineHeight: "22px",
                             marginTop: "-2px",
                             width: "100px",
+                            paddingRight:'5px'
                           }}
                           id="green-div"
                         >
                           <div style={{ fontSize: "14px" }}>Fare</div>
-                          <div style={{ fontSize: "30px" }}>₹{item.fare}</div>
+                          <div style={{ fontSize: "28px" }}>₹{item.fare}</div>
                         </div>
                       </div>
                     );
@@ -1485,24 +1508,24 @@ export default function DeliveryLocation() {
                             {item.formatted_address}
                           </p>
                         </div>
-                        <div className="save-action">
+                        {/* <div className="save-action">
                           <FontAwesomeIcon
                             icon={faBookmark}
                             className="heart-icon"
                           />
                           <span>SAVE</span>
-                        </div>
+                        </div> */}
                       </div>
                     ))
                     .slice(0, 7)
-                : previousRides.map((item, index) => (
+                : distinctPickups.map((item, index) => (
                     <div
                       key={index}
                       className="history-item"
                       onClick={() => {
                         setPickup({
-                          name: item.pickUp.name,
-                          address: item.pickUp.address,
+                          name: item.name,
+                          address: item.address,
                         });
                         setDropPredictions([]);
                       }}
@@ -1515,24 +1538,24 @@ export default function DeliveryLocation() {
                       <div className="item-details">
                         <div className="item-header">
                           <span className="location-name">
-                            {item.pickUp.name}
+                            {item.name}
                           </span>
                           <span className="user-tag">
                             <FontAwesomeIcon icon={faUser} size="xs" />{" "}
-                            {item.receiver_name}
+                            {/* {item.receiver_name} */}
                           </span>
                         </div>
                         <p className="location-address">
-                          {item.pickUp.address}
+                          {item.address}
                         </p>
                       </div>
-                      <div className="save-action">
+                      {/* <div className="save-action">
                         <FontAwesomeIcon
                           icon={faBookmark}
                           className="heart-icon"
                         />
                         <span>SAVE</span>
-                      </div>
+                      </div> */}
                     </div>
                   ))
               ).slice(0, 4)}
@@ -1563,23 +1586,23 @@ export default function DeliveryLocation() {
                           {item.formatted_address}
                         </p>
                       </div>
-                      <div className="save-action">
+                      {/* <div className="save-action">
                         <FontAwesomeIcon
                           icon={faBookmark}
                           className="heart-icon"
                         />
                         <span>SAVE</span>
-                      </div>
+                      </div> */}
                     </div>
                   ))
-                : previousRides.slice(0, 8).map((item, index) => (
+                : distinctDrops.slice(0, 8).map((item, index) => (
                     <div
                       key={index}
                       className="history-item"
                       onClick={() => {
                         setDrop({
-                          name: item.drop.name,
-                          address: item.drop.address,
+                          name: item.name,
+                          address: item.address,
                         });
                         setDropPredictions([]);
                       }}
@@ -1592,22 +1615,22 @@ export default function DeliveryLocation() {
                       <div className="item-details">
                         <div className="item-header">
                           <span className="location-name">
-                            {item.drop.name}
+                            {item.name}
                           </span>
                           <span className="user-tag">
                             <FontAwesomeIcon icon={faUser} size="xs" />{" "}
-                            {item.receiver_name}
+                            {/* {item.receiver_name} */}
                           </span>
                         </div>
-                        <p className="location-address">{item.drop.address}</p>
+                        <p className="location-address">{item.address}</p>
                       </div>
-                      <div className="save-action">
+                      {/* <div className="save-action">
                         <FontAwesomeIcon
                           icon={faBookmark}
                           className="heart-icon"
                         />
                         <span>SAVE</span>
-                      </div>
+                      </div> */}
                     </div>
                   )))}
           </div>

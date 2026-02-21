@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import logo from '../../../assets/Logo.png'
 import coin from '../../../assets/coin.png'
 import bell from '../../../assets/Bell.png'
@@ -17,6 +17,7 @@ import profile from "../../../assets/driver2.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPhone } from "@fortawesome/free-solid-svg-icons";
 import StarRating from '../../Components/StarRating/StarRating.jsx'
+import axios from 'axios'
 function Orders() {
     const {previousRides}=useContext(RideContext)
     const navigate=useNavigate()
@@ -26,9 +27,40 @@ function Orders() {
         ELoader: { img: Eloader, name: "E Loader" },
         miniTruck: { img: MiniTruck, name: "Mini Truck" },
       };
+      const [rideRatings, setRideRatings] = useState({});
       const [breakup,setBreakup]=useState(null);
       const name=localStorage.getItem('name')
       const phone=localStorage.getItem('phone')
+      // Update your handler
+const handleRatingChange =  async (rideId,newRating,prevRating) => {
+  if(prevRating>0) {
+    console.log(prevRating)
+    return
+  };
+  try {
+    // Optimistic UI update (instant star change)
+    setRideRatings(prev => ({ ...prev, [rideId]: newRating }));
+
+    await axios.patch(
+      `https://thetest-h9x3.onrender.com/ride/rides/${rideId}/rating`,
+      { rating: newRating }
+    );
+
+  } catch (error) {
+    console.error("Rating update failed:", error);
+
+    // Rollback UI if API fails
+    setRideRatings(prev => {
+      const updated = { ...prev };
+      delete updated[rideId];
+      return updated;
+    });
+  }
+};
+
+useEffect(()=>{
+
+},[handleRatingChange])
       const handleBreakUp=(id)=>{
           setBreakup(prevId => prevId === id ? null : id)
       }
@@ -52,7 +84,7 @@ function Orders() {
         })
       }
   return (
-    <div className='app-container' style={{overflowY:'hidden'}}>
+    <div className='app-container' style={{overflowY:'scroll'}}>
 
           {/* Header */}
                <header className="header2">
@@ -67,7 +99,7 @@ function Orders() {
                      </div>
          
                    </div>
-                   <div><img src={bell} width={26} /></div>
+                   <div><img src={bell} width={26}/></div>
                  </div>
                </header>
 
@@ -85,9 +117,9 @@ function Orders() {
                         <div style={{display:'flex',flexDirection:'row',alignItems:'center',gap:'5px'}}>
                               <img src={vehicleImages[item.vehcile].img} alt="" width={50} />
                               <div>
-                                  <div style={{fontWeight:'600',alignItems:'center'}}>2 Wheeler  <span style={{color:'green',fontWeight:'600',fontSize:'14px'}}> - ( {item.status} )</span></div>
+                                  <div style={{fontWeight:'600',alignItems:'center'}}>{vehicleImages[item.vehcile].name}<span style={{color:'green',fontWeight:'600',fontSize:'14px'}}> - ( {item.status} )</span></div>
                                   
-                                  <div style={{color:'gray',fontSize:'12px'}}>23 Jan 2026 , 03:53PM ( Order time ) </div>
+                                  <div style={{color:'gray',fontSize:'12px'}}>{item.time||'23 Jan 2026 , 03:53PM '}( Order time ) </div>
                                   <div  style={{color:'gray',fontSize:'12px'}}>4.2km (<span> Product type - {item.productType}</span> )</div>
                                   <div  style={{color:'gray',fontSize:'12px'}}></div>
                              </div>
@@ -143,26 +175,24 @@ function Orders() {
 
             <div>
               <div style={{ fontWeight: "600" }}>
-                Driver Name
+                {item.driverId?.name || "Driver Not Assigned"}
               </div>
-              <div style={{ fontSize: "12px", color: "gray" }}>UP32 AK 3254</div>
+              <div style={{ fontSize: "12px", color: "gray" }}> {item.driverId?.numberPlate || "—"}</div>
             </div>
           </div>
 
             
           <div>
-              <StarRating rating={3}/>
+                <StarRating 
+                rating={item.rating}
+                onRatingChange={(newRating) => handleRatingChange(item._id, newRating,item.rating)}
+                size={16}
+              />
           </div>
           
           
         </div>
-
-
-
-          
-                     <div
-
-                    
+                        <div
                               className="info-container3"
                               style={{ zIndex: "7",padding:'0px 10px' }}
                             >

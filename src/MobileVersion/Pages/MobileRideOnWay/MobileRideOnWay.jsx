@@ -26,6 +26,7 @@ import MiniAuto from "../../../assets/blue-miniAuto.png";
 import Eloader from "../../../assets/blue-eloader.png";
 import ThreeWheeler from "../../../assets/3wheeler.png";
 import MiniTruck from "../../../assets/blue-minitruck.png";
+import Footer from "../../Components/Footer/Footer.jsx";
 
 function MobileRideOnWay() {
   const [search, setSearch] = useState(true);
@@ -441,8 +442,8 @@ function MobileRideOnWay() {
                   <div style={{ fontWeight: "600", fontSize: "14px" }}>
                     {vehicleImages[vehicle].name}
                   </div>
-                  <div style={{ fontSize: "10px", fontWeight: "500" }}>
-                    {distance}Km in <div>({travelTime} mins)</div>
+                  <div style={{ fontSize: "11px", fontWeight: "500" }}>
+                    {distance} in <div>({travelTime})</div>
                   </div>
                 </div>
               </div>
@@ -622,7 +623,7 @@ function MobileRideOnWay() {
               </div>
               <div style={{ fontSize: "12px", color: "gray" }}>{ride.driverId.name}</div>
               <div style={{ fontSize: "10px" }}>
-                <StarRating rating={3} />
+                <StarRating rating={3} size={12}/>
               </div>
             </div>
           </div>
@@ -746,7 +747,12 @@ function MobileRideOnWay() {
                                                    You will receive 2 coins on this order
                                                </div> */}
         </div>
+        <div style={{width:'100%',height:'50px',background:'#0000E6'}}>
+
+        </div>
       </div>
+      
+      <Footer/>
     </div>
   );
 }

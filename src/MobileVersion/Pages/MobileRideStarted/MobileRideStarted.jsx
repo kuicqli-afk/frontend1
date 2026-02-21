@@ -13,6 +13,7 @@ import {
   Marker,
   DirectionsRenderer,
 } from "@react-google-maps/api";
+
 import axios from "axios";
 import location from "../../../assets/Location.png";
 import drop2 from "../../../assets/drop2.png";
@@ -31,11 +32,12 @@ import MiniTruck from "../../../assets/blue-minitruck.png";
 import TwoWheeler from "../../../assets/blue-scooter.png";
 import { MdWatchLater } from "react-icons/md";
 import cash from "../../../assets/cash.jpg";
+import Footer from "../../Components/Footer/Footer.jsx";
 
 
 function MobileRideStarted() {
   const [driverLocation, setDriverLocation] = useState();
-    const [breakup, setBreakup] = useState(false);
+  const [breakup, setBreakup] = useState(false);
   const { isLoaded } = useGoogleMaps();
   const [directionResponse, setDirectionResponse] = useState(null);
   const [data, setData] = useState(null);
@@ -52,7 +54,7 @@ function MobileRideStarted() {
   const {vehicle}=useContext(RideContext);
   const [prohibitedItems, setProhibitedItems] = useState(false);
   const [dots, setDots] = useState("");
-     const prohibitedItemsData = [
+  const prohibitedItemsData = [
     "Weapons and Firearms",
     "Explosive Substances and Devices",
     "Flammable Materials",
@@ -90,7 +92,7 @@ function MobileRideStarted() {
     if (!socket) return;
 
     const handleRideCompleted = (newRide) => {
-      alert("Ride Completed");
+      // alert("Ride Completed");
       //  socket.leave(`order_${ride._id}`);
       console.log(newRide);
       navigate("/fare-link");
@@ -224,6 +226,9 @@ function MobileRideStarted() {
   }
 }, [isLoaded]);
 
+
+// console.log(travelTime)
+
 const formatTime = (totalSeconds) => {
     const hr = Math.floor(totalSeconds / 3600);
     const min = Math.floor((totalSeconds % 3600) / 60);
@@ -267,7 +272,9 @@ const formatTime = (totalSeconds) => {
 
       <div
         style={{
-          padding: "10px",
+          padding: "10px 10px 20px 10px",
+          // paddingBottom:'0px',
+          background:'#0000E6',
           display: "flex",
           flexDirection: "column",
           gap: "5px",
@@ -406,8 +413,8 @@ const formatTime = (totalSeconds) => {
                             {vehicleImages[vehicle].name}
                           </div>
                           <div style={{ fontSize: "10px", fontWeight: "500" }}>
-                            {distance}Km in{" "}
-                            <div>({travelTime} mins)</div>
+                            {distance} in{" "}
+                            <div>({travelTime})</div>
                           </div>
                         </div>
                       </div>
@@ -496,28 +503,7 @@ const formatTime = (totalSeconds) => {
 
                 {/* End Of Phibited Item Div */}
 
-        <div
-          style={{
-            zIndex: "7",
-            background: "white",
-            padding: "15px 25px",
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            borderRadius: "10px",
-            fontSize: "16px",
-            fontWeight: "600",
-          }}
-        >
-          <div>
-            Ride Confimation Otp-{" "}
-            <span style={{ color: "blue" }}>
-              {data
-                ? data.rideConfirmOtp
-                : "You Receive Otp Once the Rider Completed the Ride"}
-            </span>
-          </div>
-        </div>
+     
 
         <div
           className="info-container3"
@@ -787,7 +773,10 @@ const formatTime = (totalSeconds) => {
                                                            You will receive 2 coins on this order
                                                        </div> */}
                 </div>
+                
       </div>
+      <div style={{width:'100%',height:'50px',background:'#0000E6'}}></div>
+      <Footer/>
     </div>
   );
 }

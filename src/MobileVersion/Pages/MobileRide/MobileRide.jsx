@@ -25,11 +25,12 @@ import weight2 from "../../../assets/weight2.png";
 import TwoWheeler from "../../../assets/blue-scooter.png";
 import notification from "../../../assets/notification3.wav";
 import Footer from "../../Components/Footer/Footer.jsx";
+import axios from 'axios'
 
 function MobileRide() {
   const [search, setSearch] = useState(true);
   const { isLoaded } = useGoogleMaps();
-  const { socket } = useContext(SocketContext);
+  const { socket,sendMessage } = useContext(SocketContext);
   const ride = JSON.parse(localStorage.getItem("ride"));
   const nearByDrivers = ride?.nearbyDrivers || [];
   const [dots, setDots] = useState("");
@@ -89,7 +90,23 @@ function MobileRide() {
 
   const phone = localStorage.getItem("phone");
   const name = localStorage.getItem("name");
+
      const handleCancel=()=>{
+      axios.post('https://thetest-h9x3.onrender.com/ride/cancelRide',{
+        id:ride._id
+      }).then((response)=>{
+        console.log(response)
+         if(response.data)
+         {
+            sendMessage("leaveOrder", {
+              orderId: response.data.data._id,
+              userId: response.data.data.userId,
+            });
+         }
+      }).catch((error)=>{
+        console.log(error)
+      })
+     
     navigate('/fare-link')
   }
  
@@ -193,6 +210,20 @@ function MobileRide() {
             </div>
           </div>
         </div>
+
+                          {/* Start of Searching text */}
+                  <div
+          className="time-container"
+          style={{ color: "#0000E6", fontSize: "14px", fontWeight: "500" ,padding:'9px 12px'}}
+        >
+          Searching for Kuicqli Heroes near by{dots}
+        </div>
+        {/* End Of Searching Text */}
+        <div className="searchbar-container">
+          <div className="progress-bar2"></div>
+        </div>
+
+        {/* End Of Progress Bar */}
         {/* Vehicle div Starts*/}
          <div className="fare-container2" >
           {vehicle && (
@@ -428,19 +459,7 @@ function MobileRide() {
                                       
                                  </div> */}
                                </div>
-                               {/* Start of Searching text */}
-                  <div
-          className="time-container"
-          style={{ color: "#0000E6", fontSize: "14px", fontWeight: "500" ,padding:'9px 12px'}}
-        >
-          Searching for Kuicqli Heroes near by{dots}
-        </div>
-        {/* End Of Searching Text */}
-        <div className="searchbar-container">
-          <div className="progress-bar2"></div>
-        </div>
-
-        {/* End Of Progress Bar */}
+             
 
                                <div
                       style={{
@@ -454,10 +473,10 @@ function MobileRide() {
                         Cancel Ride
                       </div>
                     </div>
-          
+           <div style={{width:'100%',height:'50px',background:'#0000E6'}}></div>
       </div>
       {/* <div className="design" style={{position:'absolute',bottom:'0px',height:'180px',width:'100%'}}></div> */}
-       
+      
       <Footer/>
     </div>
   );

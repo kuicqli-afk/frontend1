@@ -40,12 +40,18 @@ export const RideProvider = ({ children }) => {
   };
 
 
+  
+
+
+
+
+
      useEffect(()=>{
       axios.post('https://thetest-h9x3.onrender.com/ride/get-ride/userId/',{
         phone:phone
       }).then((response)=>{
         console.log(response.data.data)
-        setPreviousRides(response.data.data)
+       setPreviousRides([...response.data.data].reverse());
 
       }).catch((error)=>console.log(error))
     },[])
