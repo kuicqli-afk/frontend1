@@ -42,7 +42,7 @@ import { DirectionsRenderer } from "@react-google-maps/api";
 import location2 from "../../../assets/location2.png";
 import Footer from "../../Components/Footer/Footer.jsx";
 import { useLocation } from 'react-router-dom'
-
+import wheeler from '../../../assets/blue3wheeler.png'
 
 
 
@@ -95,7 +95,7 @@ const distinctDrops = [
     ])
   ).values()
 ];
-console.log(distinctPickups)
+console.log(vehicle)
 
   const prohibitedItemsData = [
     "Weapons and Firearms",
@@ -179,7 +179,7 @@ console.log(distinctPickups)
     bike: { img: TwoWheeler, name: "2 Wheeler" },
     miniAuto: { img: MiniAuto, name: "Mini Auto" },
     ELoader: { img: Eloader, name: "E Loader" },
-    Wheeler: { img: Eloader, name: "3 Wheeler" },
+    Wheeler: { img: wheeler, name: "3 Wheeler" },
     miniTruck: { img: MiniTruck, name: "Mini Truck" },
   };
  
@@ -498,7 +498,7 @@ console.log(distinctPickups)
                           }}
                         >
                           <p style={{ color: "white", fontSize: "10px" }}>
-                            40KG
+                            {activeVehicle.weight}
                           </p>
                           <img src={weight2} alt="" width={30} />
                         </div>
@@ -795,8 +795,8 @@ console.log(distinctPickups)
                             height: "70px",
                           }}
                         >
-                          <p style={{ color: "white", fontSize: "10px" }}>
-                            40KG
+                          <p style={{ color: "white", fontSize: "10px" ,textAlign:'center'}}>
+                            {activeVehicle.weight}Kg
                           </p>
                           <img src={weight2} alt="" width={30} />
                         </div>

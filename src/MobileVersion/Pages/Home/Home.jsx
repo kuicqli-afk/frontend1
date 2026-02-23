@@ -41,6 +41,7 @@ import Es5 from '../../../assets/E5.png'
 import Es6 from '../../../assets/E6.png'
 import Es7 from '../../../assets/E7.png'
 import sweet from '../../../assets/sweet.png'
+
 import {
   faBell,
   faHouse,
@@ -53,6 +54,7 @@ import {
 import { Link } from "react-router-dom";
 import { RideContext } from "../../../context/RideContext";
 import Footer from "../../Components/Footer/Footer";
+import axios from "axios";
 
 function Home() {
   const img = [chiken, sharwma, pizza, bhatura, burger, cookie, sweet];
@@ -64,7 +66,8 @@ function Home() {
   const {setVehicle}=useContext(RideContext);
   const {previousRides}=useContext(RideContext)
   const [lastRide,setLastRide]=useState()
-
+  const phone=localStorage.getItem('phone')
+  const [coins,setCoins]=useState()
   //Getting Details About Last Ride
  useEffect(() => {
   if (!previousRides || previousRides.length === 0) return;
@@ -89,10 +92,18 @@ function Home() {
   }, []);
 
 
-  //  useEffect(() => {
+   useEffect(() => {
    
-  //   return () => clearInterval(interval); // cleanup
-  // }, []);
+    axios.post('https://thetest-h9x3.onrender.com/user/get-coins',{
+      phone:phone
+    }).then((response)=>{
+      console.log(response)
+      setCoins(response.data.data)
+
+    }).catch((error)=>{
+      console.log(error)
+    })
+  }, []);
 
   return (
     <div className="app-container">
@@ -104,7 +115,7 @@ function Home() {
           <div className="coin-badge">
             <div style={{ marginLeft: '-10px' }}><img src={coin} alt="" width={22} /></div>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <span>12 Coins Available </span>
+              <span>{coins} Coins Available </span>
               <p style={{ fontSize: '7px', fontWeight: '300', paddingTop: '1px' }}>Earn 11 More Coins To Use</p>
             </div>
 
@@ -134,7 +145,7 @@ function Home() {
           { name: "2 Wheeler", weight: "20kg", icon: "🏍️", img: bike ,name2:'bike'},
           { name: "Mini Auto", weight: "45kg", icon: "🛺", img: auto ,name2:'miniAuto'},
           { name: "E Loader", weight: "400kg", icon: "🚚", img: ELoader,name2:'Eloader' },
-          { name: "3 Wheeler", weight: "550kg", icon: "🚚", img: eloader, name2:'Eloader'},
+          { name: "3 Wheeler", weight: "550kg", icon: "🚚", img: eloader, name2:'Wheeler'},
           { name: "Mini Truck", weight: "720kg", icon: "🚚", img: truck ,name2:'miniTruck'},
         ].map((v, i) => (
           <Link to='/ride' onClick={()=>{

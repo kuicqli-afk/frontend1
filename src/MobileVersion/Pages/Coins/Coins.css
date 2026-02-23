@@ -1,0 +1,90 @@
+.coins-container {
+  padding: 20px;
+  width: 100%;
+  margin-top: -60px;
+}
+
+/* Main Card */
+.coin-card {
+  border-radius: 18px;
+  padding: 28px;
+  background: linear-gradient(135deg, #1E88E5, #1565C0);
+  color: #ffffff;
+  box-shadow: 0 12px 30px rgba(13, 71, 161, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle Light Overlay */
+.coin-card::after {
+  content: "";
+  position: absolute;
+  top: -50px;
+  right: -50px;
+  width: 180px;
+  height: 180px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 50%;
+}
+
+/* Header */
+.coin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.coin-header h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Reward Badge */
+.reward-badge {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  backdrop-filter: blur(5px);
+}
+
+/* Body Layout */
+.coin-body {
+  margin-top: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Info Section */
+.coin-info .label {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.coin-amount {
+  font-size: 52px;
+  font-weight: 700;
+  margin: 8px 0;
+}
+
+.sub-text {
+  font-size: 14px;
+  opacity: 0.85;
+}
+
+/* Coin Image */
+.coin-image img {
+  width: 95px;
+  height: auto;
+  filter: drop-shadow(0px 6px 12px rgba(0, 0, 0, 0.25));
+}
+
+.heading{
+  color:white;
+  font-size:20px;
+  font-weight:600;
+  padding:20px 30px;
+}

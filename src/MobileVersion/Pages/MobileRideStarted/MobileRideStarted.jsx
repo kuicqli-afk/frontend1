@@ -83,11 +83,12 @@ function MobileRideStarted() {
     
      useEffect(() => {
         const interval = setInterval(() => {
-          setDots((prev) => (prev.length < 6 ? prev + "." : ""));
+          setDots((prev) => (prev.length < 4 ? prev + "." : ""));
         }, 300); // add one dot every 500ms
     
         return () => clearInterval(interval);
       }, []);
+      
   useEffect(() => {
     if (!socket) return;
 

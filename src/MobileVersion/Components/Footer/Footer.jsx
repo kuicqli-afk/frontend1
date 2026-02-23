@@ -20,9 +20,12 @@ function Footer() {
             <FaBox size="20px"/><span>Orders</span>
           </div>
         </Link>
+        <Link to='/coins'>
         <div className="nav-item">
           <FaCoins size="20px"/><span>Coins</span>
         </div>
+        </Link>
+        
         <div className="nav-item">
           <FaUser size="20px"/><span>Account</span>
         </div>
