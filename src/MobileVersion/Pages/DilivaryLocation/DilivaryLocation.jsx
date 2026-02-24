@@ -412,15 +412,11 @@ console.log(vehicle)
                 </div>
                 <div style={{ display: "flex", flexDirection: "column" }}>
                   <span>{coins} Coins Available </span>
-                  <p
-                    style={{
-                      fontSize: "7px",
-                      fontWeight: "300",
-                      paddingTop: "1px",
-                    }}
-                  >
-                    Earn 11 More Coins To Use
-                  </p>
+                     <p style={{ fontSize: '7px', fontWeight: '300', paddingTop: '1px' }}>
+                          {coins > 25
+                            ? `You can use Coin!`
+                            : `Collect ${25 - coins} more coins to use`}
+              </p>
                 </div>
               </div>
               <div>
@@ -1127,15 +1123,11 @@ console.log(vehicle)
                 </div>
                 <div style={{ display: "flex", flexDirection: "column" }}>
                   <span>{coins} Coins Available </span>
-                  <p
-                    style={{
-                      fontSize: "7px",
-                      fontWeight: "300",
-                      paddingTop: "1px",
-                    }}
-                  >
-                    Earn 11 More Coins To Use
-                  </p>
+                     <p style={{ fontSize: '7px', fontWeight: '300', paddingTop: '1px' }}>
+                          {coins > 25
+                            ? `You can use Coin!`
+                            : `Collect ${25 - coins} more coins to use`}
+              </p>
                 </div>
               </div>
               <div>
@@ -1361,15 +1353,11 @@ console.log(vehicle)
                 </div>
                 <div style={{ display: "flex", flexDirection: "column" }}>
                   <span>{coins} Coins Available </span>
-                  <p
-                    style={{
-                      fontSize: "7px",
-                      fontWeight: "300",
-                      paddingTop: "1px",
-                    }}
-                  >
-                    Earn 11 More Coins To Use
-                  </p>
+                     <p style={{ fontSize: '7px', fontWeight: '300', paddingTop: '1px' }}>
+                          {coins > 25
+                            ? `You can use Coin!`
+                            : `Collect ${25 - coins} more coins to use`}
+              </p>
                 </div>
               </div>
               <div>

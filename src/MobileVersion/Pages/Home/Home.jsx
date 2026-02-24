@@ -67,7 +67,7 @@ function Home() {
   const {previousRides}=useContext(RideContext)
   const [lastRide,setLastRide]=useState()
   const phone=localStorage.getItem('phone')
-  const [coins,setCoins]=useState()
+  const {coins}=useContext(RideContext);
   //Getting Details About Last Ride
  useEffect(() => {
   if (!previousRides || previousRides.length === 0) return;
@@ -91,19 +91,9 @@ function Home() {
     return () => clearInterval(interval,interval2,interval3); // cleanup
   }, []);
 
+ useEffect(()=>{
 
-   useEffect(() => {
-   
-    axios.post('https://thetest-h9x3.onrender.com/user/get-coins',{
-      phone:phone
-    }).then((response)=>{
-      console.log(response)
-      setCoins(response.data.data)
-
-    }).catch((error)=>{
-      console.log(error)
-    })
-  }, []);
+ },[])
 
   return (
     <div className="app-container">
@@ -116,7 +106,11 @@ function Home() {
             <div style={{ marginLeft: '-10px' }}><img src={coin} alt="" width={22} /></div>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               <span>{coins} Coins Available </span>
-              <p style={{ fontSize: '7px', fontWeight: '300', paddingTop: '1px' }}>Earn 11 More Coins To Use</p>
+             <p style={{ fontSize: '7px', fontWeight: '300', paddingTop: '1px' }}>
+                          {coins > 25
+                            ? `You can use Coin!`
+                            : `Collect ${25 - coins} more coins to use`}
+              </p>
             </div>
 
           </div>

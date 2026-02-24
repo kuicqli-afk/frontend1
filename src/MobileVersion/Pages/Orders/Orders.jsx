@@ -96,7 +96,11 @@ useEffect(()=>{
                      <div style={{ marginLeft: '-10px' }}><img src={coin} alt="" width={22} /></div>
                      <div style={{ display: 'flex', flexDirection: 'column' }}>
                        <span>{coins} Coins Available </span>
-                       <p style={{ fontSize: '7px', fontWeight: '300', paddingTop: '1px' }}>Earn 11 More Coins To Use</p>
+                         <p style={{ fontSize: '7px', fontWeight: '300', paddingTop: '1px' }}>
+                          {coins > 25
+                            ? `You can use Coin!`
+                            : `Collect ${25 - coins} more coins to use`}
+                          </p>
                      </div>
          
                    </div>
