@@ -1,35 +1,46 @@
 import React from 'react'
 import './Footer.css'
 
-import { FaHome } from "react-icons/fa";
-import { FaBox } from "react-icons/fa";
-import { FaCoins } from "react-icons/fa";
-import { FaUser } from "react-icons/fa";
-import { Link } from 'react-router-dom';
+import { FaHome, FaBox, FaCoins, FaUser } from "react-icons/fa";
+import { NavLink } from 'react-router-dom';
+
 function Footer() {
   return (
-     <nav className="bottom-nav2" style={{ marginTop: "40px", zIndex: "10" }}>
-        <Link to='/fare-link'>
-        <div className="nav-item active">
-          <FaHome size="20px"/><span>Home</span>
-        </div>
-        </Link>
-        
-        <Link to="/orders">
-          <div className="nav-item">
-            <FaBox size="20px"/><span>Orders</span>
-          </div>
-        </Link>
-        <Link to='/coins'>
-        <div className="nav-item">
-          <FaCoins size="20px"/><span>Coins</span>
-        </div>
-        </Link>
-        
-        <div className="nav-item">
-          <FaUser size="20px"/><span>Account</span>
-        </div>
-      </nav>
+    <nav className="bottom-nav2" style={{ marginTop: "40px", zIndex: "10" }}>
+      
+      <NavLink 
+        to="/fare-link"
+        className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+      >
+        <FaHome size="20px"/>
+        <span>Home</span>
+      </NavLink>
+
+      <NavLink 
+        to="/orders"
+        className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+      >
+        <FaBox size="20px"/>
+        <span>Orders</span>
+      </NavLink>
+
+      <NavLink 
+        to="/coins"
+        className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+      >
+        <FaCoins size="20px"/>
+        <span>Coins</span>
+      </NavLink>
+
+      <NavLink 
+        to="/account"
+        className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+      >
+        <FaUser size="20px"/>
+        <span>Account</span>
+      </NavLink>
+
+    </nav>
   )
 }
 

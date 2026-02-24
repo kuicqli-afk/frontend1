@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import './Coins.css'
 import Footer from '../../Components/Footer/Footer'
 import bell from '../../../assets/Bell.png'
 import coin from '../../../assets/coin.png'
 import logo from "../../../assets/Logo.png";
 import coin2 from '../../../assets/coin2.png'
+import { RideContext } from '../../../context/RideContext'
 function Coins() {
   const name=localStorage.getItem('name')
+  const {coins}=useContext(RideContext);
   return (
     <>
     <div className="app-container">
@@ -17,7 +19,7 @@ function Coins() {
                   <div className="coin-badge">
                     <div style={{ marginLeft: '-10px' }}><img src={coin} alt="" width={22} /></div>
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
-                      <span>12 Coins Available </span>
+                      <span>{coins} Coins Available </span>
                       <p style={{ fontSize: '7px', fontWeight: '300', paddingTop: '1px' }}>Earn 11 More Coins To Use</p>
                     </div>
         
@@ -37,7 +39,7 @@ function Coins() {
                         <div className="coin-body">
                         <div className="coin-info">
                             <p className="label" style={{color:'white'}}>Total Coins</p>
-                            <h1 className="coin-amount">23</h1>
+                            <h1 className="coin-amount">{coins}</h1>
                             <p className="sub-text">Keep delivering to earn more rewards</p>
                         </div>
 

@@ -19,7 +19,8 @@ import { faPhone } from "@fortawesome/free-solid-svg-icons";
 import StarRating from '../../Components/StarRating/StarRating.jsx'
 import axios from 'axios'
 function Orders() {
-    const {previousRides}=useContext(RideContext)
+    const {previousRides,coins}=useContext(RideContext)
+    
     const navigate=useNavigate()
       const vehicleImages = {
         bike: { img: TwoWheeler, name: "2 Wheeler" },
@@ -94,7 +95,7 @@ useEffect(()=>{
                    <div className="coin-badge">
                      <div style={{ marginLeft: '-10px' }}><img src={coin} alt="" width={22} /></div>
                      <div style={{ display: 'flex', flexDirection: 'column' }}>
-                       <span>12 Coins Available </span>
+                       <span>{coins} Coins Available </span>
                        <p style={{ fontSize: '7px', fontWeight: '300', paddingTop: '1px' }}>Earn 11 More Coins To Use</p>
                      </div>
          

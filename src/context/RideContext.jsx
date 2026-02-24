@@ -11,6 +11,7 @@ export const RideProvider = ({ children }) => {
   const [vehicle,setVehicle]=useState('bike');
   const phone=localStorage.getItem('phone')
   //Privous Rides
+  const [coins,setCoins]=useState()
   const [previousRides,setPreviousRides]=useState([])
   // Use a "Lazy Initializer" function inside useState. 
   // This runs ONLY once when the app starts.
@@ -55,9 +56,21 @@ export const RideProvider = ({ children }) => {
 
       }).catch((error)=>console.log(error))
     },[])
+
+       useEffect(() => {
+        axios.post('https://thetest-h9x3.onrender.com/user/get-coins',{
+          phone:phone
+        }).then((response)=>{
+          console.log(response)
+          setCoins(response.data.data)
+    
+        }).catch((error)=>{
+          console.log(error)
+        })
+      }, []);
   
   return (
-    <RideContext.Provider value={{ pendingRide,fare,setFare,setPendingRide: updatePendingRide, clearPendingRide ,previousRides,vehicle,setVehicle}}>
+    <RideContext.Provider value={{ pendingRide,fare,setFare,setPendingRide: updatePendingRide, clearPendingRide ,previousRides,vehicle,setVehicle,coins}}>
       {children}
     </RideContext.Provider>
   );

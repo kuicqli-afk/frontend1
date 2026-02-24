@@ -56,12 +56,14 @@ export default function DeliveryLocation() {
     address: "",
     coords: { lat: "", lng: "" },
   });
+
   const [pickupQuery, setPickupQuery] = useState();
   const [drop, setDrop] = useState({
     name: "",
     address: "",
     coords: { lat: "", lng: "" },
   });
+
   const [dropQuery, setDropQuery] = useState();
   const [activeInput, setActiveInput] = useState(null);
   const [pickupPredictions, setPickupPredictions] = useState([]);
@@ -71,7 +73,7 @@ export default function DeliveryLocation() {
   
   const [active, setActive] = useState();
   const { socket, sendMessage } = useContext(SocketContext);
-  const { previousRides, vehicle, setVehicle ,fare,setFare} = useContext(RideContext);
+  const { previousRides, vehicle, setVehicle ,fare,setFare,coins} = useContext(RideContext);
   const [finalDetail, setFinalDetail] = useState(false);
   const [pickupCoords, setPickupCoords] = useState(null);
   const [dropCoords, setDropCoords] = useState(null);
@@ -409,7 +411,7 @@ console.log(vehicle)
                   <img src={coin} alt="" width={22} />
                 </div>
                 <div style={{ display: "flex", flexDirection: "column" }}>
-                  <span>12 Coins Available </span>
+                  <span>{coins} Coins Available </span>
                   <p
                     style={{
                       fontSize: "7px",
@@ -1124,7 +1126,7 @@ console.log(vehicle)
                   <img src={coin} alt="" width={22} />
                 </div>
                 <div style={{ display: "flex", flexDirection: "column" }}>
-                  <span>12 Coins Available </span>
+                  <span>{coins} Coins Available </span>
                   <p
                     style={{
                       fontSize: "7px",
@@ -1358,7 +1360,7 @@ console.log(vehicle)
                   <img src={coin} alt="" width={22} />
                 </div>
                 <div style={{ display: "flex", flexDirection: "column" }}>
-                  <span>12 Coins Available </span>
+                  <span>{coins} Coins Available </span>
                   <p
                     style={{
                       fontSize: "7px",

@@ -30,6 +30,7 @@ import TempSlider from './Components/TempSlider/TempSlider.jsx';
 import ProtectedRoute from './MobileVersion/Components/ProtectedRoute/ProtectedRoute.jsx';
 import Orders from './MobileVersion/Pages/Orders/Orders.jsx';
 import Coins from './MobileVersion/Pages/Coins/Coins.jsx';
+import Account from './MobileVersion/Components/Account/Account.jsx';
 function App() {
 
   const location = useLocation();
@@ -107,6 +108,7 @@ function App() {
                         <Route path="ride/started" element={<MobileRideStarted/>}/>
                         <Route path="/orders" element={<Orders/>}/>
                         <Route path="/coins" element={<Coins/>}/>
+                        <Route path='/account' element={<Account/>}/>
                   </Route>
                       
    
