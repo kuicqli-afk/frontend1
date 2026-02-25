@@ -46,34 +46,32 @@ export const RideProvider = ({ children }) => {
 
 
 
-  const refreshCoins = async () => {
-    try {
-      const response = await axios.post('https://thetest-h9x3.onrender.com/user/get-coins', { phone });
-      setCoins(response.data.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
+     useEffect(()=>{
+      axios.post('https://thetest-h9x3.onrender.com/ride/get-ride/userId/',{
+        phone:phone
+      }).then((response)=>{
+        console.log(response.data.data)
+       setPreviousRides([...response.data.data].reverse());
 
-    useEffect(()=>{
-      refreshCoins()
+      }).catch((error)=>console.log(error))
     },[])
 
-       useEffect(() => {
-        axios.post('https://thetest-h9x3.onrender.com/user/get-coins',{
-          phone:phone
-        }).then((response)=>{
-          console.log(response)
-          setCoins(response.data.data)
-    
-        }).catch((error)=>{
-          console.log(error)
+        const refreshCoins = async () => {
+          try {
+            const response = await axios.post('https://thetest-h9x3.onrender.com/user/get-coins', { phone });
+            setCoins(response.data.data);
+          } catch (err) {
+            console.log(err);
+          }
+        };
+
+        useEffect(()=>{
+          refreshCoins();
         })
-      }, []);
   
   return (
-    <RideContext.Provider value={{ refreshCoins,pendingRide,fare,setFare,setPendingRide: updatePendingRide, clearPendingRide ,previousRides,vehicle,setVehicle,coins}}>
+    <RideContext.Provider value={{ refreshCoins, pendingRide,fare,setFare,setPendingRide: updatePendingRide, clearPendingRide ,previousRides,vehicle,setVehicle,coins}}>
       {children}
     </RideContext.Provider>
   );
