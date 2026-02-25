@@ -67,7 +67,7 @@ function Home() {
   const {previousRides}=useContext(RideContext)
   const [lastRide,setLastRide]=useState()
   const phone=localStorage.getItem('phone')
-  const {coins}=useContext(RideContext);
+  const {coins,refreshCoins}=useContext(RideContext);
   //Getting Details About Last Ride
  useEffect(() => {
   if (!previousRides || previousRides.length === 0) return;
@@ -92,7 +92,7 @@ function Home() {
   }, []);
 
  useEffect(()=>{
-
+   refreshCoins();
  },[])
 
   return (
