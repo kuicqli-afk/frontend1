@@ -136,18 +136,22 @@ function Home() {
       {/* Vehicle List */}
       <div className="vehicle-scroll">
         {[
-          { name: "2 Wheeler", weight: "20kg", icon: "🏍️", img: bike ,name2:'bike'},
-          { name: "Mini Auto", weight: "45kg", icon: "🛺", img: auto ,name2:'miniAuto'},
-          { name: "E Loader", weight: "400kg", icon: "🚚", img: ELoader,name2:'Eloader' },
-          { name: "3 Wheeler", weight: "550kg", icon: "🚚", img: eloader, name2:'Wheeler'},
-          { name: "Mini Truck", weight: "720kg", icon: "🚚", img: truck ,name2:'miniTruck'},
+          { name: "2 Wheeler", weight: "20kg", icon: "🏍️", img: bike ,name2:'bike',available:true},
+          { name: "Mini Auto", weight: "45kg", icon: "🛺", img: auto ,name2:'miniAuto',available:false},
+          { name: "E Loader", weight: "400kg", icon: "🚚", img: ELoader,name2:'Eloader',available:false },
+          { name: "3 Wheeler", weight: "550kg", icon: "🚚", img: eloader, name2:'Wheeler',available:false},
+          { name: "Mini Truck", weight: "720kg", icon: "🚚", img: truck ,name2:'miniTruck',available:false},
         ].map((v, i) => (
-          <Link to='/ride' onClick={()=>{
-            setVehicle(v.name2)
+          <Link to='/ride' onClick={(e)=>{
+           if (!v.available) {
+          e.preventDefault();   // 🔥 stops navigation
+          return;
+        }
+        setVehicle(v.name2);
           }} key={i}>
             <div className="v-card">
               <div className="v-badge"><div style={{ fontSize: '8px', marginTop: '10px', marginBottom: '3px' }}>{v.weight}</div><img src={weight2} width={25} /></div>
-              <div className="v-img"><img src={v.img} alt="" width={95} height={50} /></div>
+              <div className="v-img"><img src={v.img} alt="" width={95} height={50} style={v.available?{opacity:'100%'}:{opacity:'20%'}}/></div>
               <h3>{v.name}</h3>
               <p style={{ fontSize: '10px', color: '#0000E6', textDecoration: 'none' }}>Click to Check Deliver Fare. »</p>
             </div></Link>

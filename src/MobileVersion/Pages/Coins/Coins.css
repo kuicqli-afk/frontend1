@@ -2,6 +2,7 @@
   padding: 20px;
   width: 100%;
   margin-top: -60px;
+  background-color: #0000E6;
 }
 
 /* Main Card */
@@ -86,5 +87,372 @@
   color:white;
   font-size:20px;
   font-weight:600;
-  padding:20px 30px;
+  padding:20px 5px;
+}
+
+
+/* Bottom sheet animation */
+.bottom-sheet {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 80vh;
+  background: white;
+  border-radius: 20px 20px 0 0;
+  animation: slideUp 0.4s ease forwards;
+  z-index: 1000;
+}
+
+/* Slide Up Keyframe */
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Optional overlay background */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  z-index: 999;
+}
+
+.sheet-content {
+  padding: 20px;
+}
+
+.sheet-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.sheet-header h2 {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.graph-container {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.graph-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.circle {
+  width: 40px;
+  height: 40px;
+  background: #0000E6;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.graph-info h4 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.graph-info p {
+  margin: 4px 0 8px 0;
+  font-size: 13px;
+  color: gray;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 6px;
+  background: #eee;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #0000E6;
+  width: 0;
+  border-radius: 10px;
+  animation: fillAnimation 1s ease forwards;
+}
+
+.fill1 { animation-delay: 0.2s; width: 80%; }
+.fill2 { animation-delay: 0.5s; width: 60%; }
+.fill3 { animation-delay: 0.8s; width: 100%; }
+
+@keyframes fillAnimation {
+  from { width: 0; }
+}
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.timeline-item {
+  display: flex;
+  align-items: flex-start;
+}
+
+.timeline-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 15px;
+}
+
+.circle {
+  width: 38px;
+  height: 38px;
+  background: #0000E6;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  z-index: 2;
+}
+
+/* Dashed vertical line */
+.line {
+  width: 2px;
+  height: 60px;
+  border-left: 2px dashed #0000E6;
+  margin-top: 5px;
+}
+
+.timeline-content h4 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.timeline-content p {
+  margin: 5px 0 0;
+  font-size: 13px;
+  color: gray;
+}
+/* Make bottom sheet flex column */
+.bottom-sheet {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 85vh;
+  background: white;
+  border-radius: 20px 20px 0 0;
+  animation: slideUp 0.4s ease forwards;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Content scrollable */
+.sheet-content {
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* Image section */
+.sheet-image {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  width: 200px;
+  height: 200px;
+}
+
+.coin-img {
+  width: 60px;
+}
+
+.vehicle-img {
+  width: 120px;
+}
+
+/* Footer button */
+.sheet-footer {
+  padding: 15px;
+  border-top: 1px solid #eee;
+  background: white;
+}
+
+.full-btn {
+  width: 100%;
+  padding: 14px;
+  background: #0000E6;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.full-btn:active {
+  transform: scale(0.98);
+}
+.coin-history{
+  margin-top: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  background-color: rgba(0, 0, 0, 0.219);
+  padding: 10px;
+  border-radius: 10px;
+}
+
+/* Overlay background */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Modal box */
+.modal-content {
+  width: 90%;
+  max-width: 420px;
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 30px 25px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  animation: slideUp 0.35s ease-out;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Close button */
+.close-btn {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  cursor: pointer;
+  font-size: 20px;
+  color: #777;
+  transition: 0.2s ease;
+  border: none;
+}
+
+.close-btn:hover {
+  color: #000;
+  transform: scale(1.1);
+}
+
+/* Coin logo */
+.coin-logo {
+  font-size: 90px;
+  margin-bottom: 10px;
+  background: linear-gradient(145deg, #ffd700, #ffb700);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Title */
+.coin-text {
+  margin: 5px 0 10px 0;
+  font-size: 22px;
+  font-weight: 600;
+  color: #222;
+}
+
+/* Warning text */
+.warning-text {
+  color: #d32f2f;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Input field */
+.coin-input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-size: 15px;
+  transition: all 0.25s ease;
+  outline: none;
+  margin-bottom: 15px;
+}
+
+.coin-input:focus {
+  border-color: #ffc107;
+  box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.2);
+}
+
+/* Transfer button */
+.transfer-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  background: linear-gradient(135deg, #1e34ff, #0000E6);
+  color: #fff;
+  transition: all 0.25s ease;
+}
+
+.transfer-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(255, 152, 0, 0.35);
+}
+
+.transfer-btn:active {
+  transform: translateY(0);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }

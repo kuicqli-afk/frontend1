@@ -31,6 +31,7 @@ import ProtectedRoute from './MobileVersion/Components/ProtectedRoute/ProtectedR
 import Orders from './MobileVersion/Pages/Orders/Orders.jsx';
 import Coins from './MobileVersion/Pages/Coins/Coins.jsx';
 import Account from './MobileVersion/Components/Account/Account.jsx';
+import CoinHistory from './MobileVersion/Pages/CoinHistory/CoinHistory.jsx';
 function App() {
 
   const location = useLocation();
@@ -109,6 +110,7 @@ function App() {
                         <Route path="/orders" element={<Orders/>}/>
                         <Route path="/coins" element={<Coins/>}/>
                         <Route path='/account' element={<Account/>}/>
+                        <Route path='/coins/history' element={<CoinHistory/>}/>
                   </Route>
                       
    

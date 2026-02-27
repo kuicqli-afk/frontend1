@@ -1,6 +1,7 @@
 .account-container{
-    padding: 10px;
+    padding: 10px 15px;
     margin-top: -50px;
+  
 }
 
 .profile-container{
@@ -10,9 +11,43 @@
     border-radius: 10px;
 }
 
-.profile-div{
+.profile-name-container{
     display: flex;
-    flex-direction:row;
+    flex-direction:column ;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
     padding: 10px;
-    gap: 20px;
+    height: 100px;
+    padding-top: 0px;
+}
+.view-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: center;
+    font-weight: 500;
+    color: #0000E6;
+    font-size: 14px;
+    padding: 10px 10px 0px 0px;
+}
+.row-div-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: white;
+    border-radius: 10px;
+    margin-top: 5px;
+    
+}
+
+.col-container{
+    display: flex;
+    flex-direction: column;
+    background :white;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 10px;
 }
