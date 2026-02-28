@@ -178,11 +178,11 @@ console.log(vehicle)
 
   // ✅ DEFINE IT HERE (IMPORTANT)
   const vehicleImages = {
-    bike: { img: TwoWheeler, name: "2 Wheeler" },
-    miniAuto: { img: MiniAuto, name: "Mini Auto" },
-    ELoader: { img: Eloader, name: "E Loader" },
-    Wheeler: { img: wheeler, name: "3 Wheeler" },
-    miniTruck: { img: MiniTruck, name: "Mini Truck" },
+    bike: { img: TwoWheeler, name: "2 Wheeler" ,avilable:true},
+    miniAuto: { img: MiniAuto, name: "Mini Auto", avilable:false},
+    ELoader: { img: Eloader, name: "E Loader", avilable:false},
+    Wheeler: { img: wheeler, name: "3 Wheeler" ,avilable:false},
+    miniTruck: { img: MiniTruck, name: "Mini Truck",avilable:false },
   };
  
 
@@ -1014,10 +1014,13 @@ console.log(vehicle)
                 <div className="fare-container2" style={{maxHeight:'300px'}}>
                   {fare.map((item) => {
                     if (vehicle == item.vehicleType) return null;
+                    if(!item.available) return
+                  
                     return (
                       <div
                         className="vehicle"
                         onClick={() => {
+                          if(!item.avilable)return;
                           setActive(item);
                           console.log(active);
                           setVehicle(item.vehicleType);
@@ -1051,7 +1054,7 @@ console.log(vehicle)
                             <img
                               src={vehicleImages[item.vehicleType].img}
                               alt=""
-                              style={{ width: "60px", height: "60px" }}
+                              style={item.available?{ width: "60px", height: "60px" }:{width: "60px", height: "60px",opacity:'20%'}}
                             />
                             {/* <div style={{width:'60px',height:'60px'}}></div> */}
                           </div>
@@ -1064,12 +1067,12 @@ console.log(vehicle)
                             }}
                           >
                             <div
-                              style={{ fontWeight: "600", fontSize: "14px" }}
+                              style={item.avilable?{ fontWeight: "600", fontSize: "14px" }:{fontWeight: "600", fontSize: "14px",opacity:'20%'}}
                             >
                               {vehicleImages[item.vehicleType].name}
                             </div>
                             <div
-                              style={{ fontSize: "12px", fontWeight: "500" }}
+                              style={item.available?{ fontSize: "12px", fontWeight: "500" }:{ fontSize: "12px", fontWeight: "500" ,opacity:'20%'}}
                             >
                               {item.distance}Km in <div>({item.time} mins)</div>
                             </div>

@@ -102,6 +102,7 @@ function Home() {
         <img src={logo} alt="" width={120} />
         <div className="header-right">
 
+          <Link to="/coins">
           <div className="coin-badge">
             <div style={{ marginLeft: '-10px' }}><img src={coin} alt="" width={22} /></div>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -114,6 +115,8 @@ function Home() {
             </div>
 
           </div>
+          </Link>
+          
           <div><img src={bell} width={26} /></div>
         </div>
       </header>
@@ -152,9 +155,10 @@ function Home() {
             <div className="v-card">
               <div className="v-badge"><div style={{ fontSize: '8px', marginTop: '10px', marginBottom: '3px' }}>{v.weight}</div><img src={weight2} width={25} /></div>
               <div className="v-img"><img src={v.img} alt="" width={95} height={50} style={v.available?{opacity:'100%'}:{opacity:'20%'}}/></div>
-              <h3>{v.name}</h3>
-              <p style={{ fontSize: '10px', color: '#0000E6', textDecoration: 'none' }}>Click to Check Deliver Fare. »</p>
-            </div></Link>
+              <h3  style={v.available?{opacity:'100%'}:{opacity:'20%'}}>{v.name}</h3>
+              <p style={v.available?{ fontSize: '10px', color: '#0000E6', textDecoration: 'none',opacity:'100%'}:{ fontSize: '10px', color: '#0000E6', textDecoration: 'none',opacity:'20%' }} >Click to Check Deliver Fare. »</p>
+            </div>
+            </Link>
 
         ))}
       </div>
