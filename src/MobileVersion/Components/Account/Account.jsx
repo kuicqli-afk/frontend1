@@ -19,7 +19,8 @@ import { Link, useNavigate } from 'react-router-dom';
 
 function Account() {
     const {coins}=useContext(RideContext)
-  
+    const name=localStorage.getItem('name')
+    const phone=localStorage.getItem('phone')
     const navigate=useNavigate();
 
     const handleLogout=()=>{
@@ -54,7 +55,7 @@ function Account() {
                                View details<MdKeyboardArrowRight />
                        </div>
                        <div className='profile-name-container'>
-                               <div style={{fontWeight:'500',fontSize:'26px'}}>Full Name</div>
+                               <div style={{fontWeight:'500',fontSize:'26px'}}>{name}</div>
                                <div style={{color:'gray',fontSize:'12px'}}>abcemail@gmail.com</div>
                        </div>
 
@@ -111,9 +112,7 @@ function Account() {
                               <div>Terms & Condition</div>
                              </div>
                           <MdKeyboardArrowRight size={'25'}/>
-                          <div>
-                              
-                          </div>
+                        
                        </div>
 
 

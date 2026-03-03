@@ -33,6 +33,7 @@ import TwoWheeler from "../../../assets/blue-scooter.png";
 import { MdWatchLater } from "react-icons/md";
 import cash from "../../../assets/cash.jpg";
 import Footer from "../../Components/Footer/Footer.jsx";
+import StarRating from "../../Components/StarRating/StarRating.jsx";
 
 
 function MobileRideStarted() {
@@ -50,7 +51,8 @@ function MobileRideStarted() {
   const animationRef = useRef(null);
   const targetLocationRef = useRef(driverLocation);
   const [distance,setDistance]=useState();
-  const [travelTime,setTravelTime]=useState();
+ 
+  const [travelTime, setTravelTime] = useState("");
   const {vehicle}=useContext(RideContext);
   const [prohibitedItems, setProhibitedItems] = useState(false);
   const {coins}=useContext(RideContext);
@@ -97,6 +99,7 @@ function MobileRideStarted() {
       // alert("Ride Completed");
       //  socket.leave(`order_${ride._id}`);
       console.log(newRide);
+      localStorage.removeItem('ride')
       navigate("/fare-link");
     };
 
@@ -142,15 +145,12 @@ function MobileRideStarted() {
 
     try {
       const result = await directionsService.route({
-        origin: {
-          lat: ride.driverId.location.coordinates[1],
-          lng: ride.driverId.location.coordinates[0],
-        },
-        destination: ride.pickUp.address,
+        origin:ride.pickUp.address,
+        destination: ride.drop.address,
         travelMode: window.google.maps.TravelMode.DRIVING,
       });
       setDistance(result.routes[0].legs[0].distance.text); // "12.4 km"
-      setTravelTime(result.routes[0].legs[0].duration.text);
+      setTravelTime(result.routes[0].legs[0].duration.value);
       setDirectionResponse(result);
     } catch (err) {
       console.error("Route error:", err);
@@ -241,6 +241,7 @@ const formatTime = (totalSeconds) => {
 
 
   const { hr, min, sec } = formatTime(travelTime);
+
   return (
     <div className="mobile-ride-started-div">
       <header className="header2" style={{ background: "#0000E6" }}>
@@ -412,7 +413,7 @@ const formatTime = (totalSeconds) => {
                           </div>
                           <div style={{ fontSize: "10px", fontWeight: "500" }}>
                             {distance} in{" "}
-                            <div>({travelTime})</div>
+                            <div>({Math.round(travelTime/60)} min)</div>
                           </div>
                         </div>
                       </div>
@@ -505,7 +506,7 @@ const formatTime = (totalSeconds) => {
 
         <div
           className="info-container3"
-          style={{ zIndex: "7", boxShadow: "2px 2px 5px gray" }}
+          style={{ zIndex: "7"}}
         >
           <div className="div-info-container">
             <div className="location-icon-container">
@@ -570,15 +571,15 @@ const formatTime = (totalSeconds) => {
                     className="time-container"
                     style={{
                       color: "#0000E6",
-                      fontSize: "14px",
-                      fontWeight: "500",
+                      fontSize: "13px",
+                      fontWeight: "7  00",
                       padding: "2px",
                     }}
                   >
-                    Kuicqli heroes on the way {dots}
+                    Kuicqli heroes on the way to drop {dots}
                   </div>
-                  <div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
-                    <MdWatchLater size={30} style={{ color: "green" }} />
+                  <div style={{ display: "flex", flexDirection: "row", gap: "10px" ,alignItems:'center'}}>
+                    <MdWatchLater size={25} style={{ color: "green" }} />
                     <div style={{ display: "flex", flexDirection: "row", gap: "5px" }}>
                       <div
                         style={{
@@ -626,44 +627,44 @@ const formatTime = (totalSeconds) => {
                 </div>
 
                 {/* Time Container Div End */}
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            background: "white",
-            justifyContent: "space-between",
-            zIndex: "5",
-            gap: "10px",
-            alignItems: "center",
-            borderRadius: "10px",
-            boxShadow: "2px 2px 5px gray",
-            padding: "10px",
-          }}
-        >
+        
+        <div className="driver-info-div">
           <div
             style={{
               display: "flex",
               flexDirection: "row",
+              gap: "5px",
               alignItems: "center",
-              gap: "10px",
             }}
           >
-            <img src={profile} alt="" width={50} />
-
-            <div>
-              <div style={{ fontSize: "16px", fontWeight: "700" }}>
-                {ride.driverId.name}
+            <img src={profile} alt="" width={40} />
+            <img src={TwoWheeler} alt="" width={50} />
+            <div className="driver-info-2">
+              <div style={{ fontSize: "14px", fontWeight: "700" }}>
+                {ride.driverId.numberPlate}
               </div>
-              <div style={{ fontSize: "12px", color: "gray" }}>{ride.driverId.phone}</div>
+              <div style={{ fontSize: "12px", color: "gray" }}>{ride.driverId.name}</div>
+              <div style={{ fontSize: "10px" }}>
+                <StarRating rating={3} size={12}/>
+              </div>
             </div>
           </div>
 
-            
-          <div>
-            <FontAwesomeIcon icon={faPhone} style={{ color: "#0000E6" }} />
+          
+
+          <div
+            style={{
+              border: "2px solid blue",
+              padding: "5px",
+              borderRadius: "90px",
+            }}
+          >
+            <FontAwesomeIcon
+              icon={faPhone}
+              size="1"
+              style={{ color: "#0000E6" }}
+            />
           </div>
-          
-          
         </div>
 
 
@@ -707,7 +708,7 @@ const formatTime = (totalSeconds) => {
                         justifyContent: "start",
                       }}
                     >
-                      <div style={{ fontWeight: "600", textAlign: "right" }}>₹160</div>
+                      <div style={{ fontWeight: "600", textAlign: "right" }}>₹{ride.fare}</div>
                       <div
                         style={{ color: "blue", fontSize: "12px", padding: "1px 0px" }}
                         onClick={() => setBreakup((prev) => !prev)}

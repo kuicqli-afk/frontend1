@@ -18,9 +18,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPhone } from "@fortawesome/free-solid-svg-icons";
 import StarRating from '../../Components/StarRating/StarRating.jsx'
 import axios from 'axios'
+import { MdWatchLater } from "react-icons/md";
 function Orders() {
     const {previousRides,coins}=useContext(RideContext)
-    
+    const ride = JSON.parse(localStorage.getItem('ride'));
+      const [dots, setDots] = useState("");
+        
+         useEffect(() => {
+            const interval = setInterval(() => {
+              setDots((prev) => (prev.length < 4 ? prev + "." : ""));
+            }, 300); // add one dot every 500ms
+        
+            return () => clearInterval(interval);
+          }, []);
     const navigate=useNavigate()
       const vehicleImages = {
         bike: { img: TwoWheeler, name: "2 Wheeler" },
@@ -84,6 +94,7 @@ useEffect(()=>{
             }
         })
       }
+    //  console.log(ride.status)
   return (
     <div className='app-container' style={{overflowY:'scroll'}}>
 
@@ -110,9 +121,76 @@ useEffect(()=>{
 
           {/* End Of Header */}
 
+
+      
           <div className='order-container'>
-           <h2 style={{padding:"10px 10px"}}>Orders</h2>
+          <h2 style={{padding:"10px 10px"}}>Orders</h2>
          
+                  { 
+                    (ride?.status=='accepted'|| ride?.status=='ongoing') &&
+                    <Link to={ride.status==='accepted'?'/ride/confirmed':'/ride/started'}>
+                       <div className="time-container" style={{ padding: "10px 15px" }}>
+                    <div
+                      className="time-container"
+                      style={{
+                        color: "#0000E6",
+                        fontSize: "13px",
+                        fontWeight: "700",
+                        padding: "2px",
+                      }}
+                    >
+                      Kuicqli heroes on the way to {ride.status==='accepted'?'Pick up':'Drop'}{dots}
+                    </div>
+                    {/* <div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
+                      <MdWatchLater size={30} style={{ color: "green" }} />
+                      <div style={{ display: "flex", flexDirection: "row", gap: "5px" }}>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            gap: "0px",
+                          }}
+                        >
+                          <div style={{ fontSize: "14px", fontWeight: "600" }}>
+                            {String(hr).padStart(2, "0")}
+                          </div>
+                          <p style={{ color: "gray", fontSize: "10px" }}>HR</p>
+                        </div>
+                        <div>:</div>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            gap: "0px",
+                          }}
+                        >
+                          <div style={{ fontSize: "14px", fontWeight: "600" }}>
+                            {String(min).padStart(2, "0")}
+                          </div>
+                          <p style={{ color: "gray", fontSize: "10px" }}>MIN</p>
+                        </div>
+                        <div>:</div>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            gap: "0px",
+                          }}
+                        >
+                          <div style={{ fontSize: "14px", fontWeight: "600" }}>
+                            {String(sec).padStart(2, "0")}
+                          </div>
+                          <p style={{ color: "gray", fontSize: "10px" }}>SEC</p>
+                        </div>
+                      </div>
+                    </div> */}
+                  </div>
+                    </Link>
+                   
+                  }
                         <div className='past-ride-container' >
                           {
                           previousRides.map((item)=>(

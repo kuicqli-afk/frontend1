@@ -329,12 +329,12 @@ function MobileRideOnWay() {
             className="time-container"
             style={{
               color: "#0000E6",
-              fontSize: "14px",
-              fontWeight: "500",
+              fontSize: "13px",
+              fontWeight: "700",
               padding: "2px",
             }}
           >
-            Kuicqli heroes on the way {dots}
+            Kuicqli heroes on the way to pick up{dots}
           </div>
           <div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
             <MdWatchLater size={30} style={{ color: "green" }} />
@@ -625,7 +625,7 @@ function MobileRideOnWay() {
             </div>
           </div>
 
-          <div className="otp-div">OTP - {ride.otp}</div>
+          <div className="otp-div" style={{display:'flex',flexDirection:'column'}}><div>OTP</div> <div style={{color:'#0000E6'}}> {ride.otp}</div> <div style={{fontSize:'8px',fontWeight:'300'}}>Share this otp with Driver</div></div>
 
           <div
             style={{
@@ -680,7 +680,7 @@ function MobileRideOnWay() {
                 justifyContent: "start",
               }}
             >
-              <div style={{ fontWeight: "600", textAlign: "right" }}>₹160</div>
+              <div style={{ fontWeight: "600", textAlign: "right" }}>₹{ride.fare}</div>
               <div
                 style={{ color: "blue", fontSize: "12px", padding: "1px 0px" }}
                 onClick={() => setBreakup((prev) => !prev)}

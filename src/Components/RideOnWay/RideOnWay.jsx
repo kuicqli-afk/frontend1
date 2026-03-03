@@ -160,7 +160,9 @@ const RideOnWay = () => {
 
   useEffect(()=>{
     socket.on('start-ride',(ride)=>{
-     
+    //   console.log(ride)
+    //   const newRide=JSON.stringify(ride)
+    //  localStorage.setItem('ride',newRide)
       navigate('/ride/started')
       // alert('Ride Started')
     })

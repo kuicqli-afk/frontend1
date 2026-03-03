@@ -81,7 +81,7 @@ function MobileRide() {
       // alert(`Status: ${ride.status}\nDriver: ${ride.driverId.name}`);
             const audio = new Audio(notification);
             audio.play().catch((err) => console.log("Audio play blocked:", err));
-      localStorage.setItem("ride", JSON.stringify(ride));
+            localStorage.setItem("ride", JSON.stringify(ride));
     };
 
     socket.on("ride-confirmed", handleRideConfirmed);

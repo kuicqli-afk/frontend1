@@ -164,7 +164,7 @@ function Home() {
       </div>
 
       {/* Coupon */}
-      <div className="coupon-div">
+      {/* <div className="coupon-div" style={{opacity:'30%'}}>
         <div style={{ padding: '7px 10px 0px 0px', width: '40%' }}>
           <img src={couponText} alt="" width={120} />
         </div>
@@ -177,7 +177,7 @@ function Home() {
           <p style={{ color: 'gary' }}>This coupon can be applied to our other
             products to unlock attractive benefits</p>
         </div>
-      </div>
+      </div> */}
 
       {/* Hero Text */}
       <div className="hero-section">

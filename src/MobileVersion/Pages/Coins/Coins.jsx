@@ -11,15 +11,24 @@ import { FaArrowRight } from "react-icons/fa";
 import wallet from '../../../assets/wallet.jpg'
 import bank from '../../../assets/bank.jpg'
 import bikeman from '../../../assets/bikeman.webp'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 function Coins() {
+  
 
+  const ride=JSON.parse(localStorage.getItem('ride'))
   
    const [openIndex, setOpenIndex] = useState(null);
    const [explain,setExplain]=useState(false)
    const [explain2,setExplain2]=useState(false)
+   const [dots,setDots]=useState('')
 
-
+    useEffect(() => {
+        const interval = setInterval(() => {
+          setDots((prev) => (prev.length < 4 ? prev + "." : ""));
+        }, 300); // add one dot every 500ms
+    
+        return () => clearInterval(interval);
+      }, []);
      
   const name=localStorage.getItem('name')
   const navigate=useNavigate()
@@ -75,6 +84,9 @@ useEffect(() => {
                 </div>
               </header>
 
+
+
+
               <div className="coins-container">
                {explain && (
                   <div className="modal">
@@ -106,7 +118,74 @@ useEffect(() => {
                   </div>
                 )}
                 
+                       { 
+                    (ride?.status=='accepted'|| ride?.status=='ongoing') &&
+                    <Link to={ride.status==='accepted'?'/ride/confirmed':'/ride/started'}>
+                       <div className="time-container" style={{ padding: "10px 15px" ,marginBottom:'10px'}}>
+                    <div
+                      className="time-container"
+                      style={{
+                        color: "#0000E6",
+                        fontSize: "13px",
+                        fontWeight: "700",
+                        padding: "2px",
+
+                      }}
+                    >
+                      Kuicqli heroes on the way to {ride.status==='accepted'?'Pick up':'Drop'}{dots}
+                    </div>
+                    {/* <div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
+                      <MdWatchLater size={30} style={{ color: "green" }} />
+                      <div style={{ display: "flex", flexDirection: "row", gap: "5px" }}>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            gap: "0px",
+                          }}
+                        >
+                          <div style={{ fontSize: "14px", fontWeight: "600" }}>
+                            {String(hr).padStart(2, "0")}
+                          </div>
+                          <p style={{ color: "gray", fontSize: "10px" }}>HR</p>
+                        </div>
+                        <div>:</div>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            gap: "0px",
+                          }}
+                        >
+                          <div style={{ fontSize: "14px", fontWeight: "600" }}>
+                            {String(min).padStart(2, "0")}
+                          </div>
+                          <p style={{ color: "gray", fontSize: "10px" }}>MIN</p>
+                        </div>
+                        <div>:</div>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            gap: "0px",
+                          }}
+                        >
+                          <div style={{ fontSize: "14px", fontWeight: "600" }}>
+                            {String(sec).padStart(2, "0")}
+                          </div>
+                          <p style={{ color: "gray", fontSize: "10px" }}>SEC</p>
+                        </div>
+                      </div>
+                    </div> */}
+                  </div>
+                    </Link>
+                   
+                  }
                     <div className="coin-card">
+
                         
                         <div className="coin-header">
                         <h2>Hello, {name} </h2>
