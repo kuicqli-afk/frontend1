@@ -26,12 +26,12 @@ function RideStarted() {
   useEffect(() => {
     if (!socket) return
 
-    const handleRideCompleted = (newRide) => {
-      alert('Ride Completed')
-      // socket.leave(`order_${ride._id}`);
-      console.log(newRide)
-      navigate('/fare-link')
-    }
+    // const handleRideCompleted = (newRide) => {
+    //   alert('Ride Completed')
+    //   // socket.leave(`order_${ride._id}`);
+    //   console.log(newRide)
+    //   navigate('/fare-link')
+    // }
 
     const handleConfirmOtp=(data)=>
     {
@@ -44,12 +44,12 @@ function RideStarted() {
     
     }
 
-    socket.on('ride-completed', handleRideCompleted)
+    // socket.on('ride-completed', handleRideCompleted)
     socket.on('confirm-otp',handleConfirmOtp)
 
     // 🧹 Cleanup
     return () => {
-      socket.off('ride-completed', handleRideCompleted)
+      // socket.off('ride-completed', handleRideCompleted)
     }
   }, [socket])
    

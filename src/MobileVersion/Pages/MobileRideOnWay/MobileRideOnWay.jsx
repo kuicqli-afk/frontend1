@@ -469,6 +469,45 @@ function MobileRideOnWay() {
 
         {/* Vehicle Div Container End Here */}
 
+              
+        <div className="driver-info-div">
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              gap: "5px",
+              alignItems: "center",
+            }}
+          >
+            <img src={profile} alt="" width={40} />
+            <img src={TwoWheeler} alt="" width={50} />
+            <div className="driver-info-2">
+              <div style={{ fontSize: "14px", fontWeight: "700" }}>
+                {ride.driverId.numberPlate}
+              </div>
+              <div style={{ fontSize: "12px", color: "gray" }}>{ride.driverId.name}</div>
+              <div style={{ fontSize: "10px" }}>
+                <StarRating rating={3} size={12}/>
+              </div>
+            </div>
+          </div>
+
+          <div className="otp-div" style={{display:'flex',flexDirection:'column'}}><div>OTP</div> <div style={{color:'#0000E6'}}> {ride.otp}</div> <div style={{fontSize:'8px',fontWeight:'300'}}>Share this otp with Driver</div></div>
+
+          <div
+            style={{
+              border: "2px solid blue",
+              padding: "5px",
+              borderRadius: "90px",
+            }}
+          >
+            <FontAwesomeIcon
+              icon={faPhone}
+              size="1"
+              style={{ color: "#0000E6" }}
+            />
+          </div>
+        </div>
         {/* Product Type Div Start */}
 
         <div className="input-div" style={{ padding: "9px 10px" }}>
@@ -602,45 +641,7 @@ function MobileRideOnWay() {
                                   </div> */}
         {/* End Of Searching Text */}
 
-       
-        <div className="driver-info-div">
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              gap: "5px",
-              alignItems: "center",
-            }}
-          >
-            <img src={profile} alt="" width={40} />
-            <img src={TwoWheeler} alt="" width={50} />
-            <div className="driver-info-2">
-              <div style={{ fontSize: "14px", fontWeight: "700" }}>
-                {ride.driverId.numberPlate}
-              </div>
-              <div style={{ fontSize: "12px", color: "gray" }}>{ride.driverId.name}</div>
-              <div style={{ fontSize: "10px" }}>
-                <StarRating rating={3} size={12}/>
-              </div>
-            </div>
-          </div>
-
-          <div className="otp-div" style={{display:'flex',flexDirection:'column'}}><div>OTP</div> <div style={{color:'#0000E6'}}> {ride.otp}</div> <div style={{fontSize:'8px',fontWeight:'300'}}>Share this otp with Driver</div></div>
-
-          <div
-            style={{
-              border: "2px solid blue",
-              padding: "5px",
-              borderRadius: "90px",
-            }}
-          >
-            <FontAwesomeIcon
-              icon={faPhone}
-              size="1"
-              style={{ color: "#0000E6" }}
-            />
-          </div>
-        </div>
+   
 
         <div className="cash-container">
           <div className="cash-container-1">

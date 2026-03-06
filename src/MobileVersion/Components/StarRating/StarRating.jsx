@@ -9,14 +9,18 @@ function StarRating({
   total = 5, 
   onRatingChange, 
   readOnly: readOnlyProp = false,
-  size = 18 
+  size = 18,
+  
 }) {
+  
   const [hoverRating, setHoverRating] = useState(0);
    const readOnly = readOnlyProp || rating > 0;
  const handleClick = (value, e) => {
   if (readOnly || !onRatingChange) return;
 
   onRatingChange(value);
+  console.log(value)
+
   e.currentTarget.blur(); // remove focus instantly
 };
 
@@ -37,14 +41,14 @@ function StarRating({
               transition: 'transform 0.1s',
               outline: 'none' 
             }}
-            onClick={() => handleClick(starValue)}
+            onClick={(e) => handleClick(starValue,e)}
             onMouseEnter={() => !readOnly && setHoverRating(starValue)}
             onMouseLeave={() => !readOnly && setHoverRating(0)}
             tabIndex={readOnly ? -1 : 0}
             onKeyDown={(e) => {
               if (!readOnly && (e.key === 'Enter' || e.key === ' ')) {
                 e.preventDefault();
-                handleClick(starValue);
+                handleClick(starValue,e);
               }
             }}
             role={readOnly ? 'img' : 'button'}

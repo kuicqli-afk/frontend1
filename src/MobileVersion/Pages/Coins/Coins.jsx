@@ -65,7 +65,10 @@ useEffect(() => {
     <>
     <div className="app-container">
          <header className="header2">
-                <img src={logo} alt="" width={120} />
+          <Link to='/fare-link'>
+             <img src={logo} alt="" width={120} />
+          </Link>
+             
                 <div className="header-right">
         
                   <div className="coin-badge">

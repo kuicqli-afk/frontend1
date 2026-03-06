@@ -51,6 +51,11 @@ function MobileRideStarted() {
   const animationRef = useRef(null);
   const targetLocationRef = useRef(driverLocation);
   const [distance,setDistance]=useState();
+
+  const [userRating, setUserRating] = useState(0);
+const [ratingLoading, setRatingLoading] = useState(false);
+const [ratingSubmitted, setRatingSubmitted] = useState(false);
+const [showRating,setShowRating]=useState(false)
  
   const [travelTime, setTravelTime] = useState("");
   const {vehicle}=useContext(RideContext);
@@ -99,9 +104,12 @@ function MobileRideStarted() {
       // alert("Ride Completed");
       //  socket.leave(`order_${ride._id}`);
       console.log(newRide);
-      localStorage.removeItem('ride')
-      navigate("/fare-link");
+      // localStorage.removeItem('ride')
+      setShowRating(true)
+      // navigate("/fare-link");
     };
+
+
 
 
     const handleConfirmOtp = (data) => {
@@ -135,6 +143,30 @@ function MobileRideStarted() {
       });
   }, []);
 
+
+  const handleRatingChange = async (value) => {
+  try {
+    setUserRating(value);      // optimistic UI update
+    setRatingLoading(true);
+
+    const response = await axios.patch(
+      `https://thetest-h9x3.onrender.com/ride/rides/${ride._id}/rating`,
+      { rating: value }
+    );
+
+    console.log(response.data);
+    setRatingSubmitted(true);  // lock after success
+    
+  } catch (error) {
+    console.error(error);
+    setUserRating(0); // rollback if API fails
+  } finally {
+    setRatingLoading(false);
+       localStorage.removeItem('ride')
+    navigate('/fare-link')
+ 
+  }
+};
 
 
   const ride = JSON.parse(localStorage.getItem("ride"));
@@ -243,6 +275,7 @@ const formatTime = (totalSeconds) => {
   const { hr, min, sec } = formatTime(travelTime);
 
   return (
+    
     <div className="mobile-ride-started-div">
       <header className="header2" style={{ background: "#0000E6" }}>
         <Link to="/fare-link">
@@ -775,7 +808,97 @@ const formatTime = (totalSeconds) => {
                 
       </div>
       <div style={{width:'100%',height:'50px',background:'#0000E6'}}></div>
+
+   
       <Footer/>
+      {
+        showRating&&
+          <div
+    style={{
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between",
+      alignItems: "center",
+      width: "100%",
+      height: "240px",
+      background: "#ffffff",
+      position: "fixed",
+      bottom: "0",
+      zIndex: "1000",
+      padding: "24px 20px",
+      boxShadow: "0 -6px 30px rgba(0,0,0,0.08)",
+      borderTopLeftRadius: "24px",
+      borderTopRightRadius: "24px",
+    }}
+  >
+    {/* Success Text */}
+    <div
+      style={{
+        fontSize: "20px",
+        fontWeight: "600",
+        // color: "#16a34a",
+        textAlign: "center",
+        letterSpacing: "0.3px",
+      }}
+    >
+    Order Delivered Successfully
+    </div>
+
+    {/* Subtitle */}
+    <div
+      style={{
+        fontSize: "14px",
+        color: "#6b7280",
+        marginTop: "-10px",
+      }}
+    >
+      Please rate your experience
+    </div>
+
+    {/* Star Rating */}
+   <StarRating
+  rating={userRating}
+  onRatingChange={handleRatingChange}
+  readOnly={ratingSubmitted || ratingLoading}
+  size={40}
+/>
+
+{ratingLoading && (
+  <div style={{ fontSize: "13px", color: "#6b7280" }}>
+    Submitting rating...
+  </div>
+)}
+
+{ratingSubmitted && (
+  <div style={{ fontSize: "14px", color: "green", fontWeight: "500" }}>
+    ⭐ Thank you for your feedback!
+  </div>
+)}
+
+    {/* Maybe Later Button */}
+    <div
+      style={{
+        fontSize: "14px",
+        color: "#6b7280",
+        cursor: "pointer",
+        padding: "8px 16px",
+        borderRadius: "8px",
+        transition: "all 0.2s ease",
+      }}
+      onMouseEnter={(e) => {
+        e.target.style.background = "#f3f4f6";
+        e.target.style.color = "#111827";
+      }}
+      onMouseLeave={(e) => {
+        e.target.style.background = "transparent";
+        e.target.style.color = "#6b7280";
+      }}
+    >
+      Maybe later
+    </div>
+  </div>
+      }
+    
     </div>
   );
 }

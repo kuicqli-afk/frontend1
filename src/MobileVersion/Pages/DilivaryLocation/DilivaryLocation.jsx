@@ -43,6 +43,7 @@ import location2 from "../../../assets/location2.png";
 import Footer from "../../Components/Footer/Footer.jsx";
 import { useLocation } from 'react-router-dom'
 import wheeler from '../../../assets/blue3wheeler.png'
+import { MdMyLocation } from "react-icons/md";
 
 
 
@@ -81,6 +82,11 @@ export default function DeliveryLocation() {
   const [distance, setDistance] = useState("");
   const [checkfare, setChaeckFare] = useState();
   const [prohibitedItems, setProhibitedItems] = useState(false);
+  const [lock,setLock]=useState(false)
+  const [currentLocation,setCurrentLocation]=useState({
+    lat:'',
+    lng:''
+  })
   const distinctPickups = [
   ...new Map(
     previousRides.map(ride => [
@@ -128,8 +134,49 @@ console.log(vehicle)
     productType: "",
   });
 
+const handleCurrentLocation = () => {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+
+        console.log("Latitude:", latitude);
+        console.log("Longitude:", longitude);
+
+        try{
+
+         const response=await axios.post('https://thetest-h9x3.onrender.com/maps/get-address',{
+            lat:latitude,
+            lng:longitude
+          })
+
+        console.log(response.data.data)
+          // Set pickup state correctly
+          setPickup({
+            name: response.data.data.name || "Current Location",
+            address: response.data.data.display_name
+          });
+
+          console.log("Location Name:", data.name);
+          console.log("Full Address:", data.display_name);
+        } catch (error) {
+          console.error("Error fetching location name:", error);
+        }
+      },
+      (error) => {
+        console.error("Error getting location:", error);
+      }
+    );
+  } else {
+    alert("Geolocation is not supported by this browser.");
+  }
+};
+
+
   const pickupInputRef = useRef(null);
   const dropInputRef = useRef(null);
+  console.log(coins)
 
   useEffect(() => {
   if (again.state) {
@@ -393,7 +440,43 @@ console.log(vehicle)
     return <div>Loading Map...</div>;
   }
 
+
   const activeVehicle = fare.find((item) => item.vehicleType === vehicle);
+
+   const handleUseCoins = async (coins) => {
+    if(lock) return alert('You Already Used 20 Coins')
+    if (coins <= 0) {alert("Enter coins to use!") 
+      return;
+    }
+    // if ( > coins) return alert("You don't have enough coins");
+
+    // setLoading(true);
+    try {
+      const res = await axios.post("https://thetest-h9x3.onrender.com/ride/use-coins", {
+        phone: localStorage.getItem("phone"), // or wherever you store user phone
+        coins: 20,
+        pickup:pickup.address,
+        drop:drop.address,
+      });
+
+      console.log(res.data)
+      if(res.data.success)
+      {
+        console.log(res.data.fareData.data)
+        setFare(res.data.fareData.data)
+        setLock(true)
+
+      }else{
+        console.log(res.data)
+      }
+    } catch (error) {
+      console.error(error.message);
+      alert("Error applying coins");
+    } finally {
+      // setLoading(false);
+      
+    }
+  }
   return (
     <div className="delivery-screen">
       {/* Header with Back Button */}
@@ -850,6 +933,89 @@ console.log(vehicle)
                     </div>
                   )}
                 </div>
+                <div style={{display:'flex',flexDirection:'column',background:'white',borderRadius:'10px'}}>
+                           <div style={{padding:'10px 17px',backgroundColor:'white',borderRadius:'10px',display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
+
+                    <div style={{fontSize:'14px',color:'#0000E6',fontWeight:'500'}}>
+                      <div style={{display:'flex',flexDirection:'row',gap:'5px',alignItems:'center'}}> <img src={coin} alt="" width={20}/>  Minimun 20 coins required</div>
+                      
+                      </div> 
+                      <div >
+                        <div style={{fontSize:'12px',padding:'5px',background:'#e7e7e7',borderRadius:'5px'}} onClick={()=>handleUseCoins(coins)}>
+                          Use Coins
+                          </div> 
+                      </div>
+                     
+                </div>
+
+                <div style={{backgroundColor:'white',padding:'10px',fontSize:'12px',textAlign:'center',borderRadius:'10px',background:'#ebebeb'}}>
+                   You Will get {Math.floor(Number(activeVehicle?.fare)/50)} coins in this order
+                </div>
+                </div>
+              
+
+                 <div className="bill-detail-container" style={{padding:'10px 15px',background:'white',borderRadius:'10px'}}>
+              <h4>Bill Details</h4>
+              <div
+                style={{
+                  borderBottom: "1px solid gray",
+                  display: "flex",
+                  padding: "10px 0px",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  fontSize: "14px",
+                }}
+              >
+                <div>
+                  Trip Fare{" "}
+                  <span style={{ color: "gray", fontSize: "12px" }}>
+                    (incl. Toll & Taxes)
+                  </span>
+                </div>
+                <div style={{ fontWeight: "600" }}>₹{Number(activeVehicle?.fare) + Number(activeVehicle?.usedCoins)}</div>
+              </div>
+              <div
+                style={{
+                  borderBottom: "1px solid gray",
+                  display: "flex",
+                  padding: "10px 0px",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  fontSize: "14px",
+                }}
+              >
+                <div>Coins Used</div>
+                <div style={{ fontWeight: "600" }}>₹{activeVehicle?.usedCoins}</div>
+              </div>
+                  <div
+                style={{
+                  borderBottom: "1px solid gray",
+                  display: "flex",
+                  padding: "10px 0px",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  fontSize: "14px",
+                }}
+              >
+                <div>Net Fare</div>
+                <div style={{ fontWeight: "600" }}>₹{activeVehicle?.fare}</div>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  padding: "10px 0px",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  fontSize: "14px",
+                }}
+              >
+                <div style={{ fontWeight: "600" }}>
+                  Amount Payable (rounded)
+                </div>
+                <div style={{ fontWeight: "600" }}>₹{activeVehicle?.fare}</div>
+              </div>
+            </div>
+              
                 <div className="input-div" style={{ padding: "10px 15px" }}>
                   <div className="select-container-div">
                     <div
@@ -875,6 +1041,7 @@ console.log(vehicle)
                     </button>
                   </div>
                 </div>
+              
                  <div className="input-div" style={{ padding: "10px 15px" }}>
                   <div className="select-container-div">
                     <div
@@ -1459,17 +1626,26 @@ console.log(vehicle)
           <FontAwesomeIcon icon={faLocationCrosshairs} /> Select on map
         </div> */}
             {/* <div className="tab-divider"></div> */}
-            <div className="tab2" style={{ padding: "10px" }}>
+            {/* <div className="tab2" style={{ padding: "10px" }}>
               <FontAwesomeIcon icon={faHeart} /> Saved Addresses
+            </div> */}
+
+            <div className="tab2" style={{padding:'10px'}} onClick={handleCurrentLocation}>
+             <MdMyLocation size={20} /> Current Location
             </div>
+
+             
+       
           </div>
 
           {/* History List */}
           <div className="history-list">
+            
             {activeInput &&
               activeInput === "pickup" &&
               (pickupPredictions.length > 0
                 ? pickupPredictions
+              
                     .map((item, index) => (
                       <div
                         key={index}
