@@ -154,7 +154,7 @@ function Home() {
           }} key={i}>
             <div className="v-card">
               <div className="v-badge"><div style={{ fontSize: '8px', marginTop: '10px', marginBottom: '3px' }}>{v.weight}</div><img src={weight2} width={25} /></div>
-              <div className="v-img"><img src={v.img} alt="" width={95} height={50} style={v.available?{opacity:'100%'}:{opacity:'20%'}}/></div>
+              <div className="v-img"><img src={v.img} alt="" width={95} height={v.name2==='bike'?60:50} style={v.available?{opacity:'100%'}:{opacity:'20%'}}/></div>
               <h3  style={v.available?{opacity:'100%'}:{opacity:'20%'}}>{v.name}</h3>
               <p style={v.available?{ fontSize: '10px', color: '#0000E6', textDecoration: 'none',opacity:'100%'}:{ fontSize: '10px', color: '#0000E6', textDecoration: 'none',opacity:'20%' }} >Click to Check Deliver Fare. »</p>
             </div>

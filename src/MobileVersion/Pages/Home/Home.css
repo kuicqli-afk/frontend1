@@ -117,14 +117,14 @@ body {
 
 .v-card {
   background: white;
-  min-width: 110px;
+  min-width: 125px;
   border-radius: 5px;
   padding: 20px 10px 10px;
   text-align: center;
   color: #333;
   position: relative;
   padding-top: 60px;
-  height: 170px;
+  height: 185px;
 }
 
 .coupon-div {
