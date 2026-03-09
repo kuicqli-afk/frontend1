@@ -32,6 +32,10 @@ import Orders from './MobileVersion/Pages/Orders/Orders.jsx';
 import Coins from './MobileVersion/Pages/Coins/Coins.jsx';
 import Account from './MobileVersion/Components/Account/Account.jsx';
 import CoinHistory from './MobileVersion/Pages/CoinHistory/CoinHistory.jsx';
+import ProfileDetails from './MobileVersion/Components/ProfileDetails/ProfileDetails.jsx';
+import Terms from './MobileVersion/Pages/Terms/Terms.jsx';
+import Support2 from './MobileVersion/Pages/Support/Support2.jsx';
+import Language from './MobileVersion/Components/Language/Language.jsx';
 function App() {
 
   const location = useLocation();
@@ -101,7 +105,7 @@ function App() {
                 <Route  path='/auth' element={<MobileAuth/>}/>
                   <Route path='/' element={<ProtectedRoute/>}>
                         
-                         <Route index element={<Home/>} />
+                        <Route index element={<Home/>} />
                         <Route  path='fare-link' element={<Home/>}/>
                         <Route  path='ride' element={<DeliveryLocation/>}/>
                         <Route  path='search/ride' element={<MobileRide/>}/>
@@ -110,7 +114,13 @@ function App() {
                         <Route path="/orders" element={<Orders/>}/>
                         <Route path="/coins" element={<Coins/>}/>
                         <Route path='/account' element={<Account/>}/>
+                        <Route path='/account/profile' element={<ProfileDetails/>}/>
                         <Route path='/coins/history' element={<CoinHistory/>}/>
+                        <Route path='/terms' element={<Terms/>}/>   
+                        <Route path='/support' element={<Support2/>}/>
+                        <Route path='/language' element={<Language/>}/>
+
+
                   </Route>
                       
    

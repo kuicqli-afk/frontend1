@@ -15,13 +15,14 @@ import { IoLanguage } from "react-icons/io5";
 import { MdStickyNote2 } from "react-icons/md";
 import { IoIosLogOut } from "react-icons/io";
 import { Link, useNavigate } from 'react-router-dom';
-
+import { useTranslation } from "react-i18next";
 
 function Account() {
     const {coins}=useContext(RideContext)
     const name=localStorage.getItem('name')
     const phone=localStorage.getItem('phone')
     const navigate=useNavigate();
+     const { t } = useTranslation();
 
     const handleLogout=()=>{
         localStorage.removeItem('name');
@@ -51,9 +52,12 @@ function Account() {
 
               <div className='account-container'>
                     <div className="profile-container">
+                     <Link to="/account/profile">
                        <div className='view-container'>
                                View details<MdKeyboardArrowRight />
                        </div>
+                     </Link>
+                     
                        <div className='profile-name-container'>
                                <div style={{fontWeight:'500',fontSize:'26px'}}>{name}</div>
                                <div style={{color:'gray',fontSize:'12px'}}>abcemail@gmail.com</div>
@@ -70,7 +74,7 @@ function Account() {
                         <div className='row-div-container'>
                              <div style={{display:'flex',flexDirection:'row',alignItems:'center',gap:'10px'}}>
                               <div style={{background:'#e5e5e5',padding:'5px',display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center',borderRadius:'5px'}}><GiTwoCoins  size={'25'}/></div>
-                              <div>Coins</div>
+                              <div>{t('coins')}</div>
                              </div>
                           <MdKeyboardArrowRight size={'25'}/>
                        </div>
@@ -79,7 +83,7 @@ function Account() {
                          <div className='row-div-container'>
                              <div style={{display:'flex',flexDirection:'row',alignItems:'center',gap:'10px'}}>
                               <div style={{background:'#e5e5e5',padding:'5px',display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center',borderRadius:'5px'}}><BsGiftFill size={'25'}/></div>
-                              <div>Refer & Earn</div>
+                              <div>{t('refer')}</div>
                              </div>
                           <MdKeyboardArrowRight size={'20'}/>
                        </div>
@@ -89,37 +93,45 @@ function Account() {
                     <div className="col-container">
                        
 
-                        <div className='row-div-container'>
+                    <Link to='/support'>
+                         <div className='row-div-container' style={{color:'black'}}>
                              <div style={{display:'flex',flexDirection:'row',alignItems:'center',gap:'10px'}}>
                               <div style={{background:'#e5e5e5',padding:'5px',display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center',borderRadius:'5px'}}><MdSupportAgent size={'25'}/></div>
-                              <div>Help & Support</div>
+                              <div>{t('help')}</div>
                              </div>
                           <MdKeyboardArrowRight size={'25'}/>
                        </div>
+                    </Link>
+                      
+                        <Link to='/language' style={{color:'black'}}>
+                            <div className='row-div-container'>
+                                 <div style={{display:'flex',flexDirection:'row',alignItems:'center',gap:'10px'}}>
+                                    <div style={{background:'#e5e5e5',padding:'5px',display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center',borderRadius:'5px'}}><IoLanguage  size={'25'}/></div>
+                                    <div>{t('language')}</div>
+                                 </div>
+                              <MdKeyboardArrowRight size={'25'}/>
+                           </div>
+                        </Link>
+                          
 
-                          <div className='row-div-container'>
-                             <div style={{display:'flex',flexDirection:'row',alignItems:'center',gap:'10px'}}>
-                              <div style={{background:'#e5e5e5',padding:'5px',display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center',borderRadius:'5px'}}><IoLanguage  size={'25'}/></div>
-                              <div>Change Language</div>
-                             </div>
-                          <MdKeyboardArrowRight size={'25'}/>
-                       </div>
 
-
-                          <div className='row-div-container'>
-                             <div style={{display:'flex',flexDirection:'row',alignItems:'center',gap:'10px'}}>
-                              <div style={{background:'#e5e5e5',padding:'5px',display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center',borderRadius:'5px'}}><MdStickyNote2  size={'25'}/></div>
-                              <div>Terms & Condition</div>
-                             </div>
-                          <MdKeyboardArrowRight size={'25'}/>
-                        
-                       </div>
+                        <Link to='/terms'>
+                                      <div className='row-div-container' style={{color:'black'}}>
+                                       <div style={{display:'flex',flexDirection:'row',alignItems:'center',gap:'10px'}}>
+                                          <div style={{background:'#e5e5e5',padding:'5px',display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center',borderRadius:'5px'}}><MdStickyNote2  size={'25'}/></div>
+                                          <div>{t('terms')}</div>
+                                       </div>
+                                    <MdKeyboardArrowRight size={'25'}/>
+                                    
+                                 </div>
+                        </Link>
+                
 
 
                           <div className='row-div-container' onClick={handleLogout}>
                              <div style={{display:'flex',flexDirection:'row',alignItems:'center',gap:'10px'}}>
                               <div style={{background:'#e5e5e5',padding:'5px',display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center',borderRadius:'5px'}}><IoIosLogOut  size={'25'}/></div>
-                              <div>Logout</div>
+                              <div>{t('logout')}</div>
                              </div>
                           <MdKeyboardArrowRight size={'25'}/>
                        </div>

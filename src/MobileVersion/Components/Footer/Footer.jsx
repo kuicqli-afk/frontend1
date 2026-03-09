@@ -3,8 +3,10 @@ import './Footer.css'
 
 import { FaHome, FaBox, FaCoins, FaUser } from "react-icons/fa";
 import { NavLink } from 'react-router-dom';
+import { useTranslation } from "react-i18next";
 
 function Footer() {
+    const { t } = useTranslation();
   return (
     <nav className="bottom-nav2" style={{ marginTop: "40px", zIndex: "10" }}>
       
@@ -13,7 +15,7 @@ function Footer() {
         className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
       >
         <FaHome size="20px"/>
-        <span>Home</span>
+        <span>{t('home')}</span>
       </NavLink>
 
       <NavLink 
@@ -21,7 +23,7 @@ function Footer() {
         className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
       >
         <FaBox size="20px"/>
-        <span>Orders</span>
+        <span>{t('order')}</span>
       </NavLink>
 
       <NavLink 
@@ -29,7 +31,7 @@ function Footer() {
         className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
       >
         <FaCoins size="20px"/>
-        <span>Coins</span>
+        <span>{t('coins')}</span>
       </NavLink>
 
       <NavLink 
@@ -37,7 +39,7 @@ function Footer() {
         className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
       >
         <FaUser size="20px"/>
-        <span>Account</span>
+        <span>{t('account')}</span>
       </NavLink>
 
     </nav>

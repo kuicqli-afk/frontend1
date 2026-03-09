@@ -4,7 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import SocketProvider from "./context/Socketcontext.jsx";
 import { RideProvider } from "./context/RideContext.jsx";
 import { GoogleMapsProvider } from "./providers/GoogleMapsProvider.jsx"; // <— make sure the file name is exact
-
+import "./i18n";
 import "./index.css";
 import App from "./App.jsx";
 
